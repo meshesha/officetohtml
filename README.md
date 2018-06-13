@@ -22,10 +22,10 @@ This project replaces my older project called <a href="https://github.com/meshes
 * image viewer
 
 ### Demo
-* See demo <a href="https://meshesha.github.io/officetohtml/" target="_blank">here</a>.
+* See demo <a href="https://officetohtml.js.org/pages/demos.html" target="_blank">here</a>.
 
 ###  usage:
-* See page <a href="https://meshesha.github.io/officetohtml/" target="_blank">here</a>.
+* See page <a href="https://officetohtml.js.org/pages/docs.html" target="_blank">here</a>.
 
 ### LICENSE:
 * MIT
