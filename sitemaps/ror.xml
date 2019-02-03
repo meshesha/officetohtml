@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:ror="http://rorweb.com/0.1/" >
 <channel>
-  <title>ROR Sitemap for https://meshesha.github.io/officetohtml/</title>
-  <link>https://meshesha.github.io/officetohtml/</link>
+  <title>ROR Sitemap for https://officetohtml.js.org/index.html</title>
+  <link>https://officetohtml.js.org/index.html</link>
 
 <item>
-     <link>https://meshesha.github.io/officetohtml/</link>
+     <link>https://officetohtml.js.org/index.html</link>
      <title>OfficeToHtml</title>
      <description>OfficeToHtml</description>
      <ror:updatePeriod></ror:updatePeriod>
@@ -13,15 +13,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>https://meshesha.github.io/officetohtml/index.html</link>
-     <title>OfficeToHtml</title>
-     <description>OfficeToHtml</description>
-     <ror:updatePeriod></ror:updatePeriod>
-     <ror:sortOrder>1</ror:sortOrder>
-     <ror:resourceOf>sitemap</ror:resourceOf>
-</item>
-<item>
-     <link>https://meshesha.github.io/officetohtml/pages/docs.html</link>
+     <link>https://officetohtml.js.org/pages/docs.html</link>
      <title>OfficeJs | Docs </title>
      <description>OfficeJs | Docs </description>
      <ror:updatePeriod></ror:updatePeriod>
@@ -29,11 +21,19 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>https://meshesha.github.io/officetohtml/pages/demos.html</link>
+     <link>https://officetohtml.js.org/pages/demos.html</link>
      <title>OfficeJs | Demos </title>
      <description>OfficeJs | Demos </description>
      <ror:updatePeriod></ror:updatePeriod>
      <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://officetohtml.js.org/pages/lang.html</link>
+     <title>OfficeJs | Docs</title>
+     <description>OfficeJs | Docs</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 </channel>

@@ -1,4 +1,4 @@
-https://meshesha.github.io/officetohtml/
-https://meshesha.github.io/officetohtml/index.html
-https://meshesha.github.io/officetohtml/pages/docs.html
-https://meshesha.github.io/officetohtml/pages/demos.html
+https://officetohtml.js.org/index.html
+https://officetohtml.js.org/pages/docs.html
+https://officetohtml.js.org/pages/demos.html
+https://officetohtml.js.org/pages/lang.html
