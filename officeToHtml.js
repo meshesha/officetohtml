@@ -1,10 +1,10 @@
 ﻿/**
  * officeToHtml.js
- * Ver. : 1.1.0
- * last update: 09/05/2018
+ * Ver. : 1.2.0
+ * last update: 02/02/2019
  * Author: meshesha , https://github.com/meshesha
  * LICENSE: MIT
- * url:https://meshesha.github.io/officeToHtml
+ * url:https://officetohtml.js.org/
  */
 (function ( $ ) {
     $.event.special.destroyed = {
@@ -17,95 +17,98 @@
     $.fn.officeToHtml = function( options ) {
         var $result = $(this);
         var divId = $result.attr("id");
-        var defaults = { // These are the defaults.
-            url: "",
-            inputObjId: "",
-            pdfSetting: {
-                thumbnailViewBtn: true,
-                searchBtn: true,
-                nextPreviousBtn: true,
-                pageNumberTxt: true,
-                totalPagesLabel: true,
-                zoomBtns: true,
-                scaleSelector: true,
-                presantationModeBtn: true,
-                openFileBtn: true,
-                printBtn: true,
-                downloadBtn: true,
-                bookmarkBtn: true,
-                secondaryToolbarBtn: true,
-                firstPageBtn: true,
-                lastPageBtn: true,
-                pageRotateCwBtn: true,
-                pageRotateCcwBtn: true,
-                cursorSelectTextToolbarBtn: true,
-                cursorHandToolbarBtn: true
-            }, 
-            docxSetting: {
-                styleMap : null,
-                includeEmbeddedStyleMap: true,
-                includeDefaultStyleMap: true,
-                convertImage: null,
-                ignoreEmptyParagraphs: false,
-                idPrefix: "",
-                isRtl : "auto" 
-            }, 
-            pptxSetting: {
-                slidesScale: "", //Change Slides scale by percent
-                slideMode: true, /** true,false*/
-                keyBoardShortCut: false,  /** true,false ,condition: slideMode: true*/
-                mediaProcess: true, /** true,false: if true then process video and audio files */
-                jsZipV2: false,
-                slideModeConfig: {
-                    first: 1,
-                    nav: true, /** true,false : show or not nav buttons*/
-                    navTxtColor: "black", /** color */
-                    keyBoardShortCut: true, /** true,false ,condition: */
-                    showSlideNum: true, /** true,false */
-                    showTotalSlideNum: true, /** true,false */
-                    autoSlide:1, /** false or seconds , F8 to active ,keyBoardShortCut: true */
-                    randomAutoSlide: false, /** true,false ,autoSlide: > 1 */ 
-                    loop: false,  /** true,false */
-                    background: false, /** false or color*/
-                    transition: "default", /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */
-                    transitionTime: 1 /** transition time between slides in seconds */               
-                }
-                
-            }, 
-            sheetSetting: { 
-                jqueryui : false,
-                activeHeaderClassName: "",
-                allowEmpty: true,
-                autoColumnSize: true,
-                autoRowSize: false,
-                columns: false,
-                columnSorting: true,
-                contextMenu: false,
-                copyable: true,
-                customBorders: false,
-                fixedColumnsLeft: 0,
-                fixedRowsTop: 0,
-                language:'en-US',
-                search: false,
-                selectionMode: 'single',
-                sortIndicator: false,
-                readOnly: false,
-                startRows: 1,
-                startCols: 1,
-                rowHeaders: true,
-                colHeaders: true,
-                width: false,
-                height:false
-            },
-            imageSetting: {
-                frame: ['100%', '100%',false],
-                maxZoom: '900%',
-                zoomFactor: '10%',
-                mouse: true,
-                keyboard: true,
-                toolbar: true,
-                rotateToolbar: false
+        var defaults = {
+          // These are the defaults.
+          url: "",
+          inputObjId: "",
+          pdfSetting: {
+            thumbnailViewBtn: true,
+            searchBtn: true,
+            nextPreviousBtn: true,
+            pageNumberTxt: true,
+            totalPagesLabel: true,
+            zoomBtns: true,
+            scaleSelector: true,
+            presantationModeBtn: true,
+            openFileBtn: true,
+            printBtn: true,
+            downloadBtn: true,
+            bookmarkBtn: true,
+            secondaryToolbarBtn: true,
+            firstPageBtn: true,
+            lastPageBtn: true,
+            pageRotateCwBtn: true,
+            pageRotateCcwBtn: true,
+            cursorSelectTextToolbarBtn: true,
+            cursorHandToolbarBtn: true,
+            setLang: "",
+            setLangFilesPath: ""
+          },
+          docxSetting: {
+            styleMap: null,
+            includeEmbeddedStyleMap: true,
+            includeDefaultStyleMap: true,
+            convertImage: null,
+            ignoreEmptyParagraphs: false,
+            idPrefix: "",
+            isRtl: "auto"
+          },
+          pptxSetting: {
+            slidesScale: "", //Change Slides scale by percent
+            slideMode: true /** true,false*/,
+            keyBoardShortCut: false /** true,false ,condition: slideMode: true*/,
+            mediaProcess: true /** true,false: if true then process video and audio files */,
+            jsZipV2: false,
+            slideModeConfig: {
+              first: 1,
+              nav: true /** true,false : show or not nav buttons*/,
+              navTxtColor: "black" /** color */,
+              keyBoardShortCut: true /** true,false ,condition: */,
+              showSlideNum: true /** true,false */,
+              showTotalSlideNum: true /** true,false */,
+              autoSlide: 1 /** false or seconds , F8 to active ,keyBoardShortCut: true */,
+              randomAutoSlide: false /** true,false ,autoSlide: > 1 */,
+              loop: false /** true,false */,
+              background: false /** false or color*/,
+              transition:
+                "default" /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */,
+              transitionTime: 1 /** transition time between slides in seconds */
             }
+          },
+          sheetSetting: {
+            jqueryui: false,
+            activeHeaderClassName: "",
+            allowEmpty: true,
+            autoColumnSize: true,
+            autoRowSize: false,
+            columns: false,
+            columnSorting: true,
+            contextMenu: false,
+            copyable: true,
+            customBorders: false,
+            fixedColumnsLeft: 0,
+            fixedRowsTop: 0,
+            language: "en-US",
+            search: false,
+            selectionMode: "single",
+            sortIndicator: false,
+            readOnly: false,
+            startRows: 1,
+            startCols: 1,
+            rowHeaders: true,
+            colHeaders: true,
+            width: false,
+            height: false
+          },
+          imageSetting: {
+            frame: ["100%", "100%", false],
+            maxZoom: "900%",
+            zoomFactor: "10%",
+            mouse: true,
+            keyboard: true,
+            toolbar: true,
+            rotateToolbar: false
+          }
         };
         var settings = $.extend( true, {},defaults, options );
         //1.get file memeType
@@ -223,6 +226,8 @@
         pageRotateCcwOpt = (pdfSet.pageRotateCcwBtn)?"":"hidden",
         cursorSelectTextOpt = (pdfSet.cursorSelectTextToolbarBtn)?"":"hidden",
         cursorHandOpt = (pdfSet.cursorHandToolbarBtn)?"":"hidden";
+        setLang = pdfSet.setLang;
+        setLangFilesPath = pdfSet.setLangFilesPath;
         ////////////////////////////////////////////
         $("<div></div>",{
             class : "loadingInProgress",
@@ -1031,16 +1036,42 @@
         }).appendTo('div#' + divId + " .loadingInProgress #outerContainer #overlayContainer #printServiceOverlay .dialog #printThirdRwo");
 
         var my_pdf_file = fObj.Obj;
-        $("<link>",{
+
+        var currentScriptPath = function() {
+          var scripts = document.querySelectorAll("script[src]");
+          var currentScript = scripts[scripts.length - 1].src;
+          var currentScriptChunks = currentScript.split("/");
+          var currentScriptFile = currentScriptChunks[currentScriptChunks.length - 1];
+          return currentScript.replace(currentScriptFile, "");
+        };
+        function diff2(a, b){
+            var i, la = a.length, lb = b.length, res = [];
+            if (!la) return b; 
+            else if (!lb) return a; 
+            for (i = 0; i < la; i++){
+                if (b.indexOf(a[i]) === -1) res.push(a[i]);
+            }
+            for (i = 0; i < lb; i++){
+                if (a.indexOf(b[i]) === -1) res.push(b[i]);
+            }
+            return res;
+        }
+        
+        var link_a_array = currentScriptPath().split("/");
+        var link_b_array = location.href.split("/");
+        var link_diff = diff2(link_a_array, link_b_array).join("/");
+        //console.log(currentScriptPath(), location.href, link_diff, setLangFilesPath);
+        setLangFilesPath = (setLangFilesPath != "") ? location.href + setLangFilesPath + "/locale.properties":"";
+        $("<link>", {
             rel: "resource",
             type: "application/l10n",
-            href: "./include/pdf/web/locale/locale.properties"
-        }).appendTo('#' + divId);
-
+            href: (setLangFilesPath != "")?setLangFilesPath:"./" + link_diff + "/pdf/locale/locale.properties"
+        }).appendTo("#" + divId);
+        
         $("#mainPdfWarrper").bind('destroyed', function() {
             //if exit from pdf viewer mode
             //return orginal html dir
-            var orgnlHtmldir = sessionStorage.getItem("o2h_orginal_html_die");
+            var orgnlHtmldir = sessionStorage.getItem("o2h_orginal_html_dir");
             if(orgnlHtmldir !== undefined){
               $("html").attr("dir",orgnlHtmldir);
             }
@@ -1182,17 +1213,25 @@
         _pdfjsLib.PDFJS.disableTextLayer = _pdfjsLib.PDFJS.disableTextLayer === undefined ? false : _pdfjsLib.PDFJS.disableTextLayer;
         _pdfjsLib.PDFJS.ignoreCurrentPositionOnZoom = _pdfjsLib.PDFJS.ignoreCurrentPositionOnZoom === undefined ? false : _pdfjsLib.PDFJS.ignoreCurrentPositionOnZoom;
         {
-        _pdfjsLib.PDFJS.locale = _pdfjsLib.PDFJS.locale === undefined && typeof navigator !== 'undefined' ? navigator.language : _pdfjsLib.PDFJS.locale;
-        }
+        //_pdfjsLib.PDFJS.locale = _pdfjsLib.PDFJS.locale === undefined && typeof navigator !== 'undefined' ? navigator.language : _pdfjsLib.PDFJS.locale;
+                if (_pdfjsLib.PDFJS.locale === undefined && typeof navigator !== 'undefined'){
+                    if (setLang != ""){
+                        _pdfjsLib.PDFJS.locale = setLang;
+                    } else {
+                        _pdfjsLib.PDFJS.locale = navigator.language; //set lang here - TODO
+                    }
+                    //console.log("_pdfjsLib.PDFJS.locale (lang)= " + _pdfjsLib.PDFJS.locale); 
+                }
+            }
         function getOutputScale(ctx) {
-        var devicePixelRatio = window.devicePixelRatio || 1;
-        var backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
-        var pixelRatio = devicePixelRatio / backingStoreRatio;
-        return {
-            sx: pixelRatio,
-            sy: pixelRatio,
-            scaled: pixelRatio !== 1
-        };
+            var devicePixelRatio = window.devicePixelRatio || 1;
+            var backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
+            var pixelRatio = devicePixelRatio / backingStoreRatio;
+            return {
+                sx: pixelRatio,
+                sy: pixelRatio,
+                scaled: pixelRatio !== 1
+            };
         }
         function scrollIntoView(element, spot) {
         var skipOverflowHiddenElements = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -1615,9 +1654,9 @@
         
         var pdfjsLib;
         if (typeof window !== 'undefined' && window['pdfjs-dist/build/pdf']) {
-        pdfjsLib = window['pdfjs-dist/build/pdf'];
+            pdfjsLib = window['pdfjs-dist/build/pdf'];
         } else {
-        pdfjsLib = require('./include/pdf/build/pdf.js');
+            pdfjsLib = require('./' + link_diff + '/pdf/pdf.js');
         }
         module.exports = pdfjsLib;
         
@@ -1760,10 +1799,10 @@
         
         var CLEANUP_TIMEOUT = 30000;
         var RenderingStates = {
-        INITIAL: 0,
-        RUNNING: 1,
-        PAUSED: 2,
-        FINISHED: 3
+            INITIAL: 0,
+            RUNNING: 1,
+            PAUSED: 2,
+            FINISHED: 3
         };
         
         var PDFRenderingQueue = function () {
@@ -1940,10 +1979,10 @@
         var DEFAULT_SCALE_DELTA = 1.1;
         var DISABLE_AUTO_FETCH_LOADING_BAR_TIMEOUT = 5000;
         function configure(PDFJS) {
-        PDFJS.imageResourcesPath = './images/';
-        PDFJS.workerSrc = './include/pdf/build/pdf.worker.js';
-        PDFJS.cMapUrl = './include/pdf/web/cmaps/';
-        PDFJS.cMapPacked = true;
+            PDFJS.imageResourcesPath = "./images/";
+            PDFJS.workerSrc = "./" + link_diff + "/pdf/pdf.worker.js";
+            PDFJS.cMapUrl = "./" + link_diff + "/pdf/cmaps/";
+            PDFJS.cMapPacked = true;
         }
         var DefaultExternalServices = {
         updateFindControlState: function updateFindControlState(data) {},
@@ -2097,20 +2136,21 @@
         },
         _initializeL10n: function _initializeL10n() {
             if (this.viewerPrefs['pdfBugEnabled']) {
-            var hash = document.location.hash.substring(1);
-            var hashParams = (0, _ui_utils.parseQueryString)(hash);
-            if ('locale' in hashParams) {
-                _pdfjsLib.PDFJS.locale = hashParams['locale'];
-            }
+                var hash = document.location.hash.substring(1);
+                var hashParams = (0, _ui_utils.parseQueryString)(hash);
+                if ('locale' in hashParams) {
+                    _pdfjsLib.PDFJS.locale = hashParams['locale'];
+                }
             }
             this.l10n = this.externalServices.createL10n();
             return this.l10n.getDirection().then(function (dir) {
+                //set dir - TODO
                 var orginalHtmlDir = $("html").attr("dir");
                 console.log("orginal html dir: " + orginalHtmlDir + ", new html dir: " + dir)
                 if(orginalHtmlDir !== undefined){
-                    sessionStorage.setItem("o2h_orginal_html_die",orginalHtmlDir);
+                    sessionStorage.setItem("o2h_orginal_html_dir",orginalHtmlDir);
                 }else{
-                    sessionStorage.setItem("o2h_orginal_html_die","");
+                    sessionStorage.setItem("o2h_orginal_html_dir","");
                 }
                 document.getElementsByTagName('html')[0].dir = dir;
                 //$("#" + divId).attr("dir", dir);
@@ -2928,23 +2968,23 @@
         };
         }
         function loadAndEnablePDFBug(enabledTabs) {
-        return new Promise(function (resolve, reject) {
-            var appConfig = PDFViewerApplication.appConfig;
-            var script = document.createElement('script');
-            script.src = appConfig.debuggerScriptPath;
-            script.onload = function () {
-            PDFBug.enable(enabledTabs);
-            PDFBug.init({
-                PDFJS: _pdfjsLib.PDFJS,
-                OPS: _pdfjsLib.OPS
-            }, appConfig.mainContainer);
-            resolve();
-            };
-            script.onerror = function () {
-            reject(new Error('Cannot load debugger at ' + script.src));
-            };
-            (document.getElementsByTagName('head')[0] || document.body).appendChild(script);
-        });
+            return new Promise(function (resolve, reject) {
+                var appConfig = PDFViewerApplication.appConfig;
+                var script = document.createElement('script');
+                script.src = appConfig.debuggerScriptPath;
+                script.onload = function () {
+                    PDFBug.enable(enabledTabs);
+                    PDFBug.init({
+                        PDFJS: _pdfjsLib.PDFJS,
+                        OPS: _pdfjsLib.OPS
+                    }, appConfig.mainContainer);
+                    resolve();
+                };
+                script.onerror = function () {
+                    reject(new Error('Cannot load debugger at ' + script.src));
+                };
+                (document.getElementsByTagName('head')[0] || document.body).appendChild(script);
+            });
         }
         function webViewerInitialized() {
         var appConfig = PDFViewerApplication.appConfig;
@@ -2970,53 +3010,53 @@
             var hash = document.location.hash.substring(1);
             var hashParams = (0, _ui_utils.parseQueryString)(hash);
             if ('disableworker' in hashParams) {
-            _pdfjsLib.PDFJS.disableWorker = hashParams['disableworker'] === 'true';
+                pdfjsLib.PDFJS.disableWorker = hashParams['disableworker'] === 'true';
             }
             if ('disablerange' in hashParams) {
-            _pdfjsLib.PDFJS.disableRange = hashParams['disablerange'] === 'true';
+                _pdfjsLib.PDFJS.disableRange = hashParams['disablerange'] === 'true';
             }
             if ('disablestream' in hashParams) {
-            _pdfjsLib.PDFJS.disableStream = hashParams['disablestream'] === 'true';
+                _pdfjsLib.PDFJS.disableStream = hashParams['disablestream'] === 'true';
             }
             if ('disableautofetch' in hashParams) {
-            _pdfjsLib.PDFJS.disableAutoFetch = hashParams['disableautofetch'] === 'true';
+                _pdfjsLib.PDFJS.disableAutoFetch = hashParams['disableautofetch'] === 'true';
             }
             if ('disablefontface' in hashParams) {
-            _pdfjsLib.PDFJS.disableFontFace = hashParams['disablefontface'] === 'true';
+                _pdfjsLib.PDFJS.disableFontFace = hashParams['disablefontface'] === 'true';
             }
             if ('disablehistory' in hashParams) {
-            _pdfjsLib.PDFJS.disableHistory = hashParams['disablehistory'] === 'true';
+                _pdfjsLib.PDFJS.disableHistory = hashParams['disablehistory'] === 'true';
             }
             if ('webgl' in hashParams) {
-            _pdfjsLib.PDFJS.disableWebGL = hashParams['webgl'] !== 'true';
+                _pdfjsLib.PDFJS.disableWebGL = hashParams['webgl'] !== 'true';
             }
             if ('useonlycsszoom' in hashParams) {
-            _pdfjsLib.PDFJS.useOnlyCssZoom = hashParams['useonlycsszoom'] === 'true';
+                _pdfjsLib.PDFJS.useOnlyCssZoom = hashParams['useonlycsszoom'] === 'true';
             }
             if ('verbosity' in hashParams) {
-            _pdfjsLib.PDFJS.verbosity = hashParams['verbosity'] | 0;
+                _pdfjsLib.PDFJS.verbosity = hashParams['verbosity'] | 0;
             }
             if ('ignorecurrentpositiononzoom' in hashParams) {
-            _pdfjsLib.PDFJS.ignoreCurrentPositionOnZoom = hashParams['ignorecurrentpositiononzoom'] === 'true';
+                _pdfjsLib.PDFJS.ignoreCurrentPositionOnZoom = hashParams['ignorecurrentpositiononzoom'] === 'true';
             }
             if ('textlayer' in hashParams) {
-            switch (hashParams['textlayer']) {
-                case 'off':
-                _pdfjsLib.PDFJS.disableTextLayer = true;
-                break;
-                case 'visible':
-                case 'shadow':
-                case 'hover':
-                var viewer = appConfig.viewerContainer;
-                viewer.classList.add('textLayer-' + hashParams['textlayer']);
-                break;
-            }
+                switch (hashParams['textlayer']) {
+                    case 'off':
+                    _pdfjsLib.PDFJS.disableTextLayer = true;
+                    break;
+                    case 'visible':
+                    case 'shadow':
+                    case 'hover':
+                    var viewer = appConfig.viewerContainer;
+                    viewer.classList.add('textLayer-' + hashParams['textlayer']);
+                    break;
+                }
             }
             if ('pdfbug' in hashParams) {
-            _pdfjsLib.PDFJS.pdfBug = true;
-            var pdfBug = hashParams['pdfbug'];
-            var enabled = pdfBug.split(',');
-            waitForBeforeOpening.push(loadAndEnablePDFBug(enabled));
+                _pdfjsLib.PDFJS.pdfBug = true;
+                var pdfBug = hashParams['pdfbug'];
+                var enabled = pdfBug.split(',');
+                waitForBeforeOpening.push(loadAndEnablePDFBug(enabled));
             }
         }
         if (!PDFViewerApplication.supportsPrinting) {
@@ -4028,9 +4068,9 @@
         function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
         
         var CursorTool = {
-        SELECT: 0,
-        HAND: 1,
-        ZOOM: 2
+            SELECT: 0,
+            HAND: 1,
+            ZOOM: 2
         };
         
         var PDFCursorTools = function () {
@@ -4639,13 +4679,13 @@
         
         var GenericExternalServices = Object.create(_app.DefaultExternalServices);
         GenericExternalServices.createDownloadManager = function () {
-        return new _download_manager.DownloadManager();
+            return new _download_manager.DownloadManager();
         };
         GenericExternalServices.createPreferences = function () {
-        return new GenericPreferences();
+            return new GenericPreferences();
         };
         GenericExternalServices.createL10n = function () {
-        return new _genericl10n.GenericL10n(_pdfjsLib.PDFJS.locale);
+            return new _genericl10n.GenericL10n(_pdfjsLib.PDFJS.locale);
         };
         _app.PDFViewerApplication.externalServices = GenericExternalServices;
         exports.GenericCom = GenericCom;
@@ -4926,730 +4966,730 @@
         
         
         document.webL10n = function (window, document, undefined) {
-        var gL10nData = {};
-        var gTextData = '';
-        var gTextProp = 'textContent';
-        var gLanguage = '';
-        var gMacros = {};
-        var gReadyState = 'loading';
-        var gAsyncResourceLoading = true;
-        function getL10nResourceLinks() {
-            return document.querySelectorAll('link[type="application/l10n"]');
-        }
-        function getL10nDictionary() {
-            var script = document.querySelector('script[type="application/l10n"]');
-            return script ? JSON.parse(script.innerHTML) : null;
-        }
-        function getTranslatableChildren(element) {
-            return element ? element.querySelectorAll('*[data-l10n-id]') : [];
-        }
-        function getL10nAttributes(element) {
-            if (!element) return {};
-            var l10nId = element.getAttribute('data-l10n-id');
-            var l10nArgs = element.getAttribute('data-l10n-args');
-            var args = {};
-            if (l10nArgs) {
-            try {
-                args = JSON.parse(l10nArgs);
-            } catch (e) {
-                console.warn('could not parse arguments for #' + l10nId);
+            var gL10nData = {};
+            var gTextData = '';
+            var gTextProp = 'textContent';
+            var gLanguage = '';
+            var gMacros = {};
+            var gReadyState = 'loading';
+            var gAsyncResourceLoading = true;
+            function getL10nResourceLinks() {
+                return document.querySelectorAll('link[type="application/l10n"]');
             }
+            function getL10nDictionary() {
+                var script = document.querySelector('script[type="application/l10n"]');
+                return script ? JSON.parse(script.innerHTML) : null;
             }
-            return {
-            id: l10nId,
-            args: args
-            };
-        }
-        function fireL10nReadyEvent(lang) {
-            var evtObject = document.createEvent('Event');
-            evtObject.initEvent('localized', true, false);
-            evtObject.language = lang;
-            document.dispatchEvent(evtObject);
-        }
-        function xhrLoadText(url, onSuccess, onFailure) {
-            onSuccess = onSuccess || function _onSuccess(data) {};
-            onFailure = onFailure || function _onFailure() {};
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, gAsyncResourceLoading);
-            if (xhr.overrideMimeType) {
-            xhr.overrideMimeType('text/plain; charset=utf-8');
+            function getTranslatableChildren(element) {
+                return element ? element.querySelectorAll('*[data-l10n-id]') : [];
             }
-            xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200 || xhr.status === 0) {
-                onSuccess(xhr.responseText);
-                } else {
+            function getL10nAttributes(element) {
+                if (!element) return {};
+                var l10nId = element.getAttribute('data-l10n-id');
+                var l10nArgs = element.getAttribute('data-l10n-args');
+                var args = {};
+                if (l10nArgs) {
+                try {
+                    args = JSON.parse(l10nArgs);
+                } catch (e) {
+                    console.warn('could not parse arguments for #' + l10nId);
+                }
+                }
+                return {
+                id: l10nId,
+                args: args
+                };
+            }
+            function fireL10nReadyEvent(lang) {
+                var evtObject = document.createEvent('Event');
+                evtObject.initEvent('localized', true, false);
+                evtObject.language = lang;
+                document.dispatchEvent(evtObject);
+            }
+            function xhrLoadText(url, onSuccess, onFailure) {
+                onSuccess = onSuccess || function _onSuccess(data) {};
+                onFailure = onFailure || function _onFailure() {};
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url, gAsyncResourceLoading);
+                if (xhr.overrideMimeType) {
+                xhr.overrideMimeType('text/plain; charset=utf-8');
+                }
+                xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status === 0) {
+                    onSuccess(xhr.responseText);
+                    } else {
+                    onFailure();
+                    }
+                }
+                };
+                xhr.onerror = onFailure;
+                xhr.ontimeout = onFailure;
+                try {
+                xhr.send(null);
+                } catch (e) {
                 onFailure();
                 }
             }
-            };
-            xhr.onerror = onFailure;
-            xhr.ontimeout = onFailure;
-            try {
-            xhr.send(null);
-            } catch (e) {
-            onFailure();
+            function parseResource(href, lang, successCallback, failureCallback) {
+                var baseURL = href.replace(/[^\/]*$/, '') || './';
+                function evalString(text) {
+                    if (text.lastIndexOf('\\') < 0) return text;
+                    return text.replace(/\\\\/g, '\\').replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\t/g, '\t').replace(/\\b/g, '\b').replace(/\\f/g, '\f').replace(/\\{/g, '{').replace(/\\}/g, '}').replace(/\\"/g, '"').replace(/\\'/g, "'");
+                }
+                function parseProperties(text, parsedPropertiesCallback) {
+                    var dictionary = {};
+                    var reBlank = /^\s*|\s*$/;
+                    var reComment = /^\s*#|^\s*$/;
+                    var reSection = /^\s*\[(.*)\]\s*$/;
+                    var reImport = /^\s*@import\s+url\((.*)\)\s*$/i;
+                    var reSplit = /^([^=\s]*)\s*=\s*(.+)$/;
+                    function parseRawLines(rawText, extendedSyntax, parsedRawLinesCallback) {
+                        var entries = rawText.replace(reBlank, '').split(/[\r\n]+/);
+                        var currentLang = '*';
+                        var genericLang = lang.split('-', 1)[0];
+                        var skipLang = false;
+                        var match = '';
+                        function nextEntry() {
+                            while (true) {
+                                if (!entries.length) {
+                                    parsedRawLinesCallback();
+                                    return;
+                                }
+                                var line = entries.shift();
+                                if (reComment.test(line)) continue;
+                                if (extendedSyntax) {
+                                    match = reSection.exec(line);
+                                    if (match) {
+                                        currentLang = match[1].toLowerCase();
+                                        skipLang = currentLang !== '*' && currentLang !== lang && currentLang !== genericLang;
+                                        continue;
+                                    } else if (skipLang) {
+                                        continue;
+                                    }
+                                    match = reImport.exec(line);
+                                    if (match) {
+                                        loadImport(baseURL + match[1], nextEntry);
+                                        return;
+                                    }
+                                }
+                                var tmp = line.match(reSplit);
+                                if (tmp && tmp.length == 3) {
+                                dictionary[tmp[1]] = evalString(tmp[2]);
+                                }
+                            }   
+                        }
+                        nextEntry();
+                    }
+                    function loadImport(url, callback) {
+                        xhrLoadText(url, function (content) {
+                            parseRawLines(content, false, callback);
+                        }, function () {
+                            console.warn(url + ' not found.');
+                            callback();
+                        });
+                    }
+                    parseRawLines(text, true, function () {
+                        parsedPropertiesCallback(dictionary);
+                    });
+                }
+                xhrLoadText(href, function (response) {
+                    gTextData += response;
+                    parseProperties(response, function (data) {
+                        for (var key in data) {
+                        var id,
+                            prop,
+                            index = key.lastIndexOf('.');
+                        if (index > 0) {
+                            id = key.substring(0, index);
+                            prop = key.substr(index + 1);
+                        } else {
+                            id = key;
+                            prop = gTextProp;
+                        }
+                        if (!gL10nData[id]) {
+                            gL10nData[id] = {};
+                        }
+                        gL10nData[id][prop] = data[key];
+                        }
+                        if (successCallback) {
+                        successCallback();
+                        }
+                    });
+                }, failureCallback);
             }
-        }
-        function parseResource(href, lang, successCallback, failureCallback) {
-            var baseURL = href.replace(/[^\/]*$/, '') || './';
-            function evalString(text) {
-            if (text.lastIndexOf('\\') < 0) return text;
-            return text.replace(/\\\\/g, '\\').replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\t/g, '\t').replace(/\\b/g, '\b').replace(/\\f/g, '\f').replace(/\\{/g, '{').replace(/\\}/g, '}').replace(/\\"/g, '"').replace(/\\'/g, "'");
-            }
-            function parseProperties(text, parsedPropertiesCallback) {
-            var dictionary = {};
-            var reBlank = /^\s*|\s*$/;
-            var reComment = /^\s*#|^\s*$/;
-            var reSection = /^\s*\[(.*)\]\s*$/;
-            var reImport = /^\s*@import\s+url\((.*)\)\s*$/i;
-            var reSplit = /^([^=\s]*)\s*=\s*(.+)$/;
-            function parseRawLines(rawText, extendedSyntax, parsedRawLinesCallback) {
-                var entries = rawText.replace(reBlank, '').split(/[\r\n]+/);
-                var currentLang = '*';
-                var genericLang = lang.split('-', 1)[0];
-                var skipLang = false;
-                var match = '';
-                function nextEntry() {
-                while (true) {
-                    if (!entries.length) {
-                    parsedRawLinesCallback();
+            function loadLocale(lang, callback) {
+                if (lang) {
+                    lang = lang.toLowerCase();
+                }
+                callback = callback || function _callback() {};
+                clear();
+                gLanguage = lang;
+                var langLinks = getL10nResourceLinks();
+                var langCount = langLinks.length;
+                if (langCount === 0) {
+                    var dict = getL10nDictionary();
+                    if (dict && dict.locales && dict.default_locale) {
+                        console.log('using the embedded JSON directory, early way out');
+                        gL10nData = dict.locales[lang];
+                        if (!gL10nData) {
+                            var defaultLocale = dict.default_locale.toLowerCase();
+                            for (var anyCaseLang in dict.locales) {
+                                anyCaseLang = anyCaseLang.toLowerCase();
+                                if (anyCaseLang === lang) {
+                                    gL10nData = dict.locales[lang];
+                                    break;
+                                } else if (anyCaseLang === defaultLocale) {
+                                    gL10nData = dict.locales[defaultLocale];
+                                }
+                            }
+                        }
+                        callback();
+                    } else {
+                        console.log('no resource to load, early way out');
+                    }
+                    fireL10nReadyEvent(lang);
+                    gReadyState = 'complete';
                     return;
-                    }
-                    var line = entries.shift();
-                    if (reComment.test(line)) continue;
-                    if (extendedSyntax) {
-                    match = reSection.exec(line);
-                    if (match) {
-                        currentLang = match[1].toLowerCase();
-                        skipLang = currentLang !== '*' && currentLang !== lang && currentLang !== genericLang;
-                        continue;
-                    } else if (skipLang) {
-                        continue;
-                    }
-                    match = reImport.exec(line);
-                    if (match) {
-                        loadImport(baseURL + match[1], nextEntry);
-                        return;
-                    }
-                    }
-                    var tmp = line.match(reSplit);
-                    if (tmp && tmp.length == 3) {
-                    dictionary[tmp[1]] = evalString(tmp[2]);
-                    }
                 }
+                var onResourceLoaded = null;
+                var gResourceCount = 0;
+                onResourceLoaded = function onResourceLoaded() {
+                gResourceCount++;
+                if (gResourceCount >= langCount) {
+                    callback();
+                    fireL10nReadyEvent(lang);
+                    gReadyState = 'complete';
                 }
-                nextEntry();
+                };
+                function L10nResourceLink(link) {
+                    var href = link.href;
+                    this.load = function (lang, callback) {
+                        parseResource(href, lang, callback, function () {
+                            console.warn(href + ' not found.');
+                            console.warn('"' + lang + '" resource not found');
+                            gLanguage = '';
+                            callback();
+                        });
+                    };
+                }
+                for (var i = 0; i < langCount; i++) {
+                    var resource = new L10nResourceLink(langLinks[i]);
+                    resource.load(lang, onResourceLoaded);
+                }
             }
-            function loadImport(url, callback) {
-                xhrLoadText(url, function (content) {
-                parseRawLines(content, false, callback);
-                }, function () {
-                console.warn(url + ' not found.');
-                callback();
+            function clear() {
+                gL10nData = {};
+                gTextData = '';
+                gLanguage = '';
+            }
+            function getPluralRules(lang) {
+                var locales2rules = {
+                    'af': 3,
+                    'ak': 4,
+                    'am': 4,
+                    'ar': 1,
+                    'asa': 3,
+                    'az': 0,
+                    'be': 11,
+                    'bem': 3,
+                    'bez': 3,
+                    'bg': 3,
+                    'bh': 4,
+                    'bm': 0,
+                    'bn': 3,
+                    'bo': 0,
+                    'br': 20,
+                    'brx': 3,
+                    'bs': 11,
+                    'ca': 3,
+                    'cgg': 3,
+                    'chr': 3,
+                    'cs': 12,
+                    'cy': 17,
+                    'da': 3,
+                    'de': 3,
+                    'dv': 3,
+                    'dz': 0,
+                    'ee': 3,
+                    'el': 3,
+                    'en': 3,
+                    'eo': 3,
+                    'es': 3,
+                    'et': 3,
+                    'eu': 3,
+                    'fa': 0,
+                    'ff': 5,
+                    'fi': 3,
+                    'fil': 4,
+                    'fo': 3,
+                    'fr': 5,
+                    'fur': 3,
+                    'fy': 3,
+                    'ga': 8,
+                    'gd': 24,
+                    'gl': 3,
+                    'gsw': 3,
+                    'gu': 3,
+                    'guw': 4,
+                    'gv': 23,
+                    'ha': 3,
+                    'haw': 3,
+                    'he': 2,
+                    'hi': 4,
+                    'hr': 11,
+                    'hu': 0,
+                    'id': 0,
+                    'ig': 0,
+                    'ii': 0,
+                    'is': 3,
+                    'it': 3,
+                    'iu': 7,
+                    'ja': 0,
+                    'jmc': 3,
+                    'jv': 0,
+                    'ka': 0,
+                    'kab': 5,
+                    'kaj': 3,
+                    'kcg': 3,
+                    'kde': 0,
+                    'kea': 0,
+                    'kk': 3,
+                    'kl': 3,
+                    'km': 0,
+                    'kn': 0,
+                    'ko': 0,
+                    'ksb': 3,
+                    'ksh': 21,
+                    'ku': 3,
+                    'kw': 7,
+                    'lag': 18,
+                    'lb': 3,
+                    'lg': 3,
+                    'ln': 4,
+                    'lo': 0,
+                    'lt': 10,
+                    'lv': 6,
+                    'mas': 3,
+                    'mg': 4,
+                    'mk': 16,
+                    'ml': 3,
+                    'mn': 3,
+                    'mo': 9,
+                    'mr': 3,
+                    'ms': 0,
+                    'mt': 15,
+                    'my': 0,
+                    'nah': 3,
+                    'naq': 7,
+                    'nb': 3,
+                    'nd': 3,
+                    'ne': 3,
+                    'nl': 3,
+                    'nn': 3,
+                    'no': 3,
+                    'nr': 3,
+                    'nso': 4,
+                    'ny': 3,
+                    'nyn': 3,
+                    'om': 3,
+                    'or': 3,
+                    'pa': 3,
+                    'pap': 3,
+                    'pl': 13,
+                    'ps': 3,
+                    'pt': 3,
+                    'rm': 3,
+                    'ro': 9,
+                    'rof': 3,
+                    'ru': 11,
+                    'rwk': 3,
+                    'sah': 0,
+                    'saq': 3,
+                    'se': 7,
+                    'seh': 3,
+                    'ses': 0,
+                    'sg': 0,
+                    'sh': 11,
+                    'shi': 19,
+                    'sk': 12,
+                    'sl': 14,
+                    'sma': 7,
+                    'smi': 7,
+                    'smj': 7,
+                    'smn': 7,
+                    'sms': 7,
+                    'sn': 3,
+                    'so': 3,
+                    'sq': 3,
+                    'sr': 11,
+                    'ss': 3,
+                    'ssy': 3,
+                    'st': 3,
+                    'sv': 3,
+                    'sw': 3,
+                    'syr': 3,
+                    'ta': 3,
+                    'te': 3,
+                    'teo': 3,
+                    'th': 0,
+                    'ti': 4,
+                    'tig': 3,
+                    'tk': 3,
+                    'tl': 4,
+                    'tn': 3,
+                    'to': 0,
+                    'tr': 0,
+                    'ts': 3,
+                    'tzm': 22,
+                    'uk': 11,
+                    'ur': 3,
+                    've': 3,
+                    'vi': 0,
+                    'vun': 3,
+                    'wa': 4,
+                    'wae': 3,
+                    'wo': 0,
+                    'xh': 3,
+                    'xog': 3,
+                    'yo': 0,
+                    'zh': 0,
+                    'zu': 3
+                };
+                function isIn(n, list) {
+                    return list.indexOf(n) !== -1;
+                }
+                function isBetween(n, start, end) {
+                    return start <= n && n <= end;
+                }
+                var pluralRules = {
+                    '0': function _(n) {
+                        return 'other';
+                    },
+                    '1': function _(n) {
+                        if (isBetween(n % 100, 3, 10)) return 'few';
+                        if (n === 0) return 'zero';
+                        if (isBetween(n % 100, 11, 99)) return 'many';
+                        if (n == 2) return 'two';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '2': function _(n) {
+                        if (n !== 0 && n % 10 === 0) return 'many';
+                        if (n == 2) return 'two';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '3': function _(n) {
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '4': function _(n) {
+                        if (isBetween(n, 0, 1)) return 'one';
+                        return 'other';
+                    },
+                    '5': function _(n) {
+                        if (isBetween(n, 0, 2) && n != 2) return 'one';
+                        return 'other';
+                    },
+                    '6': function _(n) {
+                        if (n === 0) return 'zero';
+                        if (n % 10 == 1 && n % 100 != 11) return 'one';
+                        return 'other';
+                    },
+                    '7': function _(n) {
+                        if (n == 2) return 'two';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '8': function _(n) {
+                        if (isBetween(n, 3, 6)) return 'few';
+                        if (isBetween(n, 7, 10)) return 'many';
+                        if (n == 2) return 'two';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '9': function _(n) {
+                        if (n === 0 || n != 1 && isBetween(n % 100, 1, 19)) return 'few';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '10': function _(n) {
+                        if (isBetween(n % 10, 2, 9) && !isBetween(n % 100, 11, 19)) return 'few';
+                        if (n % 10 == 1 && !isBetween(n % 100, 11, 19)) return 'one';
+                        return 'other';
+                    },
+                    '11': function _(n) {
+                        if (isBetween(n % 10, 2, 4) && !isBetween(n % 100, 12, 14)) return 'few';
+                        if (n % 10 === 0 || isBetween(n % 10, 5, 9) || isBetween(n % 100, 11, 14)) return 'many';
+                        if (n % 10 == 1 && n % 100 != 11) return 'one';
+                        return 'other';
+                    },
+                    '12': function _(n) {
+                        if (isBetween(n, 2, 4)) return 'few';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '13': function _(n) {
+                        if (isBetween(n % 10, 2, 4) && !isBetween(n % 100, 12, 14)) return 'few';
+                        if (n != 1 && isBetween(n % 10, 0, 1) || isBetween(n % 10, 5, 9) || isBetween(n % 100, 12, 14)) return 'many';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '14': function _(n) {
+                        if (isBetween(n % 100, 3, 4)) return 'few';
+                        if (n % 100 == 2) return 'two';
+                        if (n % 100 == 1) return 'one';
+                        return 'other';
+                    },
+                    '15': function _(n) {
+                        if (n === 0 || isBetween(n % 100, 2, 10)) return 'few';
+                        if (isBetween(n % 100, 11, 19)) return 'many';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '16': function _(n) {
+                        if (n % 10 == 1 && n != 11) return 'one';
+                        return 'other';
+                    },
+                    '17': function _(n) {
+                        if (n == 3) return 'few';
+                        if (n === 0) return 'zero';
+                        if (n == 6) return 'many';
+                        if (n == 2) return 'two';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '18': function _(n) {
+                        if (n === 0) return 'zero';
+                        if (isBetween(n, 0, 2) && n !== 0 && n != 2) return 'one';
+                        return 'other';
+                    },
+                    '19': function _(n) {
+                        if (isBetween(n, 2, 10)) return 'few';
+                        if (isBetween(n, 0, 1)) return 'one';
+                        return 'other';
+                    },
+                    '20': function _(n) {
+                        if ((isBetween(n % 10, 3, 4) || n % 10 == 9) && !(isBetween(n % 100, 10, 19) || isBetween(n % 100, 70, 79) || isBetween(n % 100, 90, 99))) return 'few';
+                        if (n % 1000000 === 0 && n !== 0) return 'many';
+                        if (n % 10 == 2 && !isIn(n % 100, [12, 72, 92])) return 'two';
+                        if (n % 10 == 1 && !isIn(n % 100, [11, 71, 91])) return 'one';
+                        return 'other';
+                    },
+                    '21': function _(n) {
+                        if (n === 0) return 'zero';
+                        if (n == 1) return 'one';
+                        return 'other';
+                    },
+                    '22': function _(n) {
+                        if (isBetween(n, 0, 1) || isBetween(n, 11, 99)) return 'one';
+                        return 'other';
+                    },
+                    '23': function _(n) {
+                        if (isBetween(n % 10, 1, 2) || n % 20 === 0) return 'one';
+                        return 'other';
+                    },
+                    '24': function _(n) {
+                        if (isBetween(n, 3, 10) || isBetween(n, 13, 19)) return 'few';
+                        if (isIn(n, [2, 12])) return 'two';
+                        if (isIn(n, [1, 11])) return 'one';
+                        return 'other';
+                    }
+                };
+                var index = locales2rules[lang.replace(/-.*$/, '')];
+                if (!(index in pluralRules)) {
+                    console.warn('plural form unknown for [' + lang + ']');
+                    return function () {
+                        return 'other';
+                    };
+                }
+                return pluralRules[index];
+            }
+            gMacros.plural = function (str, param, key, prop) {
+                var n = parseFloat(param);
+                if (isNaN(n)) return str;
+                if (prop != gTextProp) return str;
+                if (!gMacros._pluralRules) {
+                gMacros._pluralRules = getPluralRules(gLanguage);
+                }
+                var index = '[' + gMacros._pluralRules(n) + ']';
+                if (n === 0 && key + '[zero]' in gL10nData) {
+                str = gL10nData[key + '[zero]'][prop];
+                } else if (n == 1 && key + '[one]' in gL10nData) {
+                str = gL10nData[key + '[one]'][prop];
+                } else if (n == 2 && key + '[two]' in gL10nData) {
+                str = gL10nData[key + '[two]'][prop];
+                } else if (key + index in gL10nData) {
+                str = gL10nData[key + index][prop];
+                } else if (key + '[other]' in gL10nData) {
+                str = gL10nData[key + '[other]'][prop];
+                }
+                return str;
+            };
+            function getL10nData(key, args, fallback) {
+                var data = gL10nData[key];
+                if (!data) {
+                console.warn('#' + key + ' is undefined.');
+                if (!fallback) {
+                    return null;
+                }
+                data = fallback;
+                }
+                var rv = {};
+                for (var prop in data) {
+                var str = data[prop];
+                str = substIndexes(str, args, key, prop);
+                str = substArguments(str, args, key);
+                rv[prop] = str;
+                }
+                return rv;
+            }
+            function substIndexes(str, args, key, prop) {
+                var reIndex = /\{\[\s*([a-zA-Z]+)\(([a-zA-Z]+)\)\s*\]\}/;
+                var reMatch = reIndex.exec(str);
+                if (!reMatch || !reMatch.length) return str;
+                var macroName = reMatch[1];
+                var paramName = reMatch[2];
+                var param;
+                if (args && paramName in args) {
+                param = args[paramName];
+                } else if (paramName in gL10nData) {
+                param = gL10nData[paramName];
+                }
+                if (macroName in gMacros) {
+                var macro = gMacros[macroName];
+                str = macro(str, param, key, prop);
+                }
+                return str;
+            }
+            function substArguments(str, args, key) {
+                var reArgs = /\{\{\s*(.+?)\s*\}\}/g;
+                return str.replace(reArgs, function (matched_text, arg) {
+                if (args && arg in args) {
+                    return args[arg];
+                }
+                if (arg in gL10nData) {
+                    return gL10nData[arg];
+                }
+                console.log('argument {{' + arg + '}} for #' + key + ' is undefined.');
+                return matched_text;
                 });
             }
-            parseRawLines(text, true, function () {
-                parsedPropertiesCallback(dictionary);
-            });
-            }
-            xhrLoadText(href, function (response) {
-            gTextData += response;
-            parseProperties(response, function (data) {
-                for (var key in data) {
-                var id,
-                    prop,
-                    index = key.lastIndexOf('.');
-                if (index > 0) {
-                    id = key.substring(0, index);
-                    prop = key.substr(index + 1);
+            function translateElement(element) {
+                var l10n = getL10nAttributes(element);
+                if (!l10n.id) return;
+                var data = getL10nData(l10n.id, l10n.args);
+                if (!data) {
+                console.warn('#' + l10n.id + ' is undefined.');
+                return;
+                }
+                if (data[gTextProp]) {
+                if (getChildElementCount(element) === 0) {
+                    element[gTextProp] = data[gTextProp];
                 } else {
-                    id = key;
-                    prop = gTextProp;
-                }
-                if (!gL10nData[id]) {
-                    gL10nData[id] = {};
-                }
-                gL10nData[id][prop] = data[key];
-                }
-                if (successCallback) {
-                successCallback();
-                }
-            });
-            }, failureCallback);
-        }
-        function loadLocale(lang, callback) {
-            if (lang) {
-                lang = lang.toLowerCase();
-            }
-            callback = callback || function _callback() {};
-            clear();
-            gLanguage = lang;
-            var langLinks = getL10nResourceLinks();
-            var langCount = langLinks.length;
-            if (langCount === 0) {
-            var dict = getL10nDictionary();
-            if (dict && dict.locales && dict.default_locale) {
-                console.log('using the embedded JSON directory, early way out');
-                gL10nData = dict.locales[lang];
-                if (!gL10nData) {
-                    var defaultLocale = dict.default_locale.toLowerCase();
-                    for (var anyCaseLang in dict.locales) {
-                        anyCaseLang = anyCaseLang.toLowerCase();
-                        if (anyCaseLang === lang) {
-                            gL10nData = dict.locales[lang];
-                            break;
-                        } else if (anyCaseLang === defaultLocale) {
-                            gL10nData = dict.locales[defaultLocale];
+                    var children = element.childNodes;
+                    var found = false;
+                    for (var i = 0, l = children.length; i < l; i++) {
+                    if (children[i].nodeType === 3 && /\S/.test(children[i].nodeValue)) {
+                        if (found) {
+                        children[i].nodeValue = '';
+                        } else {
+                        children[i].nodeValue = data[gTextProp];
+                        found = true;
                         }
                     }
-                }
-                callback();
-            } else {
-                console.log('no resource to load, early way out');
-            }
-            fireL10nReadyEvent(lang);
-            gReadyState = 'complete';
-            return;
-            }
-            var onResourceLoaded = null;
-            var gResourceCount = 0;
-            onResourceLoaded = function onResourceLoaded() {
-            gResourceCount++;
-            if (gResourceCount >= langCount) {
-                callback();
-                fireL10nReadyEvent(lang);
-                gReadyState = 'complete';
-            }
-            };
-            function L10nResourceLink(link) {
-            var href = link.href;
-            this.load = function (lang, callback) {
-                parseResource(href, lang, callback, function () {
-                console.warn(href + ' not found.');
-                console.warn('"' + lang + '" resource not found');
-                gLanguage = '';
-                callback();
-                });
-            };
-            }
-            for (var i = 0; i < langCount; i++) {
-            var resource = new L10nResourceLink(langLinks[i]);
-            resource.load(lang, onResourceLoaded);
-            }
-        }
-        function clear() {
-            gL10nData = {};
-            gTextData = '';
-            gLanguage = '';
-        }
-        function getPluralRules(lang) {
-            var locales2rules = {
-            'af': 3,
-            'ak': 4,
-            'am': 4,
-            'ar': 1,
-            'asa': 3,
-            'az': 0,
-            'be': 11,
-            'bem': 3,
-            'bez': 3,
-            'bg': 3,
-            'bh': 4,
-            'bm': 0,
-            'bn': 3,
-            'bo': 0,
-            'br': 20,
-            'brx': 3,
-            'bs': 11,
-            'ca': 3,
-            'cgg': 3,
-            'chr': 3,
-            'cs': 12,
-            'cy': 17,
-            'da': 3,
-            'de': 3,
-            'dv': 3,
-            'dz': 0,
-            'ee': 3,
-            'el': 3,
-            'en': 3,
-            'eo': 3,
-            'es': 3,
-            'et': 3,
-            'eu': 3,
-            'fa': 0,
-            'ff': 5,
-            'fi': 3,
-            'fil': 4,
-            'fo': 3,
-            'fr': 5,
-            'fur': 3,
-            'fy': 3,
-            'ga': 8,
-            'gd': 24,
-            'gl': 3,
-            'gsw': 3,
-            'gu': 3,
-            'guw': 4,
-            'gv': 23,
-            'ha': 3,
-            'haw': 3,
-            'he': 2,
-            'hi': 4,
-            'hr': 11,
-            'hu': 0,
-            'id': 0,
-            'ig': 0,
-            'ii': 0,
-            'is': 3,
-            'it': 3,
-            'iu': 7,
-            'ja': 0,
-            'jmc': 3,
-            'jv': 0,
-            'ka': 0,
-            'kab': 5,
-            'kaj': 3,
-            'kcg': 3,
-            'kde': 0,
-            'kea': 0,
-            'kk': 3,
-            'kl': 3,
-            'km': 0,
-            'kn': 0,
-            'ko': 0,
-            'ksb': 3,
-            'ksh': 21,
-            'ku': 3,
-            'kw': 7,
-            'lag': 18,
-            'lb': 3,
-            'lg': 3,
-            'ln': 4,
-            'lo': 0,
-            'lt': 10,
-            'lv': 6,
-            'mas': 3,
-            'mg': 4,
-            'mk': 16,
-            'ml': 3,
-            'mn': 3,
-            'mo': 9,
-            'mr': 3,
-            'ms': 0,
-            'mt': 15,
-            'my': 0,
-            'nah': 3,
-            'naq': 7,
-            'nb': 3,
-            'nd': 3,
-            'ne': 3,
-            'nl': 3,
-            'nn': 3,
-            'no': 3,
-            'nr': 3,
-            'nso': 4,
-            'ny': 3,
-            'nyn': 3,
-            'om': 3,
-            'or': 3,
-            'pa': 3,
-            'pap': 3,
-            'pl': 13,
-            'ps': 3,
-            'pt': 3,
-            'rm': 3,
-            'ro': 9,
-            'rof': 3,
-            'ru': 11,
-            'rwk': 3,
-            'sah': 0,
-            'saq': 3,
-            'se': 7,
-            'seh': 3,
-            'ses': 0,
-            'sg': 0,
-            'sh': 11,
-            'shi': 19,
-            'sk': 12,
-            'sl': 14,
-            'sma': 7,
-            'smi': 7,
-            'smj': 7,
-            'smn': 7,
-            'sms': 7,
-            'sn': 3,
-            'so': 3,
-            'sq': 3,
-            'sr': 11,
-            'ss': 3,
-            'ssy': 3,
-            'st': 3,
-            'sv': 3,
-            'sw': 3,
-            'syr': 3,
-            'ta': 3,
-            'te': 3,
-            'teo': 3,
-            'th': 0,
-            'ti': 4,
-            'tig': 3,
-            'tk': 3,
-            'tl': 4,
-            'tn': 3,
-            'to': 0,
-            'tr': 0,
-            'ts': 3,
-            'tzm': 22,
-            'uk': 11,
-            'ur': 3,
-            've': 3,
-            'vi': 0,
-            'vun': 3,
-            'wa': 4,
-            'wae': 3,
-            'wo': 0,
-            'xh': 3,
-            'xog': 3,
-            'yo': 0,
-            'zh': 0,
-            'zu': 3
-            };
-            function isIn(n, list) {
-            return list.indexOf(n) !== -1;
-            }
-            function isBetween(n, start, end) {
-            return start <= n && n <= end;
-            }
-            var pluralRules = {
-            '0': function _(n) {
-                return 'other';
-            },
-            '1': function _(n) {
-                if (isBetween(n % 100, 3, 10)) return 'few';
-                if (n === 0) return 'zero';
-                if (isBetween(n % 100, 11, 99)) return 'many';
-                if (n == 2) return 'two';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '2': function _(n) {
-                if (n !== 0 && n % 10 === 0) return 'many';
-                if (n == 2) return 'two';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '3': function _(n) {
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '4': function _(n) {
-                if (isBetween(n, 0, 1)) return 'one';
-                return 'other';
-            },
-            '5': function _(n) {
-                if (isBetween(n, 0, 2) && n != 2) return 'one';
-                return 'other';
-            },
-            '6': function _(n) {
-                if (n === 0) return 'zero';
-                if (n % 10 == 1 && n % 100 != 11) return 'one';
-                return 'other';
-            },
-            '7': function _(n) {
-                if (n == 2) return 'two';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '8': function _(n) {
-                if (isBetween(n, 3, 6)) return 'few';
-                if (isBetween(n, 7, 10)) return 'many';
-                if (n == 2) return 'two';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '9': function _(n) {
-                if (n === 0 || n != 1 && isBetween(n % 100, 1, 19)) return 'few';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '10': function _(n) {
-                if (isBetween(n % 10, 2, 9) && !isBetween(n % 100, 11, 19)) return 'few';
-                if (n % 10 == 1 && !isBetween(n % 100, 11, 19)) return 'one';
-                return 'other';
-            },
-            '11': function _(n) {
-                if (isBetween(n % 10, 2, 4) && !isBetween(n % 100, 12, 14)) return 'few';
-                if (n % 10 === 0 || isBetween(n % 10, 5, 9) || isBetween(n % 100, 11, 14)) return 'many';
-                if (n % 10 == 1 && n % 100 != 11) return 'one';
-                return 'other';
-            },
-            '12': function _(n) {
-                if (isBetween(n, 2, 4)) return 'few';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '13': function _(n) {
-                if (isBetween(n % 10, 2, 4) && !isBetween(n % 100, 12, 14)) return 'few';
-                if (n != 1 && isBetween(n % 10, 0, 1) || isBetween(n % 10, 5, 9) || isBetween(n % 100, 12, 14)) return 'many';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '14': function _(n) {
-                if (isBetween(n % 100, 3, 4)) return 'few';
-                if (n % 100 == 2) return 'two';
-                if (n % 100 == 1) return 'one';
-                return 'other';
-            },
-            '15': function _(n) {
-                if (n === 0 || isBetween(n % 100, 2, 10)) return 'few';
-                if (isBetween(n % 100, 11, 19)) return 'many';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '16': function _(n) {
-                if (n % 10 == 1 && n != 11) return 'one';
-                return 'other';
-            },
-            '17': function _(n) {
-                if (n == 3) return 'few';
-                if (n === 0) return 'zero';
-                if (n == 6) return 'many';
-                if (n == 2) return 'two';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '18': function _(n) {
-                if (n === 0) return 'zero';
-                if (isBetween(n, 0, 2) && n !== 0 && n != 2) return 'one';
-                return 'other';
-            },
-            '19': function _(n) {
-                if (isBetween(n, 2, 10)) return 'few';
-                if (isBetween(n, 0, 1)) return 'one';
-                return 'other';
-            },
-            '20': function _(n) {
-                if ((isBetween(n % 10, 3, 4) || n % 10 == 9) && !(isBetween(n % 100, 10, 19) || isBetween(n % 100, 70, 79) || isBetween(n % 100, 90, 99))) return 'few';
-                if (n % 1000000 === 0 && n !== 0) return 'many';
-                if (n % 10 == 2 && !isIn(n % 100, [12, 72, 92])) return 'two';
-                if (n % 10 == 1 && !isIn(n % 100, [11, 71, 91])) return 'one';
-                return 'other';
-            },
-            '21': function _(n) {
-                if (n === 0) return 'zero';
-                if (n == 1) return 'one';
-                return 'other';
-            },
-            '22': function _(n) {
-                if (isBetween(n, 0, 1) || isBetween(n, 11, 99)) return 'one';
-                return 'other';
-            },
-            '23': function _(n) {
-                if (isBetween(n % 10, 1, 2) || n % 20 === 0) return 'one';
-                return 'other';
-            },
-            '24': function _(n) {
-                if (isBetween(n, 3, 10) || isBetween(n, 13, 19)) return 'few';
-                if (isIn(n, [2, 12])) return 'two';
-                if (isIn(n, [1, 11])) return 'one';
-                return 'other';
-            }
-            };
-            var index = locales2rules[lang.replace(/-.*$/, '')];
-            if (!(index in pluralRules)) {
-            console.warn('plural form unknown for [' + lang + ']');
-            return function () {
-                return 'other';
-            };
-            }
-            return pluralRules[index];
-        }
-        gMacros.plural = function (str, param, key, prop) {
-            var n = parseFloat(param);
-            if (isNaN(n)) return str;
-            if (prop != gTextProp) return str;
-            if (!gMacros._pluralRules) {
-            gMacros._pluralRules = getPluralRules(gLanguage);
-            }
-            var index = '[' + gMacros._pluralRules(n) + ']';
-            if (n === 0 && key + '[zero]' in gL10nData) {
-            str = gL10nData[key + '[zero]'][prop];
-            } else if (n == 1 && key + '[one]' in gL10nData) {
-            str = gL10nData[key + '[one]'][prop];
-            } else if (n == 2 && key + '[two]' in gL10nData) {
-            str = gL10nData[key + '[two]'][prop];
-            } else if (key + index in gL10nData) {
-            str = gL10nData[key + index][prop];
-            } else if (key + '[other]' in gL10nData) {
-            str = gL10nData[key + '[other]'][prop];
-            }
-            return str;
-        };
-        function getL10nData(key, args, fallback) {
-            var data = gL10nData[key];
-            if (!data) {
-            console.warn('#' + key + ' is undefined.');
-            if (!fallback) {
-                return null;
-            }
-            data = fallback;
-            }
-            var rv = {};
-            for (var prop in data) {
-            var str = data[prop];
-            str = substIndexes(str, args, key, prop);
-            str = substArguments(str, args, key);
-            rv[prop] = str;
-            }
-            return rv;
-        }
-        function substIndexes(str, args, key, prop) {
-            var reIndex = /\{\[\s*([a-zA-Z]+)\(([a-zA-Z]+)\)\s*\]\}/;
-            var reMatch = reIndex.exec(str);
-            if (!reMatch || !reMatch.length) return str;
-            var macroName = reMatch[1];
-            var paramName = reMatch[2];
-            var param;
-            if (args && paramName in args) {
-            param = args[paramName];
-            } else if (paramName in gL10nData) {
-            param = gL10nData[paramName];
-            }
-            if (macroName in gMacros) {
-            var macro = gMacros[macroName];
-            str = macro(str, param, key, prop);
-            }
-            return str;
-        }
-        function substArguments(str, args, key) {
-            var reArgs = /\{\{\s*(.+?)\s*\}\}/g;
-            return str.replace(reArgs, function (matched_text, arg) {
-            if (args && arg in args) {
-                return args[arg];
-            }
-            if (arg in gL10nData) {
-                return gL10nData[arg];
-            }
-            console.log('argument {{' + arg + '}} for #' + key + ' is undefined.');
-            return matched_text;
-            });
-        }
-        function translateElement(element) {
-            var l10n = getL10nAttributes(element);
-            if (!l10n.id) return;
-            var data = getL10nData(l10n.id, l10n.args);
-            if (!data) {
-            console.warn('#' + l10n.id + ' is undefined.');
-            return;
-            }
-            if (data[gTextProp]) {
-            if (getChildElementCount(element) === 0) {
-                element[gTextProp] = data[gTextProp];
-            } else {
-                var children = element.childNodes;
-                var found = false;
-                for (var i = 0, l = children.length; i < l; i++) {
-                if (children[i].nodeType === 3 && /\S/.test(children[i].nodeValue)) {
-                    if (found) {
-                    children[i].nodeValue = '';
-                    } else {
-                    children[i].nodeValue = data[gTextProp];
-                    found = true;
+                    }
+                    if (!found) {
+                    var textNode = document.createTextNode(data[gTextProp]);
+                    element.insertBefore(textNode, element.firstChild);
                     }
                 }
+                delete data[gTextProp];
                 }
-                if (!found) {
-                var textNode = document.createTextNode(data[gTextProp]);
-                element.insertBefore(textNode, element.firstChild);
+                for (var k in data) {
+                element[k] = data[k];
                 }
             }
-            delete data[gTextProp];
+            function getChildElementCount(element) {
+                if (element.children) {
+                return element.children.length;
+                }
+                if (typeof element.childElementCount !== 'undefined') {
+                return element.childElementCount;
+                }
+                var count = 0;
+                for (var i = 0; i < element.childNodes.length; i++) {
+                count += element.nodeType === 1 ? 1 : 0;
+                }
+                return count;
             }
-            for (var k in data) {
-            element[k] = data[k];
+            function translateFragment(element) {
+                element = element || document.documentElement;
+                var children = getTranslatableChildren(element);
+                var elementCount = children.length;
+                for (var i = 0; i < elementCount; i++) {
+                translateElement(children[i]);
+                }
+                translateElement(element);
             }
-        }
-        function getChildElementCount(element) {
-            if (element.children) {
-            return element.children.length;
-            }
-            if (typeof element.childElementCount !== 'undefined') {
-            return element.childElementCount;
-            }
-            var count = 0;
-            for (var i = 0; i < element.childNodes.length; i++) {
-            count += element.nodeType === 1 ? 1 : 0;
-            }
-            return count;
-        }
-        function translateFragment(element) {
-            element = element || document.documentElement;
-            var children = getTranslatableChildren(element);
-            var elementCount = children.length;
-            for (var i = 0; i < elementCount; i++) {
-            translateElement(children[i]);
-            }
-            translateElement(element);
-        }
-        return {
-            get: function get(key, args, fallbackString) {
-            var index = key.lastIndexOf('.');
-            var prop = gTextProp;
-            if (index > 0) {
-                prop = key.substr(index + 1);
-                key = key.substring(0, index);
-            }
-            var fallback;
-            if (fallbackString) {
-                fallback = {};
-                fallback[prop] = fallbackString;
-            }
-            var data = getL10nData(key, args, fallback);
-            if (data && prop in data) {
-                return data[prop];
-            }
-            return '{{' + key + '}}';
-            },
-            getData: function getData() {
-            return gL10nData;
-            },
-            getText: function getText() {
-            return gTextData;
-            },
-            getLanguage: function getLanguage() {
-            return gLanguage;
-            },
-            setLanguage: function setLanguage(lang, callback) {
-                loadLocale(lang, function () {
-                    if (callback) callback();
-                });
-            },
-            getDirection: function getDirection() {
-                var rtlList = ['ar', 'he', 'fa', 'ps', 'ur'];
-                var shortCode = gLanguage.split('-', 1)[0];
-                return rtlList.indexOf(shortCode) >= 0 ? 'rtl' : 'ltr';
-            },
-            translate: translateFragment,
-            getReadyState: function getReadyState() {
-            return gReadyState;
-            },
-            ready: function ready(callback) {
-            if (!callback) {
-                return;
-            } else if (gReadyState == 'complete' || gReadyState == 'interactive') {
-                window.setTimeout(function () {
-                callback();
-                });
-            } else if (document.addEventListener) {
-                document.addEventListener('localized', function once() {
-                document.removeEventListener('localized', once);
-                callback();
-                });
-            }
-            }
-        };
+            return {
+                get: function get(key, args, fallbackString) {
+                var index = key.lastIndexOf('.');
+                var prop = gTextProp;
+                if (index > 0) {
+                    prop = key.substr(index + 1);
+                    key = key.substring(0, index);
+                }
+                var fallback;
+                if (fallbackString) {
+                    fallback = {};
+                    fallback[prop] = fallbackString;
+                }
+                var data = getL10nData(key, args, fallback);
+                if (data && prop in data) {
+                    return data[prop];
+                }
+                return '{{' + key + '}}';
+                },
+                getData: function getData() {
+                return gL10nData;
+                },
+                getText: function getText() {
+                return gTextData;
+                },
+                getLanguage: function getLanguage() {
+                return gLanguage;
+                },
+                setLanguage: function setLanguage(lang, callback) {
+                    loadLocale(lang, function () {
+                        if (callback) callback();
+                    });
+                },
+                getDirection: function getDirection() {
+                    var rtlList = ['ar', 'he', 'fa', 'ps', 'ur'];
+                    var shortCode = gLanguage.split('-', 1)[0];
+                    return rtlList.indexOf(shortCode) >= 0 ? 'rtl' : 'ltr';
+                },
+                translate: translateFragment,
+                getReadyState: function getReadyState() {
+                return gReadyState;
+                },
+                ready: function ready(callback) {
+                if (!callback) {
+                    return;
+                } else if (gReadyState == 'complete' || gReadyState == 'interactive') {
+                    window.setTimeout(function () {
+                    callback();
+                    });
+                } else if (document.addEventListener) {
+                    document.addEventListener('localized', function once() {
+                    document.removeEventListener('localized', once);
+                    callback();
+                    });
+                }
+                }
+            };
         }(window, document);
         
         /***/ }),
@@ -5860,54 +5900,73 @@
         
         
         Object.defineProperty(exports, "__esModule", {
-        value: true
+            value: true
         });
         exports.GenericL10n = undefined;
         
-        var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+        var _createClass = function () { 
+            function defineProperties(target, props) {
+                for (var i = 0; i < props.length; i++) { 
+                    var descriptor = props[i]; 
+                    descriptor.enumerable = descriptor.enumerable || false; 
+                    descriptor.configurable = true; 
+                    if ("value" in descriptor) descriptor.writable = true; 
+                    Object.defineProperty(target, descriptor.key, descriptor);
+                } 
+            } 
+            return function (Constructor, protoProps, staticProps) { 
+                if (protoProps) defineProperties(Constructor.prototype, protoProps); 
+                if (staticProps) defineProperties(Constructor, staticProps); 
+                return Constructor; 
+            }; 
+        }();
         
         __webpack_require__(10);
         
-        function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+        function _classCallCheck(instance, Constructor) {
+            if (!(instance instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function"); 
+            } 
+        }
         
         var webL10n = document.webL10n;
         
         var GenericL10n = function () {
-        function GenericL10n(lang) {
-            _classCallCheck(this, GenericL10n);
-        
-            this._lang = lang;
-            this._ready = new Promise(function (resolve, reject) {
-            webL10n.setLanguage(lang, function () {
-                resolve(webL10n);
-            });
-            });
-        }
-        
-        _createClass(GenericL10n, [{
-            key: 'getDirection',
-            value: function getDirection() {
-            return this._ready.then(function (l10n) {
-                return l10n.getDirection();
-            });
+            function GenericL10n(lang) {
+                _classCallCheck(this, GenericL10n);
+            
+                this._lang = lang;
+                this._ready = new Promise(function (resolve, reject) {
+                    webL10n.setLanguage(lang, function () {
+                        resolve(webL10n);
+                    });
+                });
             }
-        }, {
-            key: 'get',
-            value: function get(property, args, fallback) {
-            return this._ready.then(function (l10n) {
-                return l10n.get(property, args, fallback);
-            });
-            }
-        }, {
-            key: 'translate',
-            value: function translate(element) {
-            return this._ready.then(function (l10n) {
-                return l10n.translate(element);
-            });
-            }
-        }]);
-        
-        return GenericL10n;
+            
+            _createClass(GenericL10n, [{
+                key: 'getDirection',
+                value: function getDirection() {
+                    return this._ready.then(function (l10n) {
+                        return l10n.getDirection();
+                    });
+                }
+            }, {
+                key: 'get',
+                value: function get(property, args, fallback) {
+                    return this._ready.then(function (l10n) {
+                        return l10n.get(property, args, fallback);
+                    });
+                }
+            }, {
+                key: 'translate',
+                value: function translate(element) {
+                    return this._ready.then(function (l10n) {
+                        return l10n.translate(element);
+                    });
+                }
+            }]);
+            
+            return GenericL10n;
         }();
         
         exports.GenericL10n = GenericL10n;

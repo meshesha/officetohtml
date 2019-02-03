@@ -79,7 +79,7 @@
             $(document).bind("keydown",function(event){
                 event.preventDefault();
                 var key = event.keyCode;
-                console.log(key,isDone)
+                //console.log(key,isDone)
                 if(key==116 && !isSlideMode){ //F5
                     isSlideMode = true;
                     $("#"+divId+" .slide").hide();

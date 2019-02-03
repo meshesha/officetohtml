@@ -266,7 +266,6 @@
                 case(119): // F8
                     if(data.isSlideMode){
                         pptxjslideObj.startAutoSlide();
-                        //TODO : ADD indication that it is in auto slide mode
                     }
                 break;
             }

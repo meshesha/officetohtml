@@ -3,17 +3,17 @@
 <head>
 <title>OfficeJs | Demos </title>
 <meta charset="utf-8">
-<link href="../layout/styles/layout.css" rel="stylesheet" type="text/css">
+<link href="./layout/styles/layout.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="./include/jquery_ui/themes/start/jquery-ui.min.css">
 <script src="./include/jquery/jquery-1.12.4.min.js"></script>
 <script src="./include/jquery_ui/jquery-ui.min.js"></script>
 <!-- ################################ For files reder ###############################-->
 <!--PDF-->
 <link rel="stylesheet" href="./include/pdf/pdf.viewer.css">
-<script src="./include/pdf/build/pdf.js"></script>
+<script src="./include/pdf/pdf.js"></script>
 <!--Docs-->
-<script src="./include/docxjs/jszip-utils.js"></script>
-<script src="./include/docxjs/mammoth.browser.min.js"></script>
+<script src="./include/docx/jszip-utils.js"></script>
+<script src="./include/docx/mammoth.browser.min.js"></script>
 <!--PPTX-->
 <link rel="stylesheet" href="./include/PPTXjs/css/pptxjs.css">
 <link rel="stylesheet" href="./include/PPTXjs/css/nv.d3.min.css">
@@ -23,15 +23,15 @@
 <script type="text/javascript" src="./include/PPTXjs/js/pptxjs.js"></script>
 <script type="text/javascript" src="./include/PPTXjs/js/divs2slides.js"></script>
 <!--All Spreadsheet -->
-<link rel="stylesheet" href="./include/handsontable/dist/handsontable.full.min.css">
-<script type="text/javascript" src="./include/handsontable/dist/handsontable.full.js"></script>
-<script type="text/javascript" src="./include/SheetJS/assets/js/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="./include/SheetJS/handsontable.full.min.css">
+<script type="text/javascript" src="./include/SheetJS/handsontable.full.min.js"></script>
+<script type="text/javascript" src="./include/SheetJS/xlsx.full.min.js"></script>
 <!--Image viewer-->
 <link rel="stylesheet" href="./include/verySimpleImageViewer/css/jquery.verySimpleImageViewer.css">
 <script type="text/javascript" src="./include/verySimpleImageViewer/js/jquery.verySimpleImageViewer.js"></script>
-<!--All-->
-<script src="officeToHtml.js"></script>
-<link rel="stylesheet" href="officeToHtml.css">
+<!--officeToHtml-->
+<script src="./include/officeToHtml.js"></script>
+<link rel="stylesheet" href="./include/officeToHtml.css">
 </head>
 <body id="top">
 <div class="wrapper row1">
@@ -104,7 +104,11 @@
                     $("#file_p").show();
 
                     $("#resolte-contaniner").officeToHtml({
-                      url: file_path
+                      url: file_path,
+                       pdfSetting: {
+                         setLang: "he",
+                         setLangFilesPath:"" /*"include/pdf/lang/locale" - relative to app path*/
+                       }
                     });
                   }else{
 
@@ -113,8 +117,11 @@
                     $("#a_file").hide();
 
                     $("#resolte-contaniner").officeToHtml({
-                      inputObjId: "select_file"
-
+                      inputObjId: "select_file",
+                       pdfSetting: {
+                        setLang: "he",
+                        setLangFilesPath: "" /*"include/pdf/lang/locale" - relative to app path*/
+                      }
                     });
                   }
                 });

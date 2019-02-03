@@ -51,34 +51,29 @@
             <p class="p_heads_1">1. Include all necessary .css and .js files in &lt;HEAD&gt; area:</p>
             <pre>
                 <code>
-    &lt;link rel="stylesheet" href="./include/jquery_ui/themes/start/jquery-ui.min.css"&gt;
-    &lt;script src="./include/jquery/jquery-1.12.4.min.js"&gt;&lt;/script&gt;
-    &lt;script src="./include/jquery_ui/jquery-ui.min.js"&gt;&lt;/script&gt;
-    &lt;!-- ################################ For files reder ###############################--&gt;
-    &lt;!--PDF--&gt;
-    &lt;link rel="stylesheet" href="./include/pdf/pdf.viewer.css"&gt;
-    &lt;script src="./include/pdf/build/pdf.js"&gt;&lt;/script&gt;
-    &lt;!--Docs--&gt;
-    &lt;script src="./include/docxjs/jszip-utils.js"&gt;&lt;/script&gt;
-    &lt;script src="./include/docxjs/mammoth.browser.min.js"&gt;&lt;/script&gt;
-    &lt;!--PPTX--&gt;
-    &lt;link rel="stylesheet" href="./include/PPTXjs/css/pptxjs.css"&gt;
-    &lt;link rel="stylesheet" href="./include/PPTXjs/css/nv.d3.min.css"&gt;
-    &lt;script type="text/javascript" src="./include/PPTXjs/js/filereader.js"&gt;&lt;/script&gt;
-    &lt;script type="text/javascript" src="./include/PPTXjs/js/d3.min.js"&gt;&lt;/script&gt;
-    &lt;script type="text/javascript" src="./include/PPTXjs/js/nv.d3.min.js"&gt;&lt;/script&gt;
-    &lt;script type="text/javascript" src="./include/PPTXjs/js/pptxjs.js"&gt;&lt;/script&gt;
-    &lt;script type="text/javascript" src="./include/PPTXjs/js/divs2slides.js"&gt;&lt;/script&gt;
-    &lt;!--All Spreadsheet --&gt;
-    &lt;link rel="stylesheet" href="./include/handsontable/dist/handsontable.full.min.css"&gt;
-    &lt;script type="text/javascript" src="./include/handsontable/dist/handsontable.full.js"&gt;&lt;/script&gt;
-    &lt;script type="text/javascript" src="./include/SheetJS/assets/js/xlsx.full.min.js"&gt;&lt;/script&gt;
-    &lt;!--Image viewer--&gt;
-    &lt;link rel="stylesheet" href="./include/verySimpleImageViewer/css/jquery.verySimpleImageViewer.css"&gt;
-    &lt;script type="text/javascript" src="./include/verySimpleImageViewer/js/jquery.verySimpleImageViewer.js"&gt;&lt;/script&gt;
-    &lt;!--All--&gt;
-    &lt;script src="officeToHtml.js"&gt;&lt;/script&gt;
-    &lt;link rel="stylesheet" href="officeToHtml.css"&gt;
+&lt;!--PDF--&gt; 
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/pdf/pdf.viewer.css&quot;&gt; 
+&lt;script src=&quot;./include/pdf/pdf.js&quot;&gt;&lt;/script&gt; &lt;!--Docs--&gt;
+&lt;script src=&quot;./include/docx/jszip-utils.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;./include/docx/mammoth.browser.min.js&quot;&gt;&lt;/script&gt;
+&lt;!--PPTX--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/PPTXjs/css/pptxjs.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/PPTXjs/css/nv.d3.min.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/filereader.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/nv.d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/pptxjs.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/divs2slides.js&quot;&gt;&lt;/script&gt;
+&lt;!--All Spreadsheet --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/SheetJS/handsontable.full.min.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/SheetJS/handsontable.full.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/SheetJS/xlsx.full.min.js&quot;&gt;&lt;/script&gt;
+&lt;!--Image viewer--&gt; 
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/verySimpleImageViewer/css/jquery.verySimpleImageViewer.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/verySimpleImageViewer/js/jquery.verySimpleImageViewer.js&quot;&gt;&lt;/script&gt;
+&lt;!--officeToHtml--&gt;
+&lt;script src=&quot;./include/officeToHtml.js&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/officeToHtml.css&quot;&gt;
                 </code>
             </pre>
             <p class="p_heads_1">2. Add &lt;Div&gt; with id in &lt;BODY&gt; area:</p>
@@ -144,6 +139,7 @@ $(&quot;#resolte-contaniner&quot;).officeToHtml({
     url: file_path,
     inputObjId: &quot;select_file&quot;,
     pdfSetting: {
+        setLang: "he",
         thumbnailViewBtn: true,
         searchBtn: true,
         nextPreviousBtn: true,
@@ -185,10 +181,18 @@ $(&quot;#resolte-contaniner&quot;).officeToHtml({
                   </tr>
                   <tr>
                     <td class="tg-yw4l">1</td>
+                    <td class="tg-yw4l">setLang<br></td>
+                    <td class="tg-yw4l">set manually the interface language(short name code) -click here to see all supported languages:  <a href="lang.html">link.</a>
+                        <br>if set to "" or not set at all then the language will be as the browser interface language or English if it is not
+                        supported.   
+                    </td>
+                    <td class="tg-yw4l">""</td>
+                  </tr><tr>
+                    <td class="tg-yw4l">1</td>
                     <td class="tg-yw4l">thumbnailViewBtn<br></td>
                     <td class="tg-yw4l">Thumbnail viewer button (true - view button, false - hide button).<br></td>
                     <td class="tg-yw4l">true</td>
-                  </tr>
+                </tr>
                   <tr>
                     <td class="tg-yw4l">2</td>
                     <td class="tg-yw4l">searchBtn<br></td>
