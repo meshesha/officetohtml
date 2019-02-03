@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OfficeJs | Docs </title>
+<meta charset="utf-8">
+<link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<style>
+    .p_heads_1{
+        font-size: 18px;
+        color: rgb(4, 0, 255)
+    }
+    .p_heads_2{
+        font-size: 16px;
+        color: rgb(63, 60, 253)
+    }
+    .p_heads_3{
+        font-size: 14px;
+        color: rgb(98, 95, 255)
+    }
+</style>
+</head>
+<body id="top">
+<div class="wrapper row1">
+    <header id="header" class="hoc clear">
+        <div id="logo" class="fl_left">
+        <h1><a href="../index.html">Office To Html - Docs</a></h1>
+        </div>
+        <nav id="mainav" class="fl_right">
+        <ul class="clear">
+            <li><a href="../index.html">Home</a></li>
+            <li class="active"><a href="docs.html">Docs</a></li>
+            <li><a href="demos.html">Demos</a></li>
+            <li><a href="https://github.com/meshesha/officeToHtml">GitHub</a></li>
+            <li><a href="https://github.com/meshesha">About</a></li>
+        </ul>
+        </nav>
+    </header>
+</div>
+<div class="wrapper row3">
+  <main class="hoc container clear"> 
+    <!-- main body -->
+    <!-- ################################################################################################ -->
+    <!-- using html encode (https://codebeautify.org/html-encode-string) -->
+    <div class="content three_quarter"> 
+        <div class="box bg-light clear"> 
+          <h3 class="font-x2" id="head-name">usage</h3>
+          <div id="description">
+            <p class="p_heads_1">1. Include all necessary .css and .js files in &lt;HEAD&gt; area:</p>
+            <pre>
+                <code>
+&lt;!--PDF--&gt; 
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/pdf/pdf.viewer.css&quot;&gt; 
+&lt;script src=&quot;./include/pdf/pdf.js&quot;&gt;&lt;/script&gt; &lt;!--Docs--&gt;
+&lt;script src=&quot;./include/docx/jszip-utils.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;./include/docx/mammoth.browser.min.js&quot;&gt;&lt;/script&gt;
+&lt;!--PPTX--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/PPTXjs/css/pptxjs.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/PPTXjs/css/nv.d3.min.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/filereader.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/nv.d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/pptxjs.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/PPTXjs/js/divs2slides.js&quot;&gt;&lt;/script&gt;
+&lt;!--All Spreadsheet --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/SheetJS/handsontable.full.min.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/SheetJS/handsontable.full.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/SheetJS/xlsx.full.min.js&quot;&gt;&lt;/script&gt;
+&lt;!--Image viewer--&gt; 
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/verySimpleImageViewer/css/jquery.verySimpleImageViewer.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./include/verySimpleImageViewer/js/jquery.verySimpleImageViewer.js&quot;&gt;&lt;/script&gt;
+&lt;!--officeToHtml--&gt;
+&lt;script src=&quot;./include/officeToHtml.js&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./include/officeToHtml.css&quot;&gt;
+                </code>
+            </pre>
+            <p class="p_heads_1">2. Add &lt;Div&gt; with id in &lt;BODY&gt; area:</p>
+            <pre>
+                <code>
+&lt;div id=&quot;resolte-contaniner&quot;&gt;&lt;/div&gt;
+                </code>
+            </pre>
+            <p class="p_heads_1">3.Use one or both javascript method to read file:</p>
+            <p class="p_heads_2">a. For reading remote file :</p>
+            <pre>
+                <code>
+var file_path = &quot;path/to/file.pptx&quot;; 
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+   url: file_path
+});
+                </code>
+            </pre>
+            <p class="p_heads_2">b. For reading local file using INPUT object :</p>
+            <p class="p_heads_3">b1. First add &lt;Input&gt; with id in &lt;BODY&gt; area:</p>
+            <pre>
+                <code>
+&lt;input type=&quot;file&quot; id=&quot;select_file&quot; /&gt;                    
+                </code>
+            </pre>
+            <p class="p_heads_3">b2. And then use next script:</p>
+            <pre>
+                <code>
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+  inputObjId: "select_file"
+});
+                </code>
+            </pre>
+            
+            <p class="p_heads_1">4.options and settings:</p>
+            <pre>
+                <code>
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+    url: file_path,
+    inputObjId: &quot;select_file&quot;,
+    pdfSetting: {
+        // setting for pdf
+    },
+    docxSetting: {
+        // setting for docx
+    },
+    pptxSetting: {
+        // setting for pptx
+    },
+    sheetSetting: {
+        // setting for excel
+    },
+    imageSetting: {
+        // setting for  images
+    }
+});                    
+                </code>
+            </pre>  
+            <p class="p_heads_2">a.pdfSetting:</p>
+            <pre>
+                <code>
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+    url: file_path,
+    inputObjId: &quot;select_file&quot;,
+    pdfSetting: {
+        setLang: "he",
+        thumbnailViewBtn: true,
+        searchBtn: true,
+        nextPreviousBtn: true,
+        pageNumberTxt: true,
+        totalPagesLabel: true,
+        zoomBtns: true,
+        scaleSelector: true,
+        presantationModeBtn: true,
+        openFileBtn: true,
+        printBtn: true,
+        downloadBtn: true,
+        bookmarkBtn: true,
+        secondaryToolbarBtn: true,
+        firstPageBtn: true,
+        lastPageBtn: true,
+        pageRotateCwBtn: true,
+        pageRotateCcwBtn: true,
+        cursorSelectTextToolbarBtn: true,
+        cursorHandToolbarBtn: true
+    }
+});                    
+                </code>
+            </pre>
+            <a href="pdfViewer.png" target="_blank"><img src="pdfViewer.png" style="width:99%; height: 60%; " /></a>
+            <style type="text/css">
+                /*the tables genereted by web-site: https://www.tablesgenerator.com/html_tables */
+                .tg  {border-collapse:collapse;border-spacing:0;}
+                .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+                .tg .tg-jc4p{font-size:16px;background-color:#00009b;color:#ffffff;vertical-align:top}
+                .tg .tg-yw4l{vertical-align:top}
+                </style>
+                <table class="tg">
+                  <tr>
+                    <th class="tg-jc4p">#</th>
+                    <th class="tg-jc4p">name</th>
+                    <th class="tg-jc4p">description</th>
+                    <th class="tg-jc4p">default value</th>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">1</td>
+                    <td class="tg-yw4l">setLang<br></td>
+                    <td class="tg-yw4l">set manually the interface language(short name code) -click here to see all supported languages:  <a href="lang.html">link.</a>
+                        <br>if set to "" or not set at all then the language will be as the browser interface language or English if it is not
+                        supported.   
+                    </td>
+                    <td class="tg-yw4l">""</td>
+                  </tr><tr>
+                    <td class="tg-yw4l">1</td>
+                    <td class="tg-yw4l">thumbnailViewBtn<br></td>
+                    <td class="tg-yw4l">Thumbnail viewer button (true - view button, false - hide button).<br></td>
+                    <td class="tg-yw4l">true</td>
+                </tr>
+                  <tr>
+                    <td class="tg-yw4l">2</td>
+                    <td class="tg-yw4l">searchBtn<br></td>
+                    <td class="tg-yw4l">Seraching button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">3</td>
+                    <td class="tg-yw4l">nextPreviousBtn<br></td>
+                    <td class="tg-yw4l">next and previous button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">4</td>
+                    <td class="tg-yw4l">pageNumberTxt<br></td>
+                    <td class="tg-yw4l">page number textbox&nbsp;&nbsp;(true - view text, false - hide text).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">5</td>
+                    <td class="tg-yw4l">totalPagesLabel<br></td>
+                    <td class="tg-yw4l">total pages label  (true - view label, false - hide label).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">6</td>
+                    <td class="tg-yw4l">zoomBtns<br></td>
+                    <td class="tg-yw4l">zoom&nbsp;&nbsp;buttons (true - view buttons, false - hide buttons).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">7</td>
+                    <td class="tg-yw4l">scaleSelector<br></td>
+                    <td class="tg-yw4l">scale selector (true - view selector, false - hide selector).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">8</td>
+                    <td class="tg-yw4l">presantationModeBtn<br></td>
+                    <td class="tg-yw4l">presentation mode&nbsp;&nbsp;button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">9</td>
+                    <td class="tg-yw4l">openFileBtn<br></td>
+                    <td class="tg-yw4l">open file&nbsp;&nbsp;button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">10</td>
+                    <td class="tg-yw4l">printBtn<br></td>
+                    <td class="tg-yw4l">print&nbsp;&nbsp;button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">11</td>
+                    <td class="tg-yw4l">downloadBtn<br></td>
+                    <td class="tg-yw4l">download&nbsp;&nbsp;button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">12</td>
+                    <td class="tg-yw4l">bookmarkBtn<br></td>
+                    <td class="tg-yw4l">bookmark&nbsp;&nbsp;button - open current view in new window (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">13</td>
+                    <td class="tg-yw4l">secondaryToolbarBtn<br></td>
+                    <td class="tg-yw4l">secondary toolbar&nbsp;&nbsp;button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">14</td>
+                    <td class="tg-yw4l">firstPageBtn<br></td>
+                    <td class="tg-yw4l">go to first page&nbsp;&nbsp;button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">15</td>
+                    <td class="tg-yw4l">lastPageBtn<br></td>
+                    <td class="tg-yw4l">go to last page  button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">16</td>
+                    <td class="tg-yw4l">pageRotateCwBtn<br></td>
+                    <td class="tg-yw4l">rotate page clockwise button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">17</td>
+                    <td class="tg-yw4l">pageRotateCcwBtn<br></td>
+                    <td class="tg-yw4l">rotate page counter clockwise button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">18</td>
+                    <td class="tg-yw4l">cursorSelectTextToolbarBtn<br></td>
+                    <td class="tg-yw4l">select text button (true - view button, false - hide button).</td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-yw4l">19</td>
+                    <td class="tg-yw4l">cursorHandToolbarBtn<br></td>
+                    <td class="tg-yw4l">cursor hand button (true - view button, false - hide button).<br></td>
+                    <td class="tg-yw4l">true</td>
+                  </tr>
+                </table>
+            <p class="p_heads_2">b.docxSetting:</p>
+            <pre>
+                <code>
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+    url: file_path,
+    inputObjId: &quot;select_file&quot;,
+    docxSetting: {
+        styleMap : null,
+        includeEmbeddedStyleMap: true,
+        includeDefaultStyleMap: true,
+        convertImage: null,
+        ignoreEmptyParagraphs: false,
+        idPrefix: "",
+        isRtl : "auto" 
+    }
+});                    
+                </code>
+            </pre>
+            <table class="tg">
+            <tr>
+                <th class="tg-jc4p">#</th>
+                <th class="tg-jc4p">name</th>
+                <th class="tg-jc4p">description</th>
+                <th class="tg-jc4p">default value</th>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">1</td>
+                <td class="tg-yw4l">isRtl<br><br></td>
+                <td class="tg-yw4l">set if the docx document is "rtl" (right to left) or "ltr" (left to right).<br>set "auto" for automatic detaction (work for hebrew only)<br></td>
+                <td class="tg-yw4l">"auto"<br></td>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">2</td>
+                <td class="tg-yw4l"></td>
+                <td class="tg-yw4l">For the others options see <a href="https://github.com/mwilliamson/mammoth.js/" target="_blank">mammoth.js</a> github page</td>
+                <td class="tg-yw4l"></td>
+            </tr>
+            </table>
+                  
+                  
+            <p class="p_heads_2">c.pptxSetting:</p>
+            <pre>
+                <code>
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+    url: file_path,
+    inputObjId: &quot;select_file&quot;,
+    pptxSetting: {
+        slidesScale: "50%", //Change Slides scale by percent
+        slideMode: true, /** true,false*/
+        keyBoardShortCut: true,  /** true,false ,condition: slideMode: true*/
+        mediaProcess: true, /** true,false: if true then process video and audio files */
+        jsZipV2: false,
+        slideModeConfig: {
+            first: 1,
+            nav: true, /** true,false : show or not nav buttons*/
+            navTxtColor: "black", /** color */
+            keyBoardShortCut: false, /** true,false ,condition: */
+            showSlideNum: true, /** true,false */
+            showTotalSlideNum: true, /** true,false */
+            autoSlide:1, /** false or seconds , F8 to active ,keyBoardShortCut: true */
+            randomAutoSlide: false, /** true,false ,autoSlide:true */ 
+            loop: true,  /** true,false */
+            background: false, /** false or color*/
+            transition: "default", /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */
+            transitionTime: 1 /** transition time between slides in seconds */               
+        }
+    }
+});                    
+                </code>
+            </pre>
+            <table class="tg">
+                <tr>
+                  <th class="tg-jc4p">#</th>
+                  <th class="tg-jc4p">name</th>
+                  <th class="tg-jc4p">description</th>
+                  <th class="tg-jc4p">default value</th>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">1</td>
+                  <td class="tg-yw4l">slidesScale</td>
+                  <td class="tg-yw4l">Change Slides scale by percent(%). for orginal size set this option to "" or "100%"</td>
+                  <td class="tg-yw4l">""</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">2</td>
+                  <td class="tg-yw4l">slideMode</td>
+                  <td class="tg-yw4l">If true, turn on presentation mode. The settings of the presentation mode are controlled by the variables "slideModeConfig" </td>
+                  <td class="tg-yw4l">false</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">3</td>
+                  <td class="tg-yw4l">keyBoardShortCut</td>
+                  <td class="tg-yw4l">If true, enable to enter or exit from presentation mode by keyboard shortcut F5 </td>
+                  <td class="tg-yw4l">false</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">4</td>
+                  <td class="tg-yw4l">mediaProcess</td>
+                  <td class="tg-yw4l">if true, then process video and audio files.If 'false', you can not play and see or hear the videos and audios embedded in the presentation.</td>
+                  <td class="tg-yw4l">true</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">5</td>
+                  <td class="tg-yw4l">jsZipV2</td>
+                  <td class="tg-yw4l">url link to jsZip version 2. <br>This allows the ability to load jsZip v.2 in case jsZip v.3 is loaded for another use.</td>
+                  <td class="tg-yw4l">false</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">6</td>
+                  <td class="tg-yw4l">slideModeConfig</td>
+                  <td class="tg-yw4l">settings of the presentation mode.<br> for more details click <a href="https://github.com/meshesha/divs2slides" target="_blank">here</a></td>
+                  <td class="tg-yw4l">{}</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">7</td>
+                  <td class="tg-yw4l">slideModeConfig.first</td>
+                  <td class="tg-yw4l">The first slide that will be loaded.</td>
+                  <td class="tg-yw4l">1</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">8</td>
+                  <td class="tg-yw4l">slideModeConfig.nav</td>
+                  <td class="tg-yw4l">show ('true') or hide ('false') navigator buttons.</td>
+                  <td class="tg-yw4l">true</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">9</td>
+                  <td class="tg-yw4l">slideModeConfig.navTxtColor</td>
+                  <td class="tg-yw4l">color of slide number text and total slides number shown in navigator area.</td>
+                  <td class="tg-yw4l">"black"</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">10</td>
+                  <td class="tg-yw4l">slideModeConfig.keyBoardShortCut</td>
+                  <td class="tg-yw4l">if true , enable to control presentation by keyboard shortcuts.<br> for keyboard shortcuts list click <a href="https://github.com/meshesha/divs2slides" target="_blank">here</a> </td>
+                  <td class="tg-yw4l">false</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">11</td>
+                  <td class="tg-yw4l">slideModeConfig.showSlideNum</td>
+                  <td class="tg-yw4l">if true , show slide number in navigator area.</td>
+                  <td class="tg-yw4l">true</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">12</td>
+                  <td class="tg-yw4l">slideModeConfig.showTotalSlideNum</td>
+                  <td class="tg-yw4l">if true , show total slides number in navigator area.</td>
+                  <td class="tg-yw4l">true</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">13</td>
+                  <td class="tg-yw4l">slideModeConfig.autoSlide</td>
+                  <td class="tg-yw4l">options:'false' or number (seconds). if set 'false' it disable auto slide mode. if set number then auto slide mode will be enabled and the number will be the time between slides.</td>
+                  <td class="tg-yw4l">1</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">14</td>
+                  <td class="tg-yw4l">slideModeConfig.randomAutoSlide</td>
+                  <td class="tg-yw4l">if true and autoSlide mode are enabled then The slides appear in random order.</td>
+                  <td class="tg-yw4l">false</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">15</td>
+                  <td class="tg-yw4l">slideModeConfig.loop</td>
+                  <td class="tg-yw4l">if true, in presentation mode , after last slide will go to first slide. in auto slideMode, the presentation will play in loop.</td>
+                  <td class="tg-yw4l">false</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">16</td>
+                  <td class="tg-yw4l">slideModeConfig.background</td>
+                  <td class="tg-yw4l">color of presentation background.</td>
+                  <td class="tg-yw4l">false</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">17</td>
+                  <td class="tg-yw4l">slideModeConfig.transition</td>
+                  <td class="tg-yw4l">transition types options: "slid","fade","default","random". </td>
+                  <td class="tg-yw4l">"default"</td>
+                </tr>
+                <tr>
+                  <td class="tg-yw4l">18</td>
+                  <td class="tg-yw4l">slideModeConfig.transitionTime</td>
+                  <td class="tg-yw4l">Time delay in seconds between slides.</td>
+                  <td class="tg-yw4l">1</td>
+                </tr>
+            </table>
+            <p class="p_heads_2">d.sheetSetting:</p>
+            <pre>
+                <code>
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+    url: file_path,
+    inputObjId: &quot;select_file&quot;,
+    sheetSetting: {
+        jqueryui : false,
+        activeHeaderClassName: "",
+        allowEmpty: true,
+        autoColumnSize: true,
+        autoRowSize: false,
+        columns: false,
+        columnSorting: true,
+        contextMenu: false,
+        copyable: true,
+        customBorders: false,
+        fixedColumnsLeft: 0,
+        fixedRowsTop: 0,
+        language:'en-US',
+        search: false,
+        selectionMode: 'single',
+        sortIndicator: false,
+        readOnly: false,
+        startRows: 1,
+        startCols: 1,
+        rowHeaders: true,
+        colHeaders: true,
+        width: false,
+        height:false
+    }
+});                    
+                </code>
+            </pre>
+            <table class="tg">
+              <tr>
+                <th class="tg-jc4p">#</th>
+                <th class="tg-jc4p">name</th>
+                <th class="tg-jc4p">description</th>
+                <th class="tg-jc4p">default value</th>
+              </tr>
+              <tr>
+                <td class="tg-yw4l">1</td>
+                <td class="tg-yw4l">jqueryui</td>
+                <td class="tg-yw4l">if true , will use jQuery-ui interface.<br> To use this option, must include "jquery-ui.js" and "jquery-ui.css" in the HEAD area.</td>
+                <td class="tg-yw4l">false</td>
+              </tr>
+              <tr>
+                <td class="tg-yw4l">2</td>
+                <td class="tg-yw4l"></td>
+                <td class="tg-yw4l">For the others options see <a href="https://docs.handsontable.com/" target="_blank">handsontable tutorial</a></td>
+                <td class="tg-yw4l"></td>
+              </tr>
+            </table>
+            <p class="p_heads_2">e.imageSetting:</p>
+            <pre>
+                <code>
+$(&quot;#resolte-contaniner&quot;).officeToHtml({
+    url: file_path,
+    inputObjId: &quot;select_file&quot;,
+    imageSetting: {
+        frame: ['100%', '100%',false],
+        maxZoom: '900%',
+        zoomFactor: '10%',
+        mouse: true,
+        keyboard: true,
+        toolbar: true,
+        rotateToolbar: false
+    }
+});                    
+                </code>
+            </pre>
+            <table class="tg">
+              <tr>
+                <th class="tg-jc4p">#</th>
+                <th class="tg-jc4p">name</th>
+                <th class="tg-jc4p">description</th>
+                <th class="tg-jc4p">default value</th>
+              </tr>
+              <tr>
+                <td class="tg-yw4l">1</td>
+                <td class="tg-yw4l"></td>
+                <td class="tg-yw4l">For options see <a href="https://github.com/meshesha/verySimpleImageViewer" target="_blank">verySimpleImageViewer</a> github page</td>
+                <td class="tg-yw4l"></td>
+              </tr>
+            </table>
+
+
+          </div>
+        </div>
+    </div>
+    <!-- / main body -->
+    <div class="clear"></div>
+  </main>
+</div>
+
+<div class="wrapper row5">
+        <div id="copyright" class="hoc clear"> 
+          <p class="fl_left">Copyright &copy; 2017 - All Rights Reserved - <a href="https://github.com/meshesha/">Tady Meshesha</a></p>
+          <p class="fl_right">Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+        </div>
+      </div>
+<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+</body>
+</html>
