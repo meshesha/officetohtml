@@ -1056,11 +1056,23 @@
             }
             return res;
         }
-        
+        var full_path = location.href;
         var link_a_array = currentScriptPath().split("/");
-        var link_b_array = location.href.split("/");
+        var link_b_array = full_path.split("/");
         var link_diff = diff2(link_a_array, link_b_array).join("/");
-        //console.log(currentScriptPath(), location.href, link_diff, setLangFilesPath);
+        if (link_diff.indexOf("/") > -1) { //"include/index.html" or "include/demos.html" ....
+            var link_diff_ary = link_diff.split("/");
+            link_diff_ary.pop();
+            link_diff = link_diff_ary.join("/");
+        }
+        /*
+        console.log(
+          currentScriptPath(),
+          full_path,
+          link_diff,
+          setLangFilesPath
+        );
+        */
         setLangFilesPath = (setLangFilesPath != "") ? location.href + setLangFilesPath + "/locale.properties":"";
         $("<link>", {
             rel: "resource",
