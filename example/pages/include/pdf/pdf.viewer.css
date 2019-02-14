@@ -291,12 +291,12 @@
   border: 0;
 }
 
-* {
+#mainPdfWarrper >* {
   padding: 0;
   margin: 0;
 }
 
-html {
+#mainPdfWarrper {
   height: 100%;
   width: 100%;
   /* Font size is needed to make the activity bar the correct size. */
@@ -428,12 +428,12 @@ select {
   transition-duration: 200ms;
   transition-timing-function: ease;
 }
-html[dir="ltr"] #sidebarContainer {
+#mainPdfWarrper[dir="ltr"] #sidebarContainer {
   -webkit-transition-property: left;
   transition-property: left;
   left: -200px;
 }
-html[dir="rtl"] #sidebarContainer {
+#mainPdfWarrper[dir="rtl"] #sidebarContainer {
   -webkit-transition-property: right;
   transition-property: right;
   right: -200px;
@@ -443,10 +443,10 @@ html[dir="rtl"] #sidebarContainer {
 #outerContainer.sidebarOpen > #sidebarContainer {
   visibility: visible;
 }
-html[dir="ltr"] #outerContainer.sidebarOpen > #sidebarContainer {
+#mainPdfWarrper[dir="ltr"] #outerContainer.sidebarOpen > #sidebarContainer {
   left: 0px;
 }
-html[dir="rtl"] #outerContainer.sidebarOpen > #sidebarContainer {
+#mainPdfWarrper[dir="rtl"] #outerContainer.sidebarOpen > #sidebarContainer {
   right: 0px;
 }
 
@@ -462,12 +462,12 @@ html[dir="rtl"] #outerContainer.sidebarOpen > #sidebarContainer {
   transition-duration: 200ms;
   transition-timing-function: ease;
 }
-html[dir="ltr"] #outerContainer.sidebarOpen > #mainContainer {
+#mainPdfWarrper[dir="ltr"] #outerContainer.sidebarOpen > #mainContainer {
   -webkit-transition-property: left;
   transition-property: left;
   left: 200px;
 }
-html[dir="rtl"] #outerContainer.sidebarOpen > #mainContainer {
+#mainPdfWarrper[dir="rtl"] #outerContainer.sidebarOpen > #mainContainer {
   -webkit-transition-property: right;
   transition-property: right;
   right: 200px;
@@ -482,11 +482,11 @@ html[dir="rtl"] #outerContainer.sidebarOpen > #mainContainer {
   width: 200px;
   background-color: hsla(0, 0%, 0%, 0.1);
 }
-html[dir="ltr"] #sidebarContent {
+#mainPdfWarrper[dir="ltr"] #sidebarContent {
   left: 0;
   box-shadow: inset -1px 0 0 hsla(0, 0%, 0%, 0.25);
 }
-html[dir="rtl"] #sidebarContent {
+#mainPdfWarrper[dir="rtl"] #sidebarContent {
   right: 0;
   box-shadow: inset 1px 0 0 hsla(0, 0%, 0%, 0.25);
 }
@@ -501,10 +501,10 @@ html[dir="rtl"] #sidebarContent {
   left: 0;
   outline: none;
 }
-html[dir="ltr"] #viewerContainer {
+#mainPdfWarrper[dir="ltr"] #viewerContainer {
   box-shadow: inset 1px 0 0 hsla(0, 0%, 100%, 0.05);
 }
-html[dir="rtl"] #viewerContainer {
+#mainPdfWarrper[dir="rtl"] #viewerContainer {
   box-shadow: inset -1px 0 0 hsla(0, 0%, 100%, 0.05);
 }
 
@@ -527,12 +527,12 @@ html[dir="rtl"] #viewerContainer {
   background-image: url(images/texture.png),
     linear-gradient(hsla(0, 0%, 30%, 0.99), hsla(0, 0%, 25%, 0.95));
 }
-html[dir="ltr"] #toolbarSidebar {
+#mainPdfWarrper[dir="ltr"] #toolbarSidebar {
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25),
     inset 0 -1px 0 hsla(0, 0%, 100%, 0.05), 0 1px 0 hsla(0, 0%, 0%, 0.15),
     0 0 1px hsla(0, 0%, 0%, 0.1);
 }
-html[dir="rtl"] #toolbarSidebar {
+#mainPdfWarrper[dir="rtl"] #toolbarSidebar {
   box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.25),
     inset 0 1px 0 hsla(0, 0%, 100%, 0.05), 0 1px 0 hsla(0, 0%, 0%, 0.15),
     0 0 1px hsla(0, 0%, 0%, 0.1);
@@ -547,7 +547,7 @@ html[dir="rtl"] #toolbarSidebar {
   background-image: url(images/texture.png),
     linear-gradient(hsla(0, 0%, 32%, 0.99), hsla(0, 0%, 27%, 0.95));
 }
-html[dir="ltr"] #toolbarContainer,
+#mainPdfWarrper[dir="ltr"] #toolbarContainer,
 .findbar,
 .secondaryToolbar {
   box-shadow: inset 1px 0 0 hsla(0, 0%, 100%, 0.08),
@@ -555,7 +555,7 @@ html[dir="ltr"] #toolbarContainer,
     inset 0 -1px 0 hsla(0, 0%, 100%, 0.05), 0 1px 0 hsla(0, 0%, 0%, 0.15),
     0 1px 1px hsla(0, 0%, 0%, 0.1);
 }
-html[dir="rtl"] #toolbarContainer,
+#mainPdfWarrper[dir="rtl"] #toolbarContainer,
 .findbar,
 .secondaryToolbar {
   box-shadow: inset -1px 0 0 hsla(0, 0%, 100%, 0.08),
@@ -661,10 +661,10 @@ html[dir="rtl"] #toolbarContainer,
 .findbar.wrapContainers > div#findbarMessageContainer {
   height: auto;
 }
-html[dir="ltr"] .findbar {
+#mainPdfWarrper[dir="ltr"] .findbar {
   left: 68px;
 }
-html[dir="rtl"] .findbar {
+#mainPdfWarrper[dir="rtl"] .findbar {
   right: 68px;
 }
 
@@ -693,7 +693,7 @@ html[dir="rtl"] .findbar {
   background-repeat: no-repeat;
   background-position: right;
 }
-html[dir="rtl"] #findInput[data-status="pending"] {
+#mainPdfWarrper[dir="rtl"] #findInput[data-status="pending"] {
   background-position: left;
 }
 
@@ -702,10 +702,10 @@ html[dir="rtl"] #findInput[data-status="pending"] {
   height: auto;
   z-index: 30000;
 }
-html[dir="ltr"] .secondaryToolbar {
+#mainPdfWarrper[dir="ltr"] .secondaryToolbar {
   right: 4px;
 }
-html[dir="rtl"] .secondaryToolbar {
+#mainPdfWarrper[dir="rtl"] .secondaryToolbar {
   left: 4px;
 }
 
@@ -746,26 +746,26 @@ html[dir="rtl"] .secondaryToolbar {
   border-width: 9px;
 }
 
-html[dir="ltr"] .doorHanger:after,
-html[dir="rtl"] .doorHangerRight:after {
+#mainPdfWarrper[dir="ltr"] .doorHanger:after,
+#mainPdfWarrper[dir="rtl"] .doorHangerRight:after {
   left: 13px;
   margin-left: -8px;
 }
 
-html[dir="ltr"] .doorHanger:before,
-html[dir="rtl"] .doorHangerRight:before {
+#mainPdfWarrper[dir="ltr"] .doorHanger:before,
+#mainPdfWarrper[dir="rtl"] .doorHangerRight:before {
   left: 13px;
   margin-left: -9px;
 }
 
-html[dir="rtl"] .doorHanger:after,
-html[dir="ltr"] .doorHangerRight:after {
+#mainPdfWarrper[dir="rtl"] .doorHanger:after,
+#mainPdfWarrper[dir="ltr"] .doorHangerRight:after {
   right: 13px;
   margin-right: -8px;
 }
 
-html[dir="rtl"] .doorHanger:before,
-html[dir="ltr"] .doorHangerRight:before {
+#mainPdfWarrper[dir="rtl"] .doorHanger:before,
+#mainPdfWarrper[dir="ltr"] .doorHangerRight:before {
   right: 13px;
   margin-right: -9px;
 }
@@ -795,42 +795,42 @@ html[dir="ltr"] .doorHangerRight:before {
   transform: translateX(-50%);
 }
 
-html[dir="ltr"] #toolbarViewerLeft,
-html[dir="rtl"] #toolbarViewerRight {
+#mainPdfWarrper[dir="ltr"] #toolbarViewerLeft,
+#mainPdfWarrper[dir="rtl"] #toolbarViewerRight {
   float: left;
 }
-html[dir="ltr"] #toolbarViewerRight,
-html[dir="rtl"] #toolbarViewerLeft {
+#mainPdfWarrper[dir="ltr"] #toolbarViewerRight,
+#mainPdfWarrper[dir="rtl"] #toolbarViewerLeft {
   float: right;
 }
-html[dir="ltr"] #toolbarViewerLeft > *,
-html[dir="ltr"] #toolbarViewerMiddle > *,
-html[dir="ltr"] #toolbarViewerRight > *,
-html[dir="ltr"] .findbar * {
+#mainPdfWarrper[dir="ltr"] #toolbarViewerLeft > *,
+#mainPdfWarrper[dir="ltr"] #toolbarViewerMiddle > *,
+#mainPdfWarrper[dir="ltr"] #toolbarViewerRight > *,
+#mainPdfWarrper[dir="ltr"] .findbar * {
   position: relative;
   float: left;
 }
-html[dir="rtl"] #toolbarViewerLeft > *,
-html[dir="rtl"] #toolbarViewerMiddle > *,
-html[dir="rtl"] #toolbarViewerRight > *,
-html[dir="rtl"] .findbar * {
+#mainPdfWarrper[dir="rtl"] #toolbarViewerLeft > *,
+#mainPdfWarrper[dir="rtl"] #toolbarViewerMiddle > *,
+#mainPdfWarrper[dir="rtl"] #toolbarViewerRight > *,
+#mainPdfWarrper[dir="rtl"] .findbar * {
   position: relative;
   float: right;
 }
 
-html[dir="ltr"] .splitToolbarButton {
+#mainPdfWarrper[dir="ltr"] .splitToolbarButton {
   margin: 3px 2px 4px 0;
   display: inline-block;
 }
-html[dir="rtl"] .splitToolbarButton {
+#mainPdfWarrper[dir="rtl"] .splitToolbarButton {
   margin: 3px 0 4px 2px;
   display: inline-block;
 }
-html[dir="ltr"] .splitToolbarButton > .toolbarButton {
+#mainPdfWarrper[dir="ltr"] .splitToolbarButton > .toolbarButton {
   border-radius: 0;
   float: left;
 }
-html[dir="rtl"] .splitToolbarButton > .toolbarButton {
+#mainPdfWarrper[dir="rtl"] .splitToolbarButton > .toolbarButton {
   border-radius: 0;
   float: right;
 }
@@ -898,8 +898,8 @@ html[dir="rtl"] .splitToolbarButton > .toolbarButton {
 .splitToolbarButton > .toolbarButton {
   position: relative;
 }
-html[dir="ltr"] .splitToolbarButton > .toolbarButton:first-child,
-html[dir="rtl"] .splitToolbarButton > .toolbarButton:last-child {
+#mainPdfWarrper[dir="ltr"] .splitToolbarButton > .toolbarButton:first-child,
+#mainPdfWarrper[dir="rtl"] .splitToolbarButton > .toolbarButton:last-child {
   position: relative;
   margin: 0;
   margin-right: -1px;
@@ -907,8 +907,8 @@ html[dir="rtl"] .splitToolbarButton > .toolbarButton:last-child {
   border-bottom-left-radius: 2px;
   border-right-color: transparent;
 }
-html[dir="ltr"] .splitToolbarButton > .toolbarButton:last-child,
-html[dir="rtl"] .splitToolbarButton > .toolbarButton:first-child {
+#mainPdfWarrper[dir="ltr"] .splitToolbarButton > .toolbarButton:last-child,
+#mainPdfWarrper[dir="rtl"] .splitToolbarButton > .toolbarButton:first-child {
   position: relative;
   margin: 0;
   margin-left: -1px;
@@ -925,10 +925,10 @@ html[dir="rtl"] .splitToolbarButton > .toolbarButton:first-child {
   display: inline-block;
   margin: 5px 0;
 }
-html[dir="ltr"] .splitToolbarButtonSeparator {
+#mainPdfWarrper[dir="ltr"] .splitToolbarButtonSeparator {
   float: left;
 }
-html[dir="rtl"] .splitToolbarButtonSeparator {
+#mainPdfWarrper[dir="rtl"] .splitToolbarButtonSeparator {
   float: right;
 }
 .splitToolbarButton:hover > .splitToolbarButtonSeparator,
@@ -968,14 +968,14 @@ html[dir="rtl"] .splitToolbarButtonSeparator {
   transition-timing-function: ease;
 }
 
-html[dir="ltr"] .toolbarButton,
-html[dir="ltr"] .overlayButton,
-html[dir="ltr"] .dropdownToolbarButton {
+#mainPdfWarrper[dir="ltr"] .toolbarButton,
+#mainPdfWarrper[dir="ltr"] .overlayButton,
+#mainPdfWarrper[dir="ltr"] .dropdownToolbarButton {
   margin: 3px 2px 4px 0;
 }
-html[dir="rtl"] .toolbarButton,
-html[dir="rtl"] .overlayButton,
-html[dir="rtl"] .dropdownToolbarButton {
+#mainPdfWarrper[dir="rtl"] .toolbarButton,
+#mainPdfWarrper[dir="rtl"] .overlayButton,
+#mainPdfWarrper[dir="rtl"] .dropdownToolbarButton {
   margin: 3px 0 4px 2px;
 }
 
@@ -1053,10 +1053,10 @@ html[dir="rtl"] .dropdownToolbarButton {
   overflow: hidden;
   background: url(images/toolbarButton-menuArrows.png) no-repeat;
 }
-html[dir="ltr"] .dropdownToolbarButton {
+#mainPdfWarrper[dir="ltr"] .dropdownToolbarButton {
   background-position: 95%;
 }
-html[dir="rtl"] .dropdownToolbarButton {
+#mainPdfWarrper[dir="rtl"] .dropdownToolbarButton {
   background-position: 5%;
 }
 
@@ -1087,16 +1087,16 @@ html[dir="rtl"] .dropdownToolbarButton {
   border-bottom: 1px rgba(255, 255, 255, 0.5) solid;
 }
 
-html[dir="ltr"] .splitToolbarButton:first-child,
-html[dir="ltr"] .toolbarButton:first-child,
-html[dir="rtl"] .splitToolbarButton:last-child,
-html[dir="rtl"] .toolbarButton:last-child {
+#mainPdfWarrper[dir="ltr"] .splitToolbarButton:first-child,
+#mainPdfWarrper[dir="ltr"] .toolbarButton:first-child,
+#mainPdfWarrper[dir="rtl"] .splitToolbarButton:last-child,
+#mainPdfWarrper[dir="rtl"] .toolbarButton:last-child {
   margin-left: 4px;
 }
-html[dir="ltr"] .splitToolbarButton:last-child,
-html[dir="ltr"] .toolbarButton:last-child,
-html[dir="rtl"] .splitToolbarButton:first-child,
-html[dir="rtl"] .toolbarButton:first-child {
+#mainPdfWarrper[dir="ltr"] .splitToolbarButton:last-child,
+#mainPdfWarrper[dir="ltr"] .toolbarButton:last-child,
+#mainPdfWarrper[dir="rtl"] .splitToolbarButton:first-child,
+#mainPdfWarrper[dir="rtl"] .toolbarButton:first-child {
   margin-right: 4px;
 }
 
@@ -1106,17 +1106,17 @@ html[dir="rtl"] .toolbarButton:first-child {
   height: 1px;
 }
 
-html[dir="ltr"] #findPrevious {
+#mainPdfWarrper[dir="ltr"] #findPrevious {
   margin-left: 3px;
 }
-html[dir="ltr"] #findNext {
+#mainPdfWarrper[dir="ltr"] #findNext {
   margin-right: 3px;
 }
 
-html[dir="rtl"] #findPrevious {
+#mainPdfWarrper[dir="rtl"] #findPrevious {
   margin-right: 3px;
 }
-html[dir="rtl"] #findNext {
+#mainPdfWarrper[dir="rtl"] #findNext {
   margin-left: 3px;
 }
 
@@ -1130,52 +1130,52 @@ html[dir="rtl"] #findNext {
   left: 7px;
 }
 
-html[dir="ltr"] .secondaryToolbarButton::before {
+#mainPdfWarrper[dir="ltr"] .secondaryToolbarButton::before {
   left: 4px;
 }
-html[dir="rtl"] .secondaryToolbarButton::before {
+#mainPdfWarrper[dir="rtl"] .secondaryToolbarButton::before {
   right: 4px;
 }
 
-html[dir="ltr"] .toolbarButton#sidebarToggle::before {
+#mainPdfWarrper[dir="ltr"] .toolbarButton#sidebarToggle::before {
   content: url(images/toolbarButton-sidebarToggle.png);
 }
-html[dir="rtl"] .toolbarButton#sidebarToggle::before {
+#mainPdfWarrper[dir="rtl"] .toolbarButton#sidebarToggle::before {
   content: url(images/toolbarButton-sidebarToggle-rtl.png);
 }
 
-html[dir="ltr"] .toolbarButton#secondaryToolbarToggle::before {
+#mainPdfWarrper[dir="ltr"] .toolbarButton#secondaryToolbarToggle::before {
   content: url(images/toolbarButton-secondaryToolbarToggle.png);
 }
-html[dir="rtl"] .toolbarButton#secondaryToolbarToggle::before {
+#mainPdfWarrper[dir="rtl"] .toolbarButton#secondaryToolbarToggle::before {
   content: url(images/toolbarButton-secondaryToolbarToggle-rtl.png);
 }
 
-html[dir="ltr"] .toolbarButton.findPrevious::before {
+#mainPdfWarrper[dir="ltr"] .toolbarButton.findPrevious::before {
   content: url(images/findbarButton-previous.png);
 }
-html[dir="rtl"] .toolbarButton.findPrevious::before {
+#mainPdfWarrper[dir="rtl"] .toolbarButton.findPrevious::before {
   content: url(images/findbarButton-previous-rtl.png);
 }
 
-html[dir="ltr"] .toolbarButton.findNext::before {
+#mainPdfWarrper[dir="ltr"] .toolbarButton.findNext::before {
   content: url(images/findbarButton-next.png);
 }
-html[dir="rtl"] .toolbarButton.findNext::before {
+#mainPdfWarrper[dir="rtl"] .toolbarButton.findNext::before {
   content: url(images/findbarButton-next-rtl.png);
 }
 
-html[dir="ltr"] .toolbarButton.pageUp::before {
+#mainPdfWarrper[dir="ltr"] .toolbarButton.pageUp::before {
   content: url(images/toolbarButton-pageUp.png);
 }
-html[dir="rtl"] .toolbarButton.pageUp::before {
+#mainPdfWarrper[dir="rtl"] .toolbarButton.pageUp::before {
   content: url(images/toolbarButton-pageUp-rtl.png);
 }
 
-html[dir="ltr"] .toolbarButton.pageDown::before {
+#mainPdfWarrper[dir="ltr"] .toolbarButton.pageDown::before {
   content: url(images/toolbarButton-pageDown.png);
 }
-html[dir="rtl"] .toolbarButton.pageDown::before {
+#mainPdfWarrper[dir="rtl"] .toolbarButton.pageDown::before {
   content: url(images/toolbarButton-pageDown-rtl.png);
 }
 
@@ -1234,10 +1234,10 @@ html[dir="rtl"] .toolbarButton.pageDown::before {
   content: url(images/toolbarButton-viewThumbnail.png);
 }
 
-html[dir="ltr"] #viewOutline.toolbarButton::before {
+#mainPdfWarrper[dir="ltr"] #viewOutline.toolbarButton::before {
   content: url(images/toolbarButton-viewOutline.png);
 }
-html[dir="rtl"] #viewOutline.toolbarButton::before {
+#mainPdfWarrper[dir="rtl"] #viewOutline.toolbarButton::before {
   content: url(images/toolbarButton-viewOutline-rtl.png);
 }
 
@@ -1260,10 +1260,10 @@ html[dir="rtl"] #viewOutline.toolbarButton::before {
   width: 9px;
   border-radius: 50%;
 }
-html[dir="ltr"] .toolbarButton.pdfSidebarNotification::after {
+#mainPdfWarrper[dir="ltr"] .toolbarButton.pdfSidebarNotification::after {
   left: 17px;
 }
-html[dir="rtl"] .toolbarButton.pdfSidebarNotification::after {
+#mainPdfWarrper[dir="rtl"] .toolbarButton.pdfSidebarNotification::after {
   right: 17px;
 }
 
@@ -1277,25 +1277,25 @@ html[dir="rtl"] .toolbarButton.pdfSidebarNotification::after {
   min-width: 100%;
   white-space: normal;
 }
-html[dir="ltr"] .secondaryToolbarButton {
+#mainPdfWarrper[dir="ltr"] .secondaryToolbarButton {
   padding-left: 24px;
   text-align: left;
 }
-html[dir="rtl"] .secondaryToolbarButton {
+#mainPdfWarrper[dir="rtl"] .secondaryToolbarButton {
   padding-right: 24px;
   text-align: right;
 }
-html[dir="ltr"] .secondaryToolbarButton.bookmark {
+#mainPdfWarrper[dir="ltr"] .secondaryToolbarButton.bookmark {
   padding-left: 27px;
 }
-html[dir="rtl"] .secondaryToolbarButton.bookmark {
+#mainPdfWarrper[dir="rtl"] .secondaryToolbarButton.bookmark {
   padding-right: 27px;
 }
 
-html[dir="ltr"] .secondaryToolbarButton > span {
+#mainPdfWarrper[dir="ltr"] .secondaryToolbarButton > span {
   padding-right: 4px;
 }
-html[dir="rtl"] .secondaryToolbarButton > span {
+#mainPdfWarrper[dir="rtl"] .secondaryToolbarButton > span {
   padding-left: 4px;
 }
 
@@ -1335,10 +1335,10 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   background-color: hsla(0, 0%, 0%, 0.5);
   box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
 }
-html[dir="ltr"] .verticalToolbarSeparator {
+#mainPdfWarrper[dir="ltr"] .verticalToolbarSeparator {
   margin-left: 2px;
 }
-html[dir="rtl"] .verticalToolbarSeparator {
+#mainPdfWarrper[dir="rtl"] .verticalToolbarSeparator {
   margin-right: 2px;
 }
 
@@ -1522,13 +1522,13 @@ a:focus > .thumbnail > .thumbnailSelectionRing,
   padding: 3px 4px 0;
 }
 
-html[dir="ltr"] .outlineWithDeepNesting > .outlineItem,
-html[dir="ltr"] .outlineItem > .outlineItems {
+#mainPdfWarrper[dir="ltr"] .outlineWithDeepNesting > .outlineItem,
+#mainPdfWarrper[dir="ltr"] .outlineItem > .outlineItems {
   margin-left: 20px;
 }
 
-html[dir="rtl"] .outlineWithDeepNesting > .outlineItem,
-html[dir="rtl"] .outlineItem > .outlineItems {
+#mainPdfWarrper[dir="rtl"] .outlineWithDeepNesting > .outlineItem,
+#mainPdfWarrper[dir="rtl"] .outlineItem > .outlineItems {
   margin-right: 20px;
 }
 
@@ -1558,18 +1558,18 @@ html[dir="rtl"] .outlineItem > .outlineItems {
   width: 100%;
 }
 
-html[dir="ltr"] .outlineItem > a {
+#mainPdfWarrper[dir="ltr"] .outlineItem > a {
   padding: 2px 0 5px 4px;
 }
-html[dir="ltr"] .attachmentsItem > button {
+#mainPdfWarrper[dir="ltr"] .attachmentsItem > button {
   padding: 2px 0 3px 7px;
   text-align: left;
 }
 
-html[dir="rtl"] .outlineItem > a {
+#mainPdfWarrper[dir="rtl"] .outlineItem > a {
   padding: 2px 4px 5px 0;
 }
-html[dir="rtl"] .attachmentsItem > button {
+#mainPdfWarrper[dir="rtl"] .attachmentsItem > button {
   padding: 2px 7px 3px 0;
   text-align: right;
 }
@@ -1585,25 +1585,25 @@ html[dir="rtl"] .attachmentsItem > button {
   display: inline-block;
   position: absolute;
 }
-html[dir="ltr"] .outlineItemToggler.outlineItemsHidden::before {
+#mainPdfWarrper[dir="ltr"] .outlineItemToggler.outlineItemsHidden::before {
   content: url(images/treeitem-collapsed.png);
 }
-html[dir="rtl"] .outlineItemToggler.outlineItemsHidden::before {
+#mainPdfWarrper[dir="rtl"] .outlineItemToggler.outlineItemsHidden::before {
   content: url(images/treeitem-collapsed-rtl.png);
 }
 .outlineItemToggler.outlineItemsHidden ~ .outlineItems {
   display: none;
 }
-html[dir="ltr"] .outlineItemToggler {
+#mainPdfWarrper[dir="ltr"] .outlineItemToggler {
   float: left;
 }
-html[dir="rtl"] .outlineItemToggler {
+#mainPdfWarrper[dir="rtl"] .outlineItemToggler {
   float: right;
 }
-html[dir="ltr"] .outlineItemToggler::before {
+#mainPdfWarrper[dir="ltr"] .outlineItemToggler::before {
   right: 4px;
 }
-html[dir="rtl"] .outlineItemToggler::before {
+#mainPdfWarrper[dir="rtl"] .outlineItemToggler::before {
   left: 4px;
 }
 
@@ -1770,10 +1770,10 @@ html[dir="rtl"] .outlineItemToggler::before {
 #documentPropertiesOverlay .row > * {
   min-width: 100px;
 }
-html[dir="ltr"] #documentPropertiesOverlay .row > * {
+#mainPdfWarrper[dir="ltr"] #documentPropertiesOverlay .row > * {
   text-align: left;
 }
-html[dir="rtl"] #documentPropertiesOverlay .row > * {
+#mainPdfWarrper[dir="rtl"] #documentPropertiesOverlay .row > * {
   text-align: right;
 }
 #documentPropertiesOverlay .row > span {
@@ -1930,15 +1930,15 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
     top: -4px;
   }
 
-  html[dir="ltr"] .toolbarButton::before,
-  html[dir="rtl"] .toolbarButton::before {
+  #mainPdfWarrper[dir="ltr"] .toolbarButton::before,
+  #mainPdfWarrper[dir="rtl"] .toolbarButton::before {
     left: -1px;
   }
 
-  html[dir="ltr"] .secondaryToolbarButton::before {
+  #mainPdfWarrper[dir="ltr"] .secondaryToolbarButton::before {
     left: -2px;
   }
-  html[dir="rtl"] .secondaryToolbarButton::before {
+  #mainPdfWarrper[dir="rtl"] .secondaryToolbarButton::before {
     left: 186px;
   }
 
@@ -1953,45 +1953,45 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
     background-size: 7px 16px;
   }
 
-  html[dir="ltr"] .toolbarButton#sidebarToggle::before {
+  #mainPdfWarrper[dir="ltr"] .toolbarButton#sidebarToggle::before {
     content: url(images/toolbarButton-sidebarToggle@2x.png);
   }
-  html[dir="rtl"] .toolbarButton#sidebarToggle::before {
+  #mainPdfWarrper[dir="rtl"] .toolbarButton#sidebarToggle::before {
     content: url(images/toolbarButton-sidebarToggle-rtl@2x.png);
   }
 
-  html[dir="ltr"] .toolbarButton#secondaryToolbarToggle::before {
+  #mainPdfWarrper[dir="ltr"] .toolbarButton#secondaryToolbarToggle::before {
     content: url(images/toolbarButton-secondaryToolbarToggle@2x.png);
   }
-  html[dir="rtl"] .toolbarButton#secondaryToolbarToggle::before {
+  #mainPdfWarrper[dir="rtl"] .toolbarButton#secondaryToolbarToggle::before {
     content: url(images/toolbarButton-secondaryToolbarToggle-rtl@2x.png);
   }
 
-  html[dir="ltr"] .toolbarButton.findPrevious::before {
+  #mainPdfWarrper[dir="ltr"] .toolbarButton.findPrevious::before {
     content: url(images/findbarButton-previous@2x.png);
   }
-  html[dir="rtl"] .toolbarButton.findPrevious::before {
+  #mainPdfWarrper[dir="rtl"] .toolbarButton.findPrevious::before {
     content: url(images/findbarButton-previous-rtl@2x.png);
   }
 
-  html[dir="ltr"] .toolbarButton.findNext::before {
+  #mainPdfWarrper[dir="ltr"] .toolbarButton.findNext::before {
     content: url(images/findbarButton-next@2x.png);
   }
-  html[dir="rtl"] .toolbarButton.findNext::before {
+  #mainPdfWarrper[dir="rtl"] .toolbarButton.findNext::before {
     content: url(images/findbarButton-next-rtl@2x.png);
   }
 
-  html[dir="ltr"] .toolbarButton.pageUp::before {
+  #mainPdfWarrper[dir="ltr"] .toolbarButton.pageUp::before {
     content: url(images/toolbarButton-pageUp@2x.png);
   }
-  html[dir="rtl"] .toolbarButton.pageUp::before {
+  #mainPdfWarrper[dir="rtl"] .toolbarButton.pageUp::before {
     content: url(images/toolbarButton-pageUp-rtl@2x.png);
   }
 
-  html[dir="ltr"] .toolbarButton.pageDown::before {
+  #mainPdfWarrper[dir="ltr"] .toolbarButton.pageDown::before {
     content: url(images/toolbarButton-pageDown@2x.png);
   }
-  html[dir="rtl"] .toolbarButton.pageDown::before {
+  #mainPdfWarrper[dir="rtl"] .toolbarButton.pageDown::before {
     content: url(images/toolbarButton-pageDown-rtl@2x.png);
   }
 
@@ -2032,10 +2032,10 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
     content: url(images/toolbarButton-viewThumbnail@2x.png);
   }
 
-  html[dir="ltr"] #viewOutline.toolbarButton::before {
+  #mainPdfWarrper[dir="ltr"] #viewOutline.toolbarButton::before {
     content: url(images/toolbarButton-viewOutline@2x.png);
   }
-  html[dir="rtl"] #viewOutline.toolbarButton::before {
+  #mainPdfWarrper[dir="rtl"] #viewOutline.toolbarButton::before {
     content: url(images/toolbarButton-viewOutline-rtl@2x.png);
   }
 
@@ -2081,16 +2081,16 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
     top: -1px;
     content: url(images/treeitem-expanded@2x.png);
   }
-  html[dir="ltr"] .outlineItemToggler.outlineItemsHidden::before {
+  #mainPdfWarrper[dir="ltr"] .outlineItemToggler.outlineItemsHidden::before {
     content: url(images/treeitem-collapsed@2x.png);
   }
-  html[dir="rtl"] .outlineItemToggler.outlineItemsHidden::before {
+  #mainPdfWarrper[dir="rtl"] .outlineItemToggler.outlineItemsHidden::before {
     content: url(images/treeitem-collapsed-rtl@2x.png);
   }
-  html[dir="ltr"] .outlineItemToggler::before {
+  #mainPdfWarrper[dir="ltr"] .outlineItemToggler::before {
     right: 0;
   }
-  html[dir="rtl"] .outlineItemToggler::before {
+  #mainPdfWarrper[dir="rtl"] .outlineItemToggler::before {
     left: 0;
   }
 }
@@ -2226,10 +2226,10 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
     background-color: hsla(0, 0%, 0%, 0.7);
   }
 
-  html[dir="ltr"] #outerContainer.sidebarOpen > #mainContainer {
+  #mainPdfWarrper[dir="ltr"] #outerContainer.sidebarOpen > #mainContainer {
     left: 0px;
   }
-  html[dir="rtl"] #outerContainer.sidebarOpen > #mainContainer {
+  #mainPdfWarrper[dir="rtl"] #outerContainer.sidebarOpen > #mainContainer {
     right: 0px;
   }
 
@@ -2272,10 +2272,10 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   .toolbarButtonSpacer {
     width: 0;
   }
-  html[dir="ltr"] .findbar {
+  #mainPdfWarrper[dir="ltr"] .findbar {
     left: 38px;
   }
-  html[dir="rtl"] .findbar {
+  #mainPdfWarrper[dir="rtl"] .findbar {
     right: 38px;
   }
 }
