@@ -12,7 +12,7 @@ The plugin integrates other libraries like PPTXjs, mammoth.js,SheetJs Combined w
 This project replaces my older project called <a href="https://github.com/meshesha/OfficeJs">OfficeJs</a> so the version does not start from 1.0.0.
 
 ### Version:
-* 1.2.0
+* 1.2.1
 
 ### Support:
 * pdf viewer
