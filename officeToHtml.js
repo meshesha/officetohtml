@@ -3009,8 +3009,9 @@
                     var appConfig = PDFViewerApplication.appConfig;
                     var file = void 0;
                     var queryString = document.location.search.substring(1);
-                    var params = (0, _ui_utils.parseQueryString)(queryString);
-                    file = 'file' in params ? params.file : appConfig.defaultUrl;
+                    //var params = (0, _ui_utils.parseQueryString)(queryString);
+                    //file = 'file' in params ? params.file : appConfig.defaultUrl;
+                    file = appConfig.defaultUrl;
                     validateFileURL(file);
                     var waitForBeforeOpening = [];
                     var fileInput = document.createElement('input');
@@ -11219,7 +11220,7 @@
                 "use strict";
 
 
-                var DEFAULT_URL = my_pdf_file;//'compressed.tracemonkey-pldi-09.pdf';
+                var DEFAULT_URL = my_pdf_file;
                 ;
                 var pdfjsWebApp = void 0;
                 {
