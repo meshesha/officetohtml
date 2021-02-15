@@ -1,17 +1,28 @@
 /**
  * pptxjs.js
+<<<<<<< HEAD
  * Ver. : 1.11.0
  * last update: 09/01/2021
+=======
+ * Ver. : 1.10.4
+ * last update: 14/05/2020
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
  * Author: meshesha , https://github.com/meshesha
  * LICENSE: MIT
  * url:https://meshesha.github.io/pptxjs
  * New: 
+<<<<<<< HEAD
  *  - Support for embedding video from a link (tested youtube and vimeo links)
  *  - support 'revealjs'(https://revealjs.com) (It is not recommended to add a theme because it distorts some of the elements like tables )
  *  - i think i fix issue [officetohtml/issues/7] (https://github.com/meshesha/officetohtml/issues/7)(not tested) 
  *  - change loading view 
  *  - fix center slides in fullscreen mode - (https://github.com/meshesha/divs2slides v1.3.3)
  *  - support emf and wmf files - microsoft files, supported only in Internet Explorer (test in IE11)
+=======
+ *  - fixed security issue
+ *  - new divs2slides (v.1.3.2)
+ *  - fixed div width issue
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
  */
 
 (function ($) {
@@ -61,6 +72,7 @@
                 background: false, /** false or color*/
                 transition: "default", /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */
                 transitionTime: 1 /** transition time between slides in seconds */
+<<<<<<< HEAD
             },
             revealjsConfig: {}
         }, options);
@@ -74,6 +86,16 @@
                     "class": "slides-loading-progress-bar",
                     "style": "width: 1%; background-color: #4775d1;"
                 }).html("<span style='text-align: center;'>Loading... (1%)</span>"))
+=======
+            }
+        }, options);
+        //
+        $("#" + divId).prepend(
+            $("<span></span>").attr({
+                "class": "slides-loadnig-msg",
+                "style": "display:block; color:blue; font-size:20px; width:50%; margin:0 auto;"
+            }).html("Loading...")
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
         );
         if (settings.slideMode) {
             if (!jQuery().divs2slides) {
@@ -95,6 +117,7 @@
                 console.log(key, isDone)
                 if (key == 116 && !isSlideMode) { //F5
                     isSlideMode = true;
+<<<<<<< HEAD
                     initSlideMode(divId, settings);
                     // $("#" + divId + " .slide").hide();
                     // setTimeout(function () {
@@ -132,13 +155,57 @@
                     //         style: trnsfrmScl  /*+ ";height: " + (numOfSlides * slidesHeight * sScaleVal) + "px"*/
                     //     })
                     // }, 1500);
+=======
+                    $("#" + divId + " .slide").hide();
+                    setTimeout(function () {
+                        //if(isDone){
+                        var slideConf = settings.slideModeConfig;
+                        //console.log(key,isDone,slideConf)
+                        $(".slides-loadnig-msg").remove()
+                        $("#" + divId).divs2slides({
+                            first: slideConf.first,
+                            nav: slideConf.nav,
+                            showPlayPauseBtn: settings.showPlayPauseBtn,
+                            navTxtColor: slideConf.navTxtColor,
+                            keyBoardShortCut: slideConf.keyBoardShortCut,
+                            showSlideNum: slideConf.showSlideNum,
+                            showTotalSlideNum: slideConf.showTotalSlideNum,
+                            autoSlide: slideConf.autoSlide,
+                            randomAutoSlide: slideConf.randomAutoSlide,
+                            loop: slideConf.loop,
+                            background: slideConf.background,
+                            transition: slideConf.transition,
+                            transitionTime: slideConf.transitionTime
+                        });
+                        //}
+
+                        var sScale = settings.slidesScale;
+                        var trnsfrmScl = "";
+                        if (sScale != "") {
+                            var numsScale = parseInt(sScale);
+                            var scaleVal = numsScale / 100;
+                            trnsfrmScl = 'transform:scale(' + scaleVal + '); transform-origin:top';
+                        }
+
+                        var numOfSlides = 1;
+                        var sScaleVal = (sScale != "") ? scaleVal : 1;
+                        var slidesHeight = $("#" + divId + " .slide").height();
+                        //console.log(slidesHeight);
+                        $("#all_slides_warpper").attr({
+                            style: trnsfrmScl  /*+ ";height: " + (numOfSlides * slidesHeight * sScaleVal) + "px"*/
+                        })
+                    }, 1500);
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
                 } else if (key == 116 && isSlideMode) {
                     //exit slide mode - TODO
 
                 }
             });
         }
+<<<<<<< HEAD
         FileReaderJS.setSync(false);
+=======
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
         if (settings.pptxFileUrl != "") {
             JSZipUtils.getBinaryContent(settings.pptxFileUrl, function (err, content) {
                 var blob = new Blob([content]);
@@ -196,6 +263,7 @@
             zip = zip.load(file);  //zip.load(file, { base64: true });
             var rslt_ary = processPPTX(zip);
             //s = readXmlFile(zip, 'ppt/tableStyles.xml');
+<<<<<<< HEAD
             //var slidesHeight = $("#" + divId + " .slide").height();
             for (var i = 0; i < rslt_ary.length; i++) {
                 switch (rslt_ary[i]["type"]) {
@@ -296,6 +364,97 @@
                     trnsfrmScl = 'transform:scale(' + scaleVal + '); transform-origin:top';
                 }
             }
+=======
+
+            var slidesHeight = $("#" + divId + " .slide").height();
+
+            for (var i = 0; i < rslt_ary.length; i++) {
+                switch (rslt_ary[i]["type"]) {
+                    case "slide":
+                        $result.append(rslt_ary[i]["data"]);
+                        break;
+                    case "pptx-thumb":
+                        //$("#pptx-thumb").attr("src", "data:image/jpeg;base64," +rslt_ary[i]["data"]);
+                        break;
+                    case "slideSize":
+                        /*
+                        var slideWidth = rslt_ary[i]["data"].width;
+                        var slideHeight = rslt_ary[i]["data"].height;
+                        $("#"+divId).css({
+                            'width': slideWidth + 80,
+                            'height': slideHeight + 60
+                        });
+                        */
+                        break;
+                    case "globalCSS":
+                        $result.append("<style>" + rslt_ary[i]["data"] + "</style>");
+                        break;
+                    case "ExecutionTime":
+                        // $result.prepend("<div id='presentation_toolbar'></div>");
+                        processMsgQueue(MsgQueue);
+                        setNumericBullets($(".block"));
+                        setNumericBullets($("table td"));
+
+                        isDone = true;
+
+                        if (settings.slideMode && !isSlideMode) {
+                            isSlideMode = true;
+                            $("#" + divId + " .slide").hide();
+                            setTimeout(function () {
+                                var slideConf = settings.slideModeConfig;
+                                $(".slides-loadnig-msg").remove();
+                                $("#" + divId).divs2slides({
+                                    first: slideConf.first,
+                                    nav: slideConf.nav,
+                                    showPlayPauseBtn: settings.showPlayPauseBtn,
+                                    navTxtColor: slideConf.navTxtColor,
+                                    keyBoardShortCut: slideConf.keyBoardShortCut,
+                                    showSlideNum: slideConf.showSlideNum,
+                                    showTotalSlideNum: slideConf.showTotalSlideNum,
+                                    autoSlide: slideConf.autoSlide,
+                                    randomAutoSlide: slideConf.randomAutoSlide,
+                                    loop: slideConf.loop,
+                                    background: slideConf.background,
+                                    transition: slideConf.transition,
+                                    transitionTime: slideConf.transitionTime
+                                });
+
+                                var sScale = settings.slidesScale;
+                                var trnsfrmScl = "";
+                                if (sScale != "") {
+                                    var numsScale = parseInt(sScale);
+                                    var scaleVal = numsScale / 100;
+                                    trnsfrmScl = 'transform:scale(' + scaleVal + '); transform-origin:top';
+                                }
+
+                                var numOfSlides = 1;
+                                var sScaleVal = (sScale != "") ? scaleVal : 1;
+                                //console.log(slidesHeight);
+                                $("#all_slides_warpper").attr({
+                                    style: trnsfrmScl + ";height: " + (numOfSlides * slidesHeight * sScaleVal) + "px"
+                                })
+
+                            }, 1500);
+                        } else if (!settings.slideMode) {
+                            $(".slides-loadnig-msg").remove();
+                        }
+                        break;
+                    default:
+                }
+            }
+            if (!settings.slideMode) {
+                if (document.getElementById("all_slides_warpper") === null) {
+                    $("#" + divId + " .slide").wrapAll("<div id='all_slides_warpper'></div>");
+                }
+            }
+            var sScale = settings.slidesScale;
+            var trnsfrmScl = "";
+            if (sScale != "") {
+                var numsScale = parseInt(sScale);
+                var scaleVal = numsScale / 100;
+                trnsfrmScl = 'transform:scale(' + scaleVal + '); transform-origin:top';
+            }
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
 
             var slidesHeight = $("#" + divId + " .slide").height();
             var numOfSlides = $("#" + divId + " .slide").length;
@@ -456,12 +615,40 @@
             var rtenObj = {};
             var content = readXmlFile(zip, "ppt/presentation.xml");
             var sldSzAttrs = content["p:presentation"]["p:sldSz"]["attrs"];
+<<<<<<< HEAD
             slideWidth = parseInt(sldSzAttrs["cx"]) * 96 / 914400;
             slideHeight = parseInt(sldSzAttrs["cy"]) * 96 / 914400;
             rtenObj = {
                 "width": slideWidth,
                 "height": slideHeight
             };
+=======
+            //var cWidth = settings.width,
+            //    cHeight = settings.height;
+            //if(cWidth === false && cHeight === false){
+            rtenObj = {
+                "width": parseInt(sldSzAttrs["cx"]) * 96 / 914400,
+                "height": parseInt(sldSzAttrs["cy"]) * 96 / 914400
+            };
+            /*    
+            }else if(cWidth !== false && cHeight === false){
+                rtenObj =  {
+                    "width": cWidth,
+                    "height": parseInt(sldSzAttrs["cy"]) * 96 / 914400
+                };
+            }else if(cWidth === false && cHeight !== false){
+                rtenObj =  {
+                    "width":  parseInt(sldSzAttrs["cx"]) * 96 / 914400,
+                    "height": cHeight
+                };
+            }else{
+                rtenObj =  {
+                    "width":  cWidth,
+                    "height": cHeight
+                };
+
+            }*/
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
             return rtenObj;
         }
 
@@ -605,12 +792,16 @@
             };
 
             var bgColor = getSlideBackgroundFill(slideContent, slideLayoutContent, slideMasterContent, warpObj);
+<<<<<<< HEAD
             if (settings.slideMode && settings.slideType == "revealjs") {
                 var result = "<section class='slide' style='width:" + slideSize.width + "px; height:" + slideSize.height + "px;" + bgColor + "'>"
             } else {
                 var result = "<div class='slide' style='width:" + slideSize.width + "px; height:" + slideSize.height + "px;" + bgColor + "'>"
             }
 
+=======
+            var result = "<div class='slide' style='width:" + slideSize.width + "px; height:" + slideSize.height + "px;" + bgColor + "'>"
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
             //result += "<div>"+getBackgroundShapes(slideContent, slideLayoutContent, slideMasterContent,warpObj) + "</div>" - TODO
             for (var nodeKey in nodes) {
                 if (nodes[nodeKey].constructor === Array) {
@@ -621,12 +812,17 @@
                     result += processNodesInSlide(nodeKey, nodes[nodeKey], warpObj);
                 }
             }
+<<<<<<< HEAD
             if (settings.slideMode && settings.slideType == "revealjs") {
                 return result + "</section>";
             } else {
                 return result + "</div>";
             }
 
+=======
+
+            return result + "</div>";
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
         }
 
         function indexNodes(content) {
@@ -3407,6 +3603,7 @@
                         yr = (dz > 0) ? y1 : t7;
                         t8 = (dyPos > 0) ? yPos : h;
                         yb = (dz > 0) ? t8 : h;
+<<<<<<< HEAD
 
                         d_val = "M" + 0 + "," + 0 +
                             " L" + x1 + "," + 0 +
@@ -3426,6 +3623,27 @@
                             " L" + 0 + "," + y1 +
                             " z";
 
+=======
+
+                        d_val = "M" + 0 + "," + 0 +
+                            " L" + x1 + "," + 0 +
+                            " L" + xt + "," + yt +
+                            " L" + x2 + "," + 0 +
+                            " L" + w + "," + 0 +
+                            " L" + w + "," + y1 +
+                            " L" + xr + "," + yr +
+                            " L" + w + "," + y2 +
+                            " L" + w + "," + h +
+                            " L" + x2 + "," + h +
+                            " L" + xb + "," + yb +
+                            " L" + x1 + "," + h +
+                            " L" + 0 + "," + h +
+                            " L" + 0 + "," + y2 +
+                            " L" + xl + "," + yl +
+                            " L" + 0 + "," + y1 +
+                            " z";
+
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
                         result += "<path d='" + d_val + "' fill='" + (!imgFillFlg ? (grndFillFlg ? "url(#linGrd_" + shpId + ")" : fillColor) : "url(#imgPtrn_" + shpId + ")") +
                             "' stroke='" + border.color + "' stroke-width='" + border.width + "' stroke-dasharray='" + border.strokeDasharray + "' />";
 
@@ -7204,16 +7422,31 @@
             }
             //video
             var vdoNode = getTextByPathList(node, ["p:nvPicPr", "p:nvPr", "a:videoFile"]);
+<<<<<<< HEAD
             var vdoRid, vdoFile, vdoFileExt, vdoMimeType, uInt8Array, blob, vdoBlob, mediaSupportFlag = false, isVdeoLink = false;
+=======
+            var vdoRid, vdoFile, vdoFileExt, vdoMimeType, uInt8Array, blob, vdoBlob, mediaSupportFlag = false;
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
             var mediaProcess = settings.mediaProcess;
             if (vdoNode !== undefined & mediaProcess) {
                 vdoRid = vdoNode["attrs"]["r:link"];
                 vdoFile = warpObj["slideResObj"][vdoRid]["target"];
+<<<<<<< HEAD
                 var checkIfLink = IsVideoLink(vdoFile);
                 if (checkIfLink) {
                     vdoFile = escapeHtml(vdoFile);
                     //vdoBlob = vdoFile;
                     isVdeoLink = true;
+=======
+                uInt8Array = zip.file(vdoFile).asArrayBuffer();
+                vdoFileExt = extractFileExtension(vdoFile).toLowerCase();
+                if (vdoFileExt == "mp4" || vdoFileExt == "webm" || vdoFileExt == "ogg") {
+                    vdoMimeType = getMimeType(vdoFileExt);
+                    blob = new Blob([uInt8Array], {
+                        type: vdoMimeType
+                    });
+                    vdoBlob = URL.createObjectURL(blob);
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
                     mediaSupportFlag = true;
                     mediaPicFlag = true;
                 } else {
@@ -7278,10 +7511,15 @@
             if ((vdoNode === undefined && audioNode === undefined) || !mediaProcess || !mediaSupportFlag) {
                 rtrnData += "<img src='data:" + mimeType + ";base64," + base64ArrayBuffer(imgArrayBuffer) + "' style='width: 100%; height: 100%'/>";
             } else if ((vdoNode !== undefined || audioNode !== undefined) && mediaProcess && mediaSupportFlag) {
+<<<<<<< HEAD
                 if (vdoNode !== undefined && !isVdeoLink) {
                     rtrnData += "<video  src='" + vdoBlob + "' controls style='width: 100%; height: 100%'>Your browser does not support the video tag.</video>";
                 } else if (vdoNode !== undefined && isVdeoLink) {
                     rtrnData += "<iframe   src='" + vdoFile + "' controls style='width: 100%; height: 100%'></iframe >";
+=======
+                if (vdoNode !== undefined) {
+                    rtrnData += "<video  src='" + vdoBlob + "' controls style='width: 100%; height: 100%'>Your browser does not support the video tag.</video>";
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
                 }
                 if (audioNode !== undefined) {
                     rtrnData += '<audio id="audio_player" controls ><source src="' + audioBlob + '"></audio>';
@@ -7969,7 +8207,11 @@
                 var tcNodes = trNodes["a:tc"];
                 if (tcNodes.constructor === Array) {
                     for (var j = 0; j < tcNodes.length; j++) {
+<<<<<<< HEAD
                         var text = genTextBody(tcNodes[j]["a:txBody"], node, undefined, undefined, undefined, warpObj);
+=======
+                        var text = genTextBody(tcNodes[j]["a:txBody"]);
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
                         //Cells Style : TODO /////////////Amir
                         var colWidthParam = getColsGrid[j]["attrs"]["w"];
                         var colStyl = "";
@@ -7996,7 +8238,11 @@
                         tableHtml += "<td style='" + colStyl + "'>" + text + "</td>";
                     }
                 } else {
+<<<<<<< HEAD
                     var text = genTextBody(tcNodes["a:txBody"], node, undefined, undefined, undefined, warpObj);
+=======
+                    var text = genTextBody(tcNodes["a:txBody"]);
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
                     //Cells Style : TODO /////////////Amir
                     var colWidthParam = getColsGrid[0]["attrs"]["w"];
                     var colStyl = "";
@@ -9526,6 +9772,7 @@
                     tx2 = wc,
                     ty2 = h
             } else if (k < 180) {
+<<<<<<< HEAD
                 n = 0,
                     o = 0
             } else if (k == 180) {
@@ -9535,6 +9782,17 @@
                     ty2 = hc
             } else if (k < 270) {
                 n = 0,
+=======
+                n = 0,
+                    o = 0
+            } else if (k == 180) {
+                tx1 = 0,
+                    ty1 = hc,
+                    tx2 = w,
+                    ty2 = hc
+            } else if (k < 270) {
+                n = 0,
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
                     o = h
             } else if (k == 270) {
                 tx1 = wc,
@@ -9839,6 +10097,7 @@
             return base64;
         }
 
+<<<<<<< HEAD
         function IsVideoLink(vdoFile) {
             /*
             var ext = extractFileExtension(vdoFile);
@@ -9852,6 +10111,8 @@
             return urlregex.test(vdoFile);
         }
 
+=======
+>>>>>>> c5837424ceb8107e4275fc6c7483f5ce2585c955
         function extractFileExtension(filename) {
             return filename.substr((~-filename.lastIndexOf(".") >>> 0) + 2);
         }
