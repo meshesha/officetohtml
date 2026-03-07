@@ -30,6 +30,8 @@
                 zoomBtns: true,
                 scaleSelector: true,
                 presantationModeBtn: true,
+                allowPresentationModeSwipe: true,
+                allowPresentationModePinchZoom: false,
                 openFileBtn: true,
                 printBtn: true,
                 downloadBtn: true,
@@ -8027,6 +8029,7 @@
                         this.mouseScrollTimeStamp = 0;
                         this.mouseScrollDelta = 0;
                         this.touchSwipeState = null;
+                        this._pinchBaseScale = null;
                         if (contextMenuItems) {
                             contextMenuItems.contextFirstPage.addEventListener('click', function () {
                                 _this.contextMenuOpen = false;
@@ -8189,6 +8192,7 @@
                             this._resetMouseScrollState();
                             this.container.removeAttribute('contextmenu');
                             this.contextMenuOpen = false;
+                            this._pinchBaseScale = null;
                         }
                     }, {
                         key: '_mouseDown',
@@ -8245,58 +8249,189 @@
                         value: function _resetMouseScrollState() {
                             this.mouseScrollTimeStamp = 0;
                             this.mouseScrollDelta = 0;
-                        }
-                    }, {
-                        key: '_touchSwipe',
-                        value: function _touchSwipe(evt) {
-                            if (!this.active) {
-                                return;
-                            }
-                            if (evt.touches.length > 1) {
-                                this.touchSwipeState = null;
-                                return;
-                            }
-                            switch (evt.type) {
-                                case 'touchstart':
-                                    this.touchSwipeState = {
-                                        startX: evt.touches[0].pageX,
-                                        startY: evt.touches[0].pageY,
-                                        endX: evt.touches[0].pageX,
-                                        endY: evt.touches[0].pageY
-                                    };
-                                    break;
-                                case 'touchmove':
-                                    if (this.touchSwipeState === null) {
-                                        return;
+                                                    }
+                        }, {
+                            key: '_touchSwipe',
+                            value: function _touchSwipe(evt) {
+                                if (!this.active) {
+                                    return;
+                                }
+
+                                var allowSwipe = pdfSet && pdfSet.allowPresentationModeSwipe !== false;
+                                var allowPinchZoom = pdfSet && pdfSet.allowPresentationModePinchZoom === true;
+
+                                // Commit an in-progress pinch when finger count drops below 2
+                                if (evt.touches.length < 2 && this.touchSwipeState && this.touchSwipeState.pinchStartScale !== undefined) {
+                                    this._commitPinchZoom();
+                                    return;
+                                }
+
+                                if (evt.touches.length > 1) {
+                                    if (allowPinchZoom) {
+                                        this._handlePinchZoom(evt);
+                                    } else {
+                                        this._clearPinchTransform();
+                                        this.touchSwipeState = null;
                                     }
-                                    this.touchSwipeState.endX = evt.touches[0].pageX;
-                                    this.touchSwipeState.endY = evt.touches[0].pageY;
                                     evt.preventDefault();
-                                    break;
-                                case 'touchend':
-                                    if (this.touchSwipeState === null) {
-                                        return;
-                                    }
-                                    var delta = 0;
-                                    var dx = this.touchSwipeState.endX - this.touchSwipeState.startX;
-                                    var dy = this.touchSwipeState.endY - this.touchSwipeState.startY;
-                                    var absAngle = Math.abs(Math.atan2(dy, dx));
-                                    if (Math.abs(dx) > SWIPE_MIN_DISTANCE_THRESHOLD && (absAngle <= SWIPE_ANGLE_THRESHOLD || absAngle >= Math.PI - SWIPE_ANGLE_THRESHOLD)) {
-                                        delta = dx;
-                                    } else if (Math.abs(dy) > SWIPE_MIN_DISTANCE_THRESHOLD && Math.abs(absAngle - Math.PI / 2) <= SWIPE_ANGLE_THRESHOLD) {
-                                        delta = dy;
-                                    }
-                                    if (delta > 0) {
-                                        this._goToPreviousPage();
-                                    } else if (delta < 0) {
-                                        this._goToNextPage();
-                                    }
-                                    break;
+                                    return;
+                                }
+
+                                // Single finger: pan if zoomed in, swipe to navigate otherwise
+                                var isZoomedIn = allowPinchZoom && this._pinchBaseScale !== null &&
+                                    this.pdfViewer && this.pdfViewer.currentScale > this._pinchBaseScale * 1.05;
+
+                                if (!allowSwipe && !isZoomedIn) {
+                                    return;
+                                }
+
+                                switch (evt.type) {
+                                    case 'touchstart':
+                                        this.touchSwipeState = {
+                                            startX: evt.touches[0].pageX,
+                                            startY: evt.touches[0].pageY,
+                                            endX: evt.touches[0].pageX,
+                                            endY: evt.touches[0].pageY,
+                                            lastX: evt.touches[0].pageX,
+                                            lastY: evt.touches[0].pageY
+                                        };
+                                        break;
+                                    case 'touchmove':
+                                        if (this.touchSwipeState === null) {
+                                            return;
+                                        }
+                                        var curX = evt.touches[0].pageX;
+                                        var curY = evt.touches[0].pageY;
+                                        if (isZoomedIn) {
+                                            // Pan the viewport
+                                            this.container.scrollLeft += this.touchSwipeState.lastX - curX;
+                                            this.container.scrollTop += this.touchSwipeState.lastY - curY;
+                                        } else {
+                                            this.touchSwipeState.endX = curX;
+                                            this.touchSwipeState.endY = curY;
+                                        }
+                                        this.touchSwipeState.lastX = curX;
+                                        this.touchSwipeState.lastY = curY;
+                                        evt.preventDefault();
+                                        break;
+                                    case 'touchend':
+                                        if (this.touchSwipeState === null) {
+                                            return;
+                                        }
+                                        if (!allowSwipe || isZoomedIn) {
+                                            this.touchSwipeState = null;
+                                            return;
+                                        }
+                                        var delta = 0;
+                                        var dx = this.touchSwipeState.endX - this.touchSwipeState.startX;
+                                        var dy = this.touchSwipeState.endY - this.touchSwipeState.startY;
+                                        var absAngle = Math.abs(Math.atan2(dy, dx));
+                                        if (Math.abs(dx) > SWIPE_MIN_DISTANCE_THRESHOLD && (absAngle <= SWIPE_ANGLE_THRESHOLD || absAngle >= Math.PI - SWIPE_ANGLE_THRESHOLD)) {
+                                            delta = dx;
+                                        } else if (Math.abs(dy) > SWIPE_MIN_DISTANCE_THRESHOLD && Math.abs(absAngle - Math.PI / 2) <= SWIPE_ANGLE_THRESHOLD) {
+                                            delta = dy;
+                                        }
+                                        if (delta > 0) {
+                                            this._goToPreviousPage();
+                                        } else if (delta < 0) {
+                                            this._goToNextPage();
+                                        }
+                                        this.touchSwipeState = null;
+                                        break;
+                                }
                             }
-                        }
-                    }, {
-                        key: '_addWindowListeners',
-                        value: function _addWindowListeners() {
+                        }, {
+                            key: '_clearPinchTransform',
+                            value: function _clearPinchTransform() {
+                                this.viewer.style.transform = '';
+                                this.viewer.style.transformOrigin = '';
+                            }
+                        }, {
+                            key: '_commitPinchZoom',
+                            value: function _commitPinchZoom() {
+                                if (!this.touchSwipeState || this.touchSwipeState.pinchStartScale === undefined) {
+                                    return;
+                                }
+
+                                var state = this.touchSwipeState;
+                                this.touchSwipeState = null;
+
+                                var oldScale = state.pinchStartScale;
+                                var gestureScale = state.lastDistance / state.pinchDistance;
+                                var newScale = Math.max(0.25, Math.min(10, oldScale * gestureScale));
+
+                                // Capture scroll and midpoint before removing the transform
+                                var rect = this.container.getBoundingClientRect();
+                                var midXRel = state.midX - rect.left;
+                                var midYRel = state.midY - rect.top;
+                                var scrollX = this.container.scrollLeft;
+                                var scrollY = this.container.scrollTop;
+
+                                // Remove visual transform and commit real scale in one paint
+                                this._clearPinchTransform();
+                                this.pdfViewer.currentScale = newScale;
+
+                                // Reposition scroll so the pinch centre stays fixed
+                                var scaleRatio = this.pdfViewer.currentScale / oldScale;
+                                this.container.scrollLeft = (scrollX + midXRel) * scaleRatio - midXRel;
+                                this.container.scrollTop  = (scrollY + midYRel) * scaleRatio - midYRel;
+
+                                // Reset pan-lock if zoomed back to near the original scale
+                                if (this._pinchBaseScale !== null &&
+                                    this.pdfViewer.currentScale <= this._pinchBaseScale * 1.05) {
+                                    this._pinchBaseScale = null;
+                                }
+                            }
+                        }, {
+                            key: '_handlePinchZoom',
+                            value: function _handlePinchZoom(evt) {
+                                if (evt.touches.length !== 2) {
+                                    return;
+                                }
+
+                                var touch1 = evt.touches[0];
+                                var touch2 = evt.touches[1];
+                                var distance = Math.sqrt(
+                                    Math.pow(touch2.pageX - touch1.pageX, 2) +
+                                    Math.pow(touch2.pageY - touch1.pageY, 2)
+                                );
+                                var midX = (touch1.pageX + touch2.pageX) / 2;
+                                var midY = (touch1.pageY + touch2.pageY) / 2;
+
+                                if (evt.type === 'touchstart' || !this.touchSwipeState || this.touchSwipeState.pinchStartScale === undefined) {
+                                    // Record base scale once per presentation session for pan detection
+                                    if (this._pinchBaseScale === null) {
+                                        this._pinchBaseScale = this.pdfViewer.currentScale;
+                                    }
+                                    // Anchor the transform origin to the initial pinch midpoint on the viewer
+                                    var viewerRect = this.viewer.getBoundingClientRect();
+                                    this.touchSwipeState = {
+                                        pinchDistance: distance,
+                                        lastDistance: distance,
+                                        pinchStartScale: this.pdfViewer.currentScale,
+                                        originX: midX - viewerRect.left,
+                                        originY: midY - viewerRect.top,
+                                        midX: midX,
+                                        midY: midY
+                                    };
+                                } else if (evt.type === 'touchmove') {
+                                    var gestureScale = distance / this.touchSwipeState.pinchDistance;
+                                    var newScale = Math.max(0.25, Math.min(10, this.touchSwipeState.pinchStartScale * gestureScale));
+                                    // Clamp gestureScale so the visual transform matches the clamped scale
+                                    var clampedGesture = newScale / this.touchSwipeState.pinchStartScale;
+
+                                    this.touchSwipeState.lastDistance = distance;
+
+                                    // CSS transform: instant visual feedback, no pdf.js re-render during gesture
+                                    this.viewer.style.transformOrigin = this.touchSwipeState.originX + 'px ' + this.touchSwipeState.originY + 'px';
+                                    this.viewer.style.transform = 'scale(' + clampedGesture + ')';
+
+                                    evt.preventDefault();
+                                }
+                            }
+                        }, {
+                            key: '_addWindowListeners',
+                            value: function _addWindowListeners() {
                             this.showControlsBind = this._showControls.bind(this);
                             this.mouseDownBind = this._mouseDown.bind(this);
                             this.mouseWheelBind = this._mouseWheel.bind(this);
