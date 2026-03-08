@@ -8277,13 +8277,9 @@
                                     return;
                                 }
 
-                                // Single finger: pan if zoomed in, swipe to navigate otherwise
+                                // Single finger: pan if zoomed in, swipe/tap to navigate otherwise
                                 var isZoomedIn = allowPinchZoom && this._pinchBaseScale !== null &&
                                     this.pdfViewer && this.pdfViewer.currentScale > this._pinchBaseScale * 1.05;
-
-                                if (!allowSwipe && !isZoomedIn) {
-                                    return;
-                                }
 
                                 switch (evt.type) {
                                     case 'touchstart':
@@ -8306,35 +8302,50 @@
                                             // Pan the viewport
                                             this.container.scrollLeft += this.touchSwipeState.lastX - curX;
                                             this.container.scrollTop += this.touchSwipeState.lastY - curY;
-                                        } else {
-                                            this.touchSwipeState.endX = curX;
-                                            this.touchSwipeState.endY = curY;
+                                            evt.preventDefault();
+                                        } else if (allowSwipe) {
+                                            evt.preventDefault();
                                         }
+                                        // Always track movement so touchend can distinguish tap from drag
+                                        this.touchSwipeState.endX = curX;
+                                        this.touchSwipeState.endY = curY;
                                         this.touchSwipeState.lastX = curX;
                                         this.touchSwipeState.lastY = curY;
-                                        evt.preventDefault();
                                         break;
                                     case 'touchend':
                                         if (this.touchSwipeState === null) {
                                             return;
                                         }
-                                        if (!allowSwipe || isZoomedIn) {
+                                        // Prevent browser from generating synthetic mousedown/click
+                                        // which would cause _mouseDown to also navigate, doubling page jumps
+                                        evt.preventDefault();
+                                        if (isZoomedIn) {
                                             this.touchSwipeState = null;
                                             return;
                                         }
+                                        var tdx = this.touchSwipeState.endX - this.touchSwipeState.startX;
+                                        var tdy = this.touchSwipeState.endY - this.touchSwipeState.startY;
+                                        var isTap = Math.abs(tdx) <= SWIPE_MIN_DISTANCE_THRESHOLD && Math.abs(tdy) <= SWIPE_MIN_DISTANCE_THRESHOLD;
                                         var delta = 0;
-                                        var dx = this.touchSwipeState.endX - this.touchSwipeState.startX;
-                                        var dy = this.touchSwipeState.endY - this.touchSwipeState.startY;
-                                        var absAngle = Math.abs(Math.atan2(dy, dx));
-                                        if (Math.abs(dx) > SWIPE_MIN_DISTANCE_THRESHOLD && (absAngle <= SWIPE_ANGLE_THRESHOLD || absAngle >= Math.PI - SWIPE_ANGLE_THRESHOLD)) {
-                                            delta = dx;
-                                        } else if (Math.abs(dy) > SWIPE_MIN_DISTANCE_THRESHOLD && Math.abs(absAngle - Math.PI / 2) <= SWIPE_ANGLE_THRESHOLD) {
-                                            delta = dy;
+                                        if (allowSwipe && !isTap) {
+                                            var absAngle = Math.abs(Math.atan2(tdy, tdx));
+                                            if (Math.abs(tdx) > SWIPE_MIN_DISTANCE_THRESHOLD && (absAngle <= SWIPE_ANGLE_THRESHOLD || absAngle >= Math.PI - SWIPE_ANGLE_THRESHOLD)) {
+                                                delta = tdx;
+                                            } else if (Math.abs(tdy) > SWIPE_MIN_DISTANCE_THRESHOLD && Math.abs(absAngle - Math.PI / 2) <= SWIPE_ANGLE_THRESHOLD) {
+                                                delta = tdy;
+                                            }
                                         }
                                         if (delta > 0) {
                                             this._goToPreviousPage();
                                         } else if (delta < 0) {
                                             this._goToNextPage();
+                                        } else if (isTap) {
+                                            // Tap: right half = next page, left half = prev page
+                                            if (this.touchSwipeState.startX > window.innerWidth / 2) {
+                                                this._goToNextPage();
+                                            } else {
+                                                this._goToPreviousPage();
+                                            }
                                         }
                                         this.touchSwipeState = null;
                                         break;
