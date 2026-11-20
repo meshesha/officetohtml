@@ -134,10 +134,15 @@ from Actions instead of the branch root:
 
 1. Repository → **Settings → Pages**
 2. **Build and deployment → Source: GitHub Actions**
-3. Custom domain stays `officetohtml.js.org` (the `CNAME` file is part of the deployed folder).
+3. **Custom domain:** type `officetohtml.js.org`, click **Save**, wait for the DNS check to pass,
+   then tick **Enforce HTTPS**. GitHub ignores the `CNAME` file when it deploys from Actions, so the
+   domain must be set here. Removing the old root `CNAME` file also cleared this setting.
+4. **Actions → Pages → Run workflow** (or push a commit) to deploy again.
 
 > If you merge without doing this, Pages keeps serving the repository root, which no longer
-> contains the site.
+> contains the site, and `officetohtml.js.org` shows a GitHub 404 page.
+> The js.org entry (`"officetohtml": "meshesha.github.io/officetohtml"`) is already correct.
+> No new repository and no js.org pull request are needed.
 
 ## Step 7 – Merge
 

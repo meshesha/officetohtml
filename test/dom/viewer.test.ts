@@ -101,7 +101,9 @@ describe("loading", () => {
   it("aborts the previous load when a new one starts", async () => {
     let release!: () => void;
     const slow = (): Renderer => ({ render: () => new Promise<void>((r) => (release = r)), destroy() {} });
-    const v = new OfficeViewer(host, { renderers: { text: slow } });
+    // the second load uses a stub too: the real PDF.js can hang under jsdom (seen on Node 22 in CI)
+    const fast = (): Renderer => ({ render: async () => {}, destroy() {} });
+    const v = new OfficeViewer(host, { renderers: { text: slow, pdf: fast } });
     const first = v.load(enc("one"), { fileName: "1.txt" });
     await new Promise((r) => setTimeout(r, 20));
     const second = v.load(enc("<p>two</p>"), { fileName: "2.json", type: "pdf" });
