@@ -1,0 +1,1 @@
+{"name":"@meshesha/officetohtml","version":"2.0.0","formats":{"documents":["docx"],"presentations":["pptx"],"spreadsheets":["xlsx","xls","ods","csv"],"pdf":true,"images":["png","jpg","gif","webp","svg","bmp","avif"]},"frameworks":["vanilla","react","vue","angular","jquery","web-components"]}

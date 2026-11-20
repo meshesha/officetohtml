@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="site-root" content="../">
+  <title>Languages – OfficeToHtml</title>
+  <meta name="description" content="UI languages of the OfficeToHtml viewer and how to add your own.">
+  <link rel="canonical" href="https://officetohtml.js.org/pages/lang.html">
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="../lib/officetohtml.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L6178F1KH3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-L6178F1KH3");
+  </script>
+  <script src="../assets/site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../"><span class="brand-logo" aria-hidden="true">O2H</span> OfficeToHtml <small>v2</small></a>
+      <button class="icon-btn menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="../">Home</a>
+        <a href="demos.html">Demos</a>
+        <a href="docs.html">Docs</a>
+        <a href="../#credits">Credits</a>
+        <a href="https://github.com/meshesha/officetohtml" rel="noopener">GitHub</a>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" style="padding:40px 0">
+    <div class="section-head">
+      <h1 style="font-size:36px;margin:0 0 8px">Languages</h1>
+      <p>Every text of the viewer – toolbar, messages, errors and dialogs – is translated. Pick a language to preview it.</p>
+    </div>
+    <div class="table-wrap" style="margin-bottom:24px">
+      <table class="data">
+        <thead><tr><th>Code</th><th>Language</th><th>Direction</th><th>Sample</th><th></th></tr></thead>
+        <tbody id="langs"></tbody>
+      </table>
+    </div>
+    <div id="viewer" style="height:420px"></div>
+
+    <h2 style="margin-top:40px">Add a language</h2>
+    <div class="code"><pre><code>import { registerLocale } from "@meshesha/officetohtml";
+
+registerLocale("it", {
+  open: "Apri file",
+  download: "Scarica",
+  print: "Stampa",
+  emptyTitle: "Nessun documento aperto",
+  // … see the Messages type for all keys; missing keys fall back to English
+});
+
+new OfficeViewer("#viewer", { locale: "it" });</code></pre></div>
+    <p class="muted">Contributions of new translations are welcome – add them to <code>src/core/i18n.ts</code> and open a pull request.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© 2017–2026 <a href="https://github.com/meshesha" rel="noopener">Tady Meshesha</a> · MIT License</div>
+      <nav aria-label="Footer"><a href="../">Home</a><a href="demos.html">Demos</a><a href="docs.html">Docs</a><a href="../#credits">Credits</a></nav>
+    </div>
+  </footer>
+
+  <script src="../assets/oth-config.js"></script>
+  <script src="../lib/officetohtml.umd.js"></script>
+  <script>
+    (function () {
+      var LANGS = [["en", "English"], ["he", "עברית · Hebrew"], ["ar", "العربية · Arabic"], ["es", "Español · Spanish"], ["fr", "Français · French"], ["de", "Deutsch · German"], ["ru", "Русский · Russian"], ["zh", "中文 · Chinese"]];
+      var RTL = ["he", "ar"];
+      var tbody = document.getElementById("langs");
+      var viewer = null;
+      function show(code) {
+        if (viewer) viewer.destroy();
+        viewer = new OfficeToHtml.OfficeViewer("#viewer", { locale: code, libs: OTH_SITE.libs, pdf: OTH_SITE.pdf, height: "100%",
+          theme: document.documentElement.getAttribute("data-theme") || "auto" });
+        viewer.load("files/demo.docx").catch(function () {});
+      }
+      LANGS.forEach(function (l) {
+        var msgs = OfficeToHtml.resolveMessages(l[0]);
+        var tr = document.createElement("tr");
+        [l[0], l[1], RTL.indexOf(l[0]) >= 0 ? "RTL" : "LTR", msgs.emptyHint].forEach(function (t, i) {
+          var td = document.createElement("td");
+          if (i === 0) { var c = document.createElement("code"); c.textContent = t; td.appendChild(c); } else td.textContent = t;
+          if (i === 3) td.dir = "auto";
+          tr.appendChild(td);
+        });
+        var td = document.createElement("td");
+        var b = document.createElement("button");
+        b.className = "btn";
+        b.style.height = "32px";
+        b.type = "button";
+        b.textContent = "Preview";
+        b.addEventListener("click", function () { show(l[0]); });
+        td.appendChild(b);
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      });
+      show("he");
+    })();
+  </script>
+</body>
+</html>

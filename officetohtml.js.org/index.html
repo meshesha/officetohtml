@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="site-root" content="./">
+  <title>OfficeToHtml – view Word, PowerPoint, Excel, PDF and images in the browser</title>
+  <meta name="description" content="OfficeToHtml v2: one Office-like JavaScript viewer for docx, pptx, xlsx/ods/csv, PDF, images and text. No jQuery, no server. Works with React, Vue, Angular, jQuery and Web Components.">
+  <link rel="canonical" href="https://officetohtml.js.org/">
+  <meta property="og:title" content="OfficeToHtml – Office documents in the browser">
+  <meta property="og:description" content="View docx, pptx, xlsx, PDF and images with one JavaScript viewer. Free and open source (MIT).">
+  <meta property="og:image" content="https://officetohtml.js.org/images/office2html.png">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="stylesheet" href="lib/officetohtml.css">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L6178F1KH3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-L6178F1KH3");
+  </script>
+  <script src="assets/site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="./"><span class="brand-logo" aria-hidden="true">O2H</span> OfficeToHtml <small>v2</small></a>
+      <button class="icon-btn menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="./" aria-current="page">Home</a>
+        <a href="pages/demos.html">Demos</a>
+        <a href="pages/docs.html">Docs</a>
+        <a href="#credits">Credits</a>
+        <a href="https://github.com/meshesha/officetohtml" rel="noopener">GitHub</a>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Version 2 · TypeScript · no jQuery</span>
+          <h1>Office documents, <span class="grad">right in the browser</span>.</h1>
+          <p class="lead">One Office-like viewer for Word, PowerPoint, Excel, PDF, images and text files. No server, no plugins, no uploads – files never leave the user's device.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="pages/demos.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg>
+              Try the demo</a>
+            <a class="btn" href="pages/docs.html">Read the docs</a>
+          </div>
+          <div class="install"><code>npm install @meshesha/officetohtml</code></div>
+        </div>
+        <div class="hero-demo" id="hero-viewer" aria-label="Live viewer example"></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="formats-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="formats-title">Every common format, one API</h2>
+          <p>The file type is detected from the file's content, not just its name. Each format uses the best open-source engine and is shown in a consistent, modern interface.</p>
+        </div>
+        <div class="grid grid-3 formats">
+          <article class="card">
+            <span class="card-icon" style="background:#2b579a">DOCX</span>
+            <h3>Word documents</h3>
+            <p>Paper-like pages, real image sizes, footnotes, right-to-left paragraphs, zoom, search and printing. Powered by mammoth.js.</p>
+            <div class="tags"><span class="tag">docx</span><span class="tag">docm</span><span class="tag">dotx</span></div>
+          </article>
+          <article class="card">
+            <span class="card-icon" style="background:#c43e1c">PPTX</span>
+            <h3>Presentations</h3>
+            <p>Slide list or slideshow with autoplay, keyboard navigation and full screen. Charts, tables, shapes and media. Powered by PPTXjs v2.</p>
+            <div class="tags"><span class="tag">pptx</span><span class="tag">ppsx</span><span class="tag">potx</span></div>
+          </article>
+          <article class="card">
+            <span class="card-icon" style="background:#217346">XLSX</span>
+            <h3>Spreadsheets</h3>
+            <p>Excel-like grid with sheet tabs, formula bar, merged cells, column widths, hidden rows and search. Powered by SheetJS and Handsontable.</p>
+            <div class="tags"><span class="tag">xlsx</span><span class="tag">xls</span><span class="tag">xlsb</span><span class="tag">ods</span><span class="tag">csv</span><span class="tag">tsv</span><span class="tag">numbers</span></div>
+          </article>
+          <article class="card">
+            <span class="card-icon" style="background:#d93025">PDF</span>
+            <h3>PDF files</h3>
+            <p>Selectable text, search with highlights, thumbnails, outline, rotation, hand tool, presentation mode with swipe and pinch zoom. Powered by PDF.js.</p>
+            <div class="tags"><span class="tag">pdf</span></div>
+          </article>
+          <article class="card">
+            <span class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg></span>
+            <h3>Images</h3>
+            <p>A modern image viewer: zoom to the cursor, pinch, pan, rotate, flip, fit and actual size, transparency grid and full screen.</p>
+            <div class="tags"><span class="tag">png</span><span class="tag">jpg</span><span class="tag">gif</span><span class="tag">webp</span><span class="tag">avif</span><span class="tag">svg</span><span class="tag">bmp</span></div>
+          </article>
+          <article class="card">
+            <span class="card-icon" style="background:#5f6368"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg></span>
+            <h3>Text &amp; code</h3>
+            <p>Plain text, Markdown, JSON (pretty printed), XML and source code with line numbers, wrapping and search.</p>
+            <div class="tags"><span class="tag">txt</span><span class="tag">md</span><span class="tag">json</span><span class="tag">xml</span><span class="tag">js</span><span class="tag">…</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="features-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="features-title">Built for real applications</h2>
+          <p>Version 2 is a complete rewrite of the original jQuery plugin.</p>
+        </div>
+        <div class="grid grid-4">
+          <div class="card"><h3>🔒 Secure by default</h3><p>Converted HTML is sanitised, links are checked, PDF scripts never run and file names are always shown as text.</p></div>
+          <div class="card"><h3>⚡ Loads what it needs</h3><p>The core is small. PDF.js, mammoth, SheetJS, Handsontable and PPTXjs load only when a file of that type is opened.</p></div>
+          <div class="card"><h3>🧩 Any framework</h3><p>Vanilla JS, React, Vue 3, Angular, jQuery (v1-compatible API) and a <code>&lt;office-viewer&gt;</code> Web Component.</p></div>
+          <div class="card"><h3>🌍 International</h3><p>UI in English, Hebrew, Arabic, Spanish, French, German, Russian and Chinese, with full right-to-left support.</p></div>
+          <div class="card"><h3>🌓 Light &amp; dark</h3><p>Follows the operating system or your setting. Styling uses CSS custom properties that are easy to override.</p></div>
+          <div class="card"><h3>🖨️ Prints the document</h3><p>Printing sends only the document to the printer – not your page, toolbar or navigation.</p></div>
+          <div class="card"><h3>♿ Accessible</h3><p>Keyboard shortcuts, focus styles, ARIA labels and live regions for status and search results.</p></div>
+          <div class="card"><h3>🧪 Tested</h3><p>Unit and DOM tests with Vitest, including regression tests for every security fix.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="start-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="start-title">Get started in a minute</h2>
+          <p>Pick your setup. See the <a href="pages/docs.html">documentation</a> for every option.</p>
+        </div>
+        <div class="tabs" role="tablist">
+          <button type="button" data-tab="t-js" aria-selected="true">JavaScript</button>
+          <button type="button" data-tab="t-html" aria-selected="false">&lt;script&gt; tag</button>
+          <button type="button" data-tab="t-react" aria-selected="false">React</button>
+          <button type="button" data-tab="t-vue" aria-selected="false">Vue</button>
+          <button type="button" data-tab="t-angular" aria-selected="false">Angular</button>
+          <button type="button" data-tab="t-jq" aria-selected="false">jQuery</button>
+        </div>
+        <div class="tab-panel" id="t-js">
+          <div class="code"><pre><code>import { OfficeViewer } from "@meshesha/officetohtml";
+
+const viewer = new OfficeViewer("#viewer", { theme: "auto" });
+await viewer.load("/files/report.docx"); // URL, File, Blob or ArrayBuffer</code></pre></div>
+        </div>
+        <div class="tab-panel" id="t-html" hidden>
+          <div class="code" data-lang="html"><pre><code>&lt;div id="viewer" style="height:600px"&gt;&lt;/div&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/@meshesha/officetohtml@2/dist/officetohtml.umd.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const viewer = new OfficeToHtml.OfficeViewer("#viewer");
+  viewer.load("files/presentation.pptx");
+&lt;/script&gt;</code></pre></div>
+        </div>
+        <div class="tab-panel" id="t-react" hidden>
+          <div class="code"><pre><code>import { OfficeViewer } from "@meshesha/officetohtml/react";
+
+export function Preview({ file }) {
+  return &lt;OfficeViewer src={file} style={{ height: 600 }} onError={(e) =&gt; console.error(e)} /&gt;;
+}</code></pre></div>
+        </div>
+        <div class="tab-panel" id="t-vue" hidden>
+          <div class="code" data-lang="html"><pre><code>&lt;script setup&gt;
+import { OfficeViewer } from "@meshesha/officetohtml/vue";
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;OfficeViewer src="/files/budget.xlsx" style="height:600px" @load="onLoad" /&gt;
+&lt;/template&gt;</code></pre></div>
+        </div>
+        <div class="tab-panel" id="t-angular" hidden>
+          <div class="code"><pre><code>// main.ts
+import { defineOfficeViewerElement } from "@meshesha/officetohtml/angular";
+defineOfficeViewerElement();
+
+// component template (add CUSTOM_ELEMENTS_SCHEMA to the component)
+// &lt;office-viewer [attr.src]="url" theme="auto" style="height:600px"&gt;&lt;/office-viewer&gt;</code></pre></div>
+        </div>
+        <div class="tab-panel" id="t-jq" hidden>
+          <div class="code"><pre><code>// v1 code keeps working:
+$("#resolte-contaniner").officeToHtml({ url: "files/demo.pdf" });
+
+// or the v2 API:
+$("#viewer").officeViewer({ src: "files/demo.pdf", theme: "dark" });</code></pre></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="credits" aria-labelledby="credits-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="credits-title">Credits &amp; licenses</h2>
+          <p>OfficeToHtml is MIT licensed and stands on the shoulders of these excellent open-source projects. Thank you to all their authors and contributors.</p>
+        </div>
+        <div class="grid grid-3">
+          <article class="card credit">
+            <header><h3>PPTXjs</h3><span class="license">MIT</span></header>
+            <p>PowerPoint rendering, slideshows and charts. By meshesha.</p>
+            <div class="links"><a href="https://github.com/meshesha/PPTXjs" rel="noopener">GitHub</a><a href="https://www.npmjs.com/package/@meshesha/pptxjs" rel="noopener">npm</a></div>
+          </article>
+          <article class="card credit">
+            <header><h3>mammoth.js</h3><span class="license">BSD-2-Clause</span></header>
+            <p>Converts .docx documents to clean HTML. By Michael Williamson.</p>
+            <div class="links"><a href="https://github.com/mwilliamson/mammoth.js" rel="noopener">GitHub</a><a href="https://www.npmjs.com/package/mammoth" rel="noopener">npm</a></div>
+          </article>
+          <article class="card credit">
+            <header><h3>SheetJS Community Edition</h3><span class="license">Apache-2.0</span></header>
+            <p>Reads xlsx, xls, xlsb, ods, csv and many more spreadsheet formats.</p>
+            <div class="links"><a href="https://sheetjs.com/" rel="noopener">Website</a><a href="https://docs.sheetjs.com/" rel="noopener">Docs</a><a href="https://git.sheetjs.com/sheetjs/sheetjs" rel="noopener">Source</a></div>
+          </article>
+          <article class="card credit">
+            <header><h3>Handsontable</h3><span class="license">Free non-commercial / commercial</span></header>
+            <p>The Excel-like data grid. Free for non-commercial and evaluation use; commercial use needs a Handsontable license (or use the built-in <code>"table"</code> engine).</p>
+            <div class="links"><a href="https://handsontable.com/" rel="noopener">Website</a><a href="https://github.com/handsontable/handsontable" rel="noopener">GitHub</a><a href="https://handsontable.com/docs/javascript-data-grid/license-key/" rel="noopener">License</a></div>
+          </article>
+          <article class="card credit">
+            <header><h3>PDF.js</h3><span class="license">Apache-2.0</span></header>
+            <p>Mozilla's PDF renderer and viewer components.</p>
+            <div class="links"><a href="https://mozilla.github.io/pdf.js/" rel="noopener">Website</a><a href="https://github.com/mozilla/pdf.js" rel="noopener">GitHub</a></div>
+          </article>
+          <article class="card credit">
+            <header><h3>DOMPurify</h3><span class="license">Apache-2.0 / MPL-2.0</span></header>
+            <p>Sanitises the HTML generated from documents. By Cure53.</p>
+            <div class="links"><a href="https://github.com/cure53/DOMPurify" rel="noopener">GitHub</a><a href="https://www.npmjs.com/package/dompurify" rel="noopener">npm</a></div>
+          </article>
+          <article class="card credit">
+            <header><h3>fflate</h3><span class="license">MIT</span></header>
+            <p>Fast, small ZIP decompression used for format detection. By 101arrowz.</p>
+            <div class="links"><a href="https://github.com/101arrowz/fflate" rel="noopener">GitHub</a><a href="https://www.npmjs.com/package/fflate" rel="noopener">npm</a></div>
+          </article>
+          <article class="card credit">
+            <header><h3>Built &amp; tested with</h3><span class="license">MIT / Apache-2.0</span></header>
+            <p><a href="https://www.typescriptlang.org/" rel="noopener">TypeScript</a>, <a href="https://vite.dev/" rel="noopener">Vite</a>, <a href="https://vitest.dev/" rel="noopener">Vitest</a>, <a href="https://github.com/jsdom/jsdom" rel="noopener">jsdom</a>, <a href="https://eslint.org/" rel="noopener">ESLint</a> and <a href="https://playwright.dev/" rel="noopener">Playwright</a>.</p>
+          </article>
+        </div>
+        <p class="muted" style="margin-top:20px">Full license texts are in <a href="https://github.com/meshesha/officetohtml/blob/master/THIRD_PARTY_NOTICES.md" rel="noopener">THIRD_PARTY_NOTICES.md</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© 2017–2026 <a href="https://github.com/meshesha" rel="noopener">Tady Meshesha</a> · MIT License</div>
+      <nav aria-label="Footer">
+        <a href="pages/demos.html">Demos</a>
+        <a href="pages/docs.html">Docs</a>
+        <a href="pages/lang.html">Languages</a>
+        <a href="#credits">Credits</a>
+        <a href="https://github.com/meshesha/officetohtml/issues" rel="noopener">Issues</a>
+        <a href="https://www.npmjs.com/package/@meshesha/officetohtml" rel="noopener">npm</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/oth-config.js"></script>
+  <script src="lib/officetohtml.umd.js"></script>
+  <script>
+    (function () {
+      var site = window.OTH_SITE;
+      var dark = function () {
+        var t = document.documentElement.getAttribute("data-theme");
+        return t ? t : "auto";
+      };
+      var viewer = new OfficeToHtml.OfficeViewer("#hero-viewer", {
+        libs: site.libs,
+        pdf: site.pdf,
+        theme: dark(),
+        height: "100%",
+        toolbar: { open: false, theme: false },
+        pptx: { mode: "slideshow" },
+      });
+      viewer.load("pages/files/demo.pptx").catch(function () {});
+      document.addEventListener("site-theme", function (e) { viewer.setTheme(e.detail); });
+    })();
+  </script>
+</body>
+</html>

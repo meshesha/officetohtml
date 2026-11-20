@@ -1,0 +1,149 @@
+{
+  "name": "@meshesha/officetohtml",
+  "version": "2.0.0",
+  "description": "View Office documents (docx, pptx, xlsx/ods/csv), PDF files and images in the browser with one Office-like viewer. Framework-agnostic, no jQuery.",
+  "license": "MIT",
+  "author": "meshesha (https://github.com/meshesha)",
+  "homepage": "https://officetohtml.js.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meshesha/officetohtml.git"
+  },
+  "bugs": "https://github.com/meshesha/officetohtml/issues",
+  "keywords": [
+    "office",
+    "viewer",
+    "docx",
+    "pptx",
+    "xlsx",
+    "pdf",
+    "image-viewer",
+    "document-viewer",
+    "html",
+    "react",
+    "vue",
+    "angular",
+    "jquery",
+    "web-components"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css",
+    "./dist/umd.js"
+  ],
+  "main": "./dist/officetohtml.cjs",
+  "module": "./dist/officetohtml.js",
+  "types": "./dist/types/index.d.ts",
+  "unpkg": "./dist/officetohtml.umd.js",
+  "jsdelivr": "./dist/officetohtml.umd.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/officetohtml.js",
+      "require": "./dist/officetohtml.cjs"
+    },
+    "./react": {
+      "types": "./dist/types/adapters/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./vue": {
+      "types": "./dist/types/adapters/vue.d.ts",
+      "import": "./dist/vue.js",
+      "require": "./dist/vue.cjs"
+    },
+    "./angular": {
+      "types": "./dist/types/adapters/angular.d.ts",
+      "import": "./dist/angular.js",
+      "require": "./dist/angular.cjs"
+    },
+    "./jquery": {
+      "types": "./dist/types/adapters/jquery.d.ts",
+      "import": "./dist/jquery.js",
+      "require": "./dist/jquery.cjs"
+    },
+    "./element": {
+      "types": "./dist/types/adapters/element.d.ts",
+      "import": "./dist/element.js",
+      "require": "./dist/element.cjs"
+    },
+    "./style.css": "./dist/officetohtml.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "scripts": {
+    "dev": "vite --config demo/vite.config.ts",
+    "build": "npm run build:lib && npm run build:umd && npm run build:types",
+    "build:lib": "vite build",
+    "build:umd": "vite build --config vite.umd.config.ts",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build:site": "npm run build && node scripts/build-site.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src test",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "fixtures": "node scripts/make-fixtures.mjs",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build",
+    "test:browser": "node scripts/smoke.mjs && node scripts/interact.mjs"
+  },
+  "dependencies": {
+    "@meshesha/pptxjs": "^2.0.0",
+    "dompurify": "^3.4.18",
+    "fflate": "^0.8.2",
+    "handsontable": "^18.1.2",
+    "mammoth": "^1.13.0",
+    "pdfjs-dist": "^6.5.438",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=16",
+    "jquery": ">=1.12",
+    "react": ">=17",
+    "vue": ">=3.2"
+  },
+  "peerDependenciesMeta": {
+    "@angular/core": {
+      "optional": true
+    },
+    "jquery": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.32",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitest/coverage-v8": "^4.1.12",
+    "eslint": "^9.39.0",
+    "jquery": "^3.7.1",
+    "jsdom": "^26.1.0",
+    "playwright-core": "^1.65.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.73.0",
+    "vite": "^7.3.8",
+    "vitest": "^4.1.12",
+    "vue": "^3.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
