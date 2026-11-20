@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeToHtml v2 – dev playground</title>
+  <link rel="stylesheet" href="./demo.css">
+</head>
+<body>
+  <header class="bar">
+    <strong>OfficeToHtml v2 · playground</strong>
+    <nav id="files"></nav>
+    <label>Theme <select id="theme"><option>auto</option><option>light</option><option>dark</option></select></label>
+    <label>Locale <select id="locale"><option value="">browser</option><option>en</option><option>he</option><option>ar</option><option>es</option><option>fr</option><option>de</option><option>ru</option><option>zh</option></select></label>
+    <label>Sheet engine <select id="engine"><option>handsontable</option><option>table</option></select></label>
+  </header>
+  <main>
+    <div id="viewer"></div>
+    <aside><h3>Events</h3><ol id="log"></ol></aside>
+  </main>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>

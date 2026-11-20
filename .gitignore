@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+dist-demo/
+test/output/
+*.log
+.DS_Store
+officetohtml.js.org/lib/
+officetohtml.js.org/vendor/

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="site-root" content="../">
+  <title>Demos – OfficeToHtml</title>
+  <meta name="description" content="Try OfficeToHtml v2 live: open docx, pptx, xlsx, csv, PDF, images and text files in the browser, switch themes and languages, and see the events.">
+  <link rel="canonical" href="https://officetohtml.js.org/pages/demos.html">
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="../lib/officetohtml.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L6178F1KH3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-L6178F1KH3");
+  </script>
+  <script src="../assets/site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../"><span class="brand-logo" aria-hidden="true">O2H</span> OfficeToHtml <small>v2</small></a>
+      <button class="icon-btn menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="../">Home</a>
+        <a href="demos.html" aria-current="page">Demos</a>
+        <a href="docs.html">Docs</a>
+        <a href="../#credits">Credits</a>
+        <a href="https://github.com/meshesha/officetohtml" rel="noopener">GitHub</a>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container demo-layout">
+    <aside class="demo-side" aria-label="Demo controls">
+      <div class="panel">
+        <h2>Sample files</h2>
+        <ul class="file-list" id="files"></ul>
+        <p class="drop-hint">…or open your own file with the folder button, or drag and drop it on the viewer. Files stay on your device.</p>
+      </div>
+      <div class="panel">
+        <h2>Options</h2>
+        <label class="field">Theme
+          <select id="opt-theme"><option value="auto">Auto (system)</option><option value="light">Light</option><option value="dark">Dark</option></select>
+        </label>
+        <label class="field">Language
+          <select id="opt-locale">
+            <option value="">Browser default</option><option value="en">English</option><option value="he">עברית</option><option value="ar">العربية</option>
+            <option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="ru">Русский</option><option value="zh">中文</option>
+          </select>
+        </label>
+        <label class="field">Slides
+          <select id="opt-pptx"><option value="list">All slides</option><option value="slideshow">Slideshow</option></select>
+        </label>
+        <label class="field">Spreadsheet engine
+          <select id="opt-engine"><option value="handsontable">Handsontable grid</option><option value="table">Lightweight table</option></select>
+        </label>
+        <label class="check"><input type="checkbox" id="opt-toolbar" checked> Toolbar</label>
+        <label class="check"><input type="checkbox" id="opt-status" checked> Status bar</label>
+        <label class="check"><input type="checkbox" id="opt-pdfside"> PDF sidebar</label>
+      </div>
+      <div class="panel">
+        <h2>Events</h2>
+        <ol class="demo-log" id="log" reversed></ol>
+      </div>
+    </aside>
+
+    <div class="demo-main">
+      <div class="demo-viewer" id="viewer"></div>
+      <div class="panel">
+        <h2>Code for these options</h2>
+        <div class="code" data-plain><pre><code id="snippet"></code></pre></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© 2017–2026 <a href="https://github.com/meshesha" rel="noopener">Tady Meshesha</a> · MIT License</div>
+      <nav aria-label="Footer">
+        <a href="../">Home</a><a href="docs.html">Docs</a><a href="lang.html">Languages</a><a href="../#credits">Credits</a>
+        <a href="https://github.com/meshesha/officetohtml/issues" rel="noopener">Issues</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../assets/oth-config.js"></script>
+  <script src="../lib/officetohtml.umd.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var FILES = [
+        { name: "demo.docx", label: "Word document", color: "#2b579a" },
+        { name: "demo.pptx", label: "PowerPoint", color: "#c43e1c" },
+        { name: "demo.xlsx", label: "Excel workbook", color: "#217346" },
+        { name: "demo.csv", label: "CSV table", color: "#217346" },
+        { name: "demo.pdf", label: "PDF paper", color: "#d93025" },
+        { name: "demo.jpg", label: "Photo", color: "#8e44ad" },
+        { name: "demo.svg", label: "Vector image", color: "#8e44ad" },
+        { name: "demo.json", label: "JSON", color: "#5f6368" },
+        { name: "demo.md", label: "Markdown", color: "#5f6368" },
+      ];
+      var site = window.OTH_SITE;
+      var $ = function (id) { return document.getElementById(id); };
+      var viewer = null;
+      var current = null;
+
+      function log(msg) {
+        var li = document.createElement("li");
+        li.textContent = new Date().toLocaleTimeString() + "  " + msg;
+        $("log").insertBefore(li, $("log").firstChild);
+        while ($("log").children.length > 60) $("log").removeChild($("log").lastChild);
+      }
+
+      function siteTheme() {
+        var t = document.documentElement.getAttribute("data-theme");
+        return $("opt-theme").value !== "auto" ? $("opt-theme").value : (t || "auto");
+      }
+
+      function options() {
+        var o = {
+          theme: siteTheme(),
+          height: "100%",
+          libs: site.libs,
+          pdf: { assetsBase: site.pdf.assetsBase, sidebar: $("opt-pdfside").checked },
+          pptx: { mode: $("opt-pptx").value },
+          sheet: { engine: $("opt-engine").value },
+        };
+        if ($("opt-locale").value) o.locale = $("opt-locale").value;
+        if (!$("opt-toolbar").checked) o.toolbar = false;
+        if (!$("opt-status").checked) o.statusbar = false;
+        return o;
+      }
+
+      function snippet() {
+        var o = {};
+        if ($("opt-theme").value !== "auto") o.theme = $("opt-theme").value;
+        if ($("opt-locale").value) o.locale = $("opt-locale").value;
+        if (!$("opt-toolbar").checked) o.toolbar = false;
+        if (!$("opt-status").checked) o.statusbar = false;
+        if ($("opt-pptx").value !== "list") o.pptx = { mode: $("opt-pptx").value };
+        if ($("opt-engine").value !== "handsontable") o.sheet = { engine: $("opt-engine").value };
+        if ($("opt-pdfside").checked) o.pdf = { sidebar: true };
+        var opts = JSON.stringify(o, null, 2).replace(/"(\w+)":/g, "$1:");
+        $("snippet").textContent =
+          'import { OfficeViewer } from "@meshesha/officetohtml";\n\n' +
+          "const viewer = new OfficeViewer(\"#viewer\"" + (opts === "{}" ? "" : ", " + opts) + ");\n" +
+          'await viewer.load("' + (current ? "files/" + current : "files/report.docx") + '");';
+      }
+
+      function create() {
+        if (viewer) viewer.destroy();
+        viewer = new OfficeToHtml.OfficeViewer("#viewer", options());
+        viewer.on("loadstart", function () { log("loadstart"); });
+        viewer.on("load", function (r) { log("load – " + r.file.name + " (" + r.file.kind + ", " + r.file.size.toLocaleString() + " bytes)"); });
+        viewer.on("error", function (e) { log("error – " + e.error.code + ": " + e.error.message); });
+        viewer.on("pagechange", function (e) { log("pagechange – " + e.page + " / " + e.total); });
+        viewer.on("zoomchange", function (e) { log("zoomchange – " + Math.round(e.zoom * 100) + "%"); });
+        viewer.on("themechange", function (e) { log("themechange – " + (e.dark ? "dark" : "light")); });
+        viewer.on("fullscreenchange", function (e) { log("fullscreenchange – " + e.fullscreen); });
+        window.viewer = viewer;
+        if (current) viewer.load("files/" + current).catch(function () {});
+        snippet();
+      }
+
+      FILES.forEach(function (f) {
+        var li = document.createElement("li");
+        var b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-pressed", "false");
+        var badge = document.createElement("span");
+        badge.className = "badge";
+        badge.style.background = f.color;
+        badge.textContent = f.name.split(".").pop();
+        var label = document.createElement("span");
+        label.textContent = f.label;
+        b.appendChild(badge);
+        b.appendChild(label);
+        b.addEventListener("click", function () {
+          current = f.name;
+          document.querySelectorAll("#files button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+          history.replaceState(null, "", "#" + f.name);
+          viewer.load("files/" + f.name).catch(function () {});
+          snippet();
+        });
+        li.appendChild(b);
+        $("files").appendChild(li);
+      });
+
+      ["opt-locale", "opt-toolbar", "opt-status", "opt-pptx", "opt-engine", "opt-pdfside"].forEach(function (id) { $(id).addEventListener("change", create); });
+      $("opt-theme").addEventListener("change", function () { viewer.setTheme(siteTheme()); snippet(); });
+      document.addEventListener("site-theme", function () { if ($("opt-theme").value === "auto") viewer.setTheme(siteTheme()); });
+
+      create();
+      var initial = decodeURIComponent(location.hash.slice(1)) || "demo.docx";
+      var idx = FILES.findIndex(function (f) { return f.name === initial; });
+      document.querySelectorAll("#files button")[idx >= 0 ? idx : 0].click();
+    })();
+  </script>
+</body>
+</html>

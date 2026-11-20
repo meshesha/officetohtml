@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@meshesha/officetohtml": ["src/index.ts"],
+      "@meshesha/officetohtml/*": ["src/adapters/*"]
+    }
+  },
+  "include": ["src", "test", "vite.config.ts", "vite.umd.config.ts", "demo", "src/types/*.d.ts"]
+}

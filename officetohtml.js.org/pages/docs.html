@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="site-root" content="../">
+  <title>Documentation – OfficeToHtml</title>
+  <meta name="description" content="OfficeToHtml v2 documentation: installation, quick start, React/Vue/Angular/jQuery/Web Component usage, options, API, events, languages, theming, security and migration from v1.">
+  <link rel="canonical" href="https://officetohtml.js.org/pages/docs.html">
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L6178F1KH3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-L6178F1KH3");
+  </script>
+  <script src="../assets/site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../"><span class="brand-logo" aria-hidden="true">O2H</span> OfficeToHtml <small>v2</small></a>
+      <button class="icon-btn menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="../">Home</a>
+        <a href="demos.html">Demos</a>
+        <a href="docs.html" aria-current="page">Docs</a>
+        <a href="../#credits">Credits</a>
+        <a href="https://github.com/meshesha/officetohtml" rel="noopener">GitHub</a>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container docs-layout">
+    <nav class="toc" aria-label="On this page">
+      <ul>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#frameworks">Frameworks</a></li>
+        <li class="sub"><a href="#react">React</a></li>
+        <li class="sub"><a href="#vue">Vue 3</a></li>
+        <li class="sub"><a href="#angular">Angular</a></li>
+        <li class="sub"><a href="#jquery">jQuery</a></li>
+        <li class="sub"><a href="#web-component">Web Component</a></li>
+        <li><a href="#options">Options</a></li>
+        <li class="sub"><a href="#opt-pdf">PDF</a></li>
+        <li class="sub"><a href="#opt-docx">Word</a></li>
+        <li class="sub"><a href="#opt-pptx">PowerPoint</a></li>
+        <li class="sub"><a href="#opt-sheet">Spreadsheets</a></li>
+        <li class="sub"><a href="#opt-image">Images &amp; text</a></li>
+        <li><a href="#api">API</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#libraries">Libraries &amp; self-hosting</a></li>
+        <li><a href="#languages">Languages</a></li>
+        <li><a href="#theming">Theming</a></li>
+        <li><a href="#keyboard">Keyboard shortcuts</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#custom-renderers">Custom renderers</a></li>
+        <li><a href="#migration">Migrating from v1</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <main id="main" class="doc">
+      <h1>Documentation</h1>
+      <p class="muted">OfficeToHtml v2 shows Word, PowerPoint, spreadsheet, PDF, image and text files in the browser with one Office-like viewer. Everything happens on the client: files are never uploaded anywhere.</p>
+
+      <h2 id="install">Installation</h2>
+      <h3>With a bundler (Vite, webpack, Angular CLI, Next.js …)</h3>
+      <div class="code" data-lang="sh"><pre><code>npm install @meshesha/officetohtml</code></pre></div>
+      <p>PDF.js, mammoth.js, SheetJS, Handsontable and PPTXjs are installed as dependencies but only downloaded by the browser when a file of that type is opened (your bundler puts each one in its own chunk).</p>
+
+      <h3>With a &lt;script&gt; tag</h3>
+      <div class="code" data-lang="html"><pre><code>&lt;div id="viewer" style="height:600px"&gt;&lt;/div&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/@meshesha/officetohtml@2/dist/officetohtml.umd.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const viewer = new OfficeToHtml.OfficeViewer("#viewer");
+  viewer.load("files/report.docx");
+&lt;/script&gt;</code></pre></div>
+      <p>The browser bundle (<code>window.OfficeToHtml</code>) contains the viewer only. The format libraries are loaded on demand from version-pinned CDN URLs, or from your own server – see <a href="#libraries">Libraries &amp; self-hosting</a>. It also registers the <code>&lt;office-viewer&gt;</code> element and, if jQuery is on the page, <code>$.fn.officeToHtml</code>.</p>
+
+      <h2 id="quick-start">Quick start</h2>
+      <div class="code"><pre><code>import { OfficeViewer } from "@meshesha/officetohtml";
+
+const viewer = new OfficeViewer("#viewer", {
+  theme: "auto",          // "light" | "dark" | "auto"
+  locale: "en",           // UI language
+});
+
+// A URL, File, Blob, ArrayBuffer or Uint8Array:
+await viewer.load("/files/budget.xlsx");
+
+// Files from an &lt;input type="file"&gt;:
+viewer.bindInput("#file-input");
+
+// Or let the user pick / drop a file (both are built in):
+viewer.open();</code></pre></div>
+      <p>The viewer fills its container. Give the container a height (for example <code>height: 600px</code> or <code>80vh</code>), or pass the <code>height</code> option.</p>
+      <div class="note">The file type is detected from the content (magic bytes and ZIP structure), so files without an extension or with a wrong one work too. Pass <code>{ fileName }</code> or <code>{ type: "xlsx" }</code> to <code>load()</code> to override.</div>
+
+      <h3>Loading protected files (custom headers)</h3>
+      <div class="code"><pre><code>const viewer = new OfficeViewer("#viewer", {
+  fetchOptions: { headers: { Authorization: `Bearer ${token}` }, credentials: "include" },
+});
+await viewer.load("/api/documents/42");   // name and type come from the response</code></pre></div>
+
+      <h3>One-liner</h3>
+      <div class="code"><pre><code>import { renderOffice } from "@meshesha/officetohtml";
+const viewer = await renderOffice("#viewer", file, { theme: "dark" });</code></pre></div>
+
+      <h2 id="frameworks">Frameworks</h2>
+      <h3 id="react">React</h3>
+      <div class="code"><pre><code>import { useRef } from "react";
+import { OfficeViewer } from "@meshesha/officetohtml/react";
+
+export function Preview({ file }) {
+  const ref = useRef(null);  // ref.current is the OfficeViewer instance
+  return (
+    &lt;OfficeViewer
+      ref={ref}
+      src={file}                       // URL, File, Blob or ArrayBuffer
+      options={{ theme: "auto" }}      // read on mount
+      style={{ height: 600 }}
+      onLoad={({ file }) =&gt; console.log(file.kind)}
+      onError={(error) =&gt; console.error(error.code)}
+      onPageChange={(page, total) =&gt; {}}
+    /&gt;
+  );
+}</code></pre></div>
+      <p>The component is client-only (it uses the DOM). In Next.js use it in a <code>"use client"</code> component.</p>
+
+      <h3 id="vue">Vue 3</h3>
+      <div class="code" data-lang="html"><pre><code>&lt;script setup&gt;
+import { ref } from "vue";
+import { OfficeViewer } from "@meshesha/officetohtml/vue";
+const src = ref("/files/slides.pptx");
+const viewerRef = ref();   // viewerRef.value.viewer is the instance
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;OfficeViewer ref="viewerRef" :src="src" :options="{ pptx: { mode: 'slideshow' } }"
+                style="height:600px" @load="onLoad" @error="onError" /&gt;
+&lt;/template&gt;</code></pre></div>
+      <p>Or register it globally: <code>app.use(OfficeToHtmlPlugin)</code>.</p>
+
+      <h3 id="angular">Angular</h3>
+      <p>Angular supports custom elements natively, so the Angular entry point registers <code>&lt;office-viewer&gt;</code>:</p>
+      <div class="code"><pre><code>// main.ts
+import { defineOfficeViewerElement } from "@meshesha/officetohtml/angular";
+defineOfficeViewerElement();
+
+// preview.component.ts
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+
+@Component({
+  selector: "app-preview",
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  template: `&lt;office-viewer [attr.src]="url" theme="auto" style="height:600px"
+                            (office-load)="loaded($event)"&gt;&lt;/office-viewer&gt;`,
+})
+export class PreviewComponent {
+  url = "/assets/report.docx";
+  loaded(e: Event) { console.log((e as CustomEvent).detail.file); }
+}</code></pre></div>
+      <p>A ready-to-copy standalone component that wraps the <code>OfficeViewer</code> class directly is in <a href="https://github.com/meshesha/officetohtml/tree/master/examples/angular" rel="noopener">examples/angular</a>.</p>
+
+      <h3 id="jquery">jQuery</h3>
+      <p>The v1 plugin API still works – existing pages only need the new script:</p>
+      <div class="code"><pre><code>// v1 style
+$("#resolte-contaniner").officeToHtml({ url: "files/demo.docx" });
+$("#resolte-contaniner").officeToHtml({ inputObjId: "select_file" });
+
+// v2 style – all options of the OfficeViewer class
+$("#viewer").officeViewer({ src: "files/demo.pdf", theme: "dark" });
+const viewer = $("#viewer").officeViewer();   // the instance</code></pre></div>
+      <p>With a bundler: <code>import { installJQueryPlugin } from "@meshesha/officetohtml/jquery"; installJQueryPlugin($);</code></p>
+
+      <h3 id="web-component">Web Component</h3>
+      <div class="code" data-lang="html"><pre><code>&lt;office-viewer src="files/demo.pdf" theme="auto" locale="en" style="height:600px"&gt;&lt;/office-viewer&gt;
+
+&lt;script type="module"&gt;
+  import { defineOfficeViewerElement } from "@meshesha/officetohtml/element";
+  defineOfficeViewerElement();
+  const el = document.querySelector("office-viewer");
+  el.addEventListener("office-load", (e) =&gt; console.log(e.detail.file));
+  el.options = { sheet: { engine: "table" } };  // full options
+  el.source = someFile;                         // File / Blob / ArrayBuffer
+&lt;/script&gt;</code></pre></div>
+      <p>Attributes: <code>src</code>, <code>file-name</code>, <code>type</code>, <code>theme</code>, <code>locale</code>, <code>dir</code>, <code>height</code>, <code>toolbar="false"</code>, <code>statusbar="false"</code>. Events: <code>office-load</code>, <code>office-error</code>, <code>office-pagechange</code>.</p>
+
+      <h2 id="options">Options</h2>
+      <p>All options are optional. <code>new OfficeViewer(container, options)</code></p>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>theme</code></td><td><code>"auto"</code></td><td><code>"light"</code>, <code>"dark"</code> or <code>"auto"</code> (follows the operating system).</td></tr>
+          <tr><td><code>locale</code></td><td>page / browser</td><td>UI language: <code>en he ar es fr de ru zh</code> or one added with <code>registerLocale()</code>. Defaults to <code>&lt;html lang&gt;</code>, then the browser language.</td></tr>
+          <tr><td><code>messages</code></td><td>–</td><td>Override individual UI strings, e.g. <code>{ open: "Browse…" }</code>.</td></tr>
+          <tr><td><code>dir</code></td><td><code>"auto"</code></td><td>UI direction: <code>"ltr"</code>, <code>"rtl"</code> or <code>"auto"</code> (from the container's <code>dir</code> or the locale).</td></tr>
+          <tr><td><code>height</code></td><td>container</td><td>Viewer height, e.g. <code>600</code> or <code>"80vh"</code>. If the container has no height, 600px is used.</td></tr>
+          <tr><td><code>toolbar</code></td><td><code>true</code></td><td><code>false</code> hides it, or an object: <code>{ open, fileName, zoom, pages, search, print, download, fullscreen, theme, tools }</code> (each <code>true</code> by default).</td></tr>
+          <tr><td><code>statusbar</code></td><td><code>true</code></td><td>Status bar (page count, word count, sheet tabs, file size).</td></tr>
+          <tr><td><code>formats</code></td><td>all</td><td>Allowed kinds: <code>["pdf","docx","pptx","sheet","image","text"]</code>.</td></tr>
+          <tr><td><code>maxFileSize</code></td><td>200 MB</td><td>Largest file accepted, in bytes (<code>0</code> = unlimited).</td></tr>
+          <tr><td><code>fetchOptions</code></td><td>–</td><td><code>fetch()</code> options for URL sources: headers, credentials, mode …</td></tr>
+          <tr><td><code>allowedProtocols</code></td><td>http, https, blob, data</td><td>URL protocols accepted by <code>load()</code>.</td></tr>
+          <tr><td><code>dropFiles</code></td><td><code>true</code></td><td>Open files dropped on the viewer.</td></tr>
+          <tr><td><code>keyboard</code></td><td><code>true</code></td><td>Keyboard shortcuts while the viewer has focus.</td></tr>
+          <tr><td><code>injectStyles</code></td><td><code>true</code></td><td>Inject the stylesheet. Set <code>false</code> and link <code>officetohtml.css</code> for a strict CSP.</td></tr>
+          <tr><td><code>nonce</code></td><td>–</td><td>CSP nonce for injected <code>&lt;style&gt;</code>, <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code> elements.</td></tr>
+          <tr><td><code>libs</code></td><td>–</td><td>Where the format libraries come from – see <a href="#libraries">Libraries</a>.</td></tr>
+          <tr><td><code>renderers</code></td><td>–</td><td>Replace or add renderers – see <a href="#custom-renderers">Custom renderers</a>.</td></tr>
+          <tr><td><code>pdf</code>, <code>docx</code>, <code>pptx</code>, <code>sheet</code>, <code>image</code>, <code>text</code></td><td>–</td><td>Per-format options (below).</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="opt-pdf">PDF – <code>pdf: { … }</code></h3>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>assetsBase</code></td><td>jsDelivr (pinned)</td><td>Base URL of the PDF.js worker, CMaps, fonts, wasm and viewer CSS (a copy of the <code>pdfjs-dist</code> folder).</td></tr>
+          <tr><td><code>workerSrc</code> / <code>workerPort</code></td><td>–</td><td>Use a specific worker URL or an existing <code>Worker</code>.</td></tr>
+          <tr><td><code>viewerCss</code></td><td>from <code>assetsBase</code></td><td>URL of <code>pdf_viewer.css</code>, or <code>false</code> if you include it yourself.</td></tr>
+          <tr><td><code>zoom</code></td><td><code>"auto"</code></td><td>Factor (1 = 100%) or <code>"auto" | "page-fit" | "page-width" | "page-actual"</code>.</td></tr>
+          <tr><td><code>page</code></td><td><code>1</code></td><td>Page to open.</td></tr>
+          <tr><td><code>textLayer</code></td><td><code>true</code></td><td>Selectable text. <code>false</code> renders faster.</td></tr>
+          <tr><td><code>annotations</code></td><td><code>true</code></td><td>Links and form fields.</td></tr>
+          <tr><td><code>sidebar</code></td><td><code>false</code></td><td>Open the thumbnails/outline sidebar.</td></tr>
+          <tr><td><code>pinchZoom</code></td><td><code>true</code></td><td>Two-finger zoom on touch screens.</td></tr>
+          <tr><td><code>swipeNavigation</code></td><td><code>true</code></td><td>In presentation (full screen) mode: swipe or tap left/right to change pages.</td></tr>
+          <tr><td><code>maxCanvasPixels</code></td><td>PDF.js default</td><td>Limit canvas size on low-memory devices.</td></tr>
+          <tr><td><code>documentOptions</code></td><td>–</td><td>Extra <code>getDocument()</code> parameters (e.g. <code>{ password }</code>).</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="opt-docx">Word – <code>docx: { … }</code></h3>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>pageView</code></td><td><code>true</code></td><td>Paper-like page. <code>false</code> = continuous flow.</td></tr>
+          <tr><td><code>zoom</code></td><td><code>1</code> / fit width</td><td>Initial zoom; on narrow screens the page is fitted to the width.</td></tr>
+          <tr><td><code>rtl</code></td><td><code>"auto"</code></td><td>Detect direction per paragraph, or force <code>true</code>/<code>false</code>.</td></tr>
+          <tr><td><code>imageSizes</code></td><td><code>true</code></td><td>Show images at the size used in the document.</td></tr>
+          <tr><td><code>styleMap</code>, <code>includeEmbeddedStyleMap</code>, <code>includeDefaultStyleMap</code>, <code>ignoreEmptyParagraphs</code>, <code>convertImage</code></td><td>mammoth defaults</td><td>Passed to <a href="https://github.com/mwilliamson/mammoth.js#api" rel="noopener">mammoth.js</a>.</td></tr>
+          <tr><td><code>allowInlineStyles</code></td><td><code>false</code></td><td>Keep <code>style</code> attributes produced by a custom style map.</td></tr>
+          <tr><td><code>onMessages</code></td><td>–</td><td>Receives mammoth's conversion warnings.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="opt-pptx">PowerPoint – <code>pptx: { … }</code></h3>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>mode</code></td><td><code>"list"</code></td><td><code>"list"</code> (all slides) or <code>"slideshow"</code>.</td></tr>
+          <tr><td><code>scale</code></td><td><code>"fit"</code></td><td><code>"fit"</code> (width), <code>"contain"</code> or a factor.</td></tr>
+          <tr><td><code>viewerOptions</code></td><td>–</td><td>Any <a href="https://github.com/meshesha/PPTXjs" rel="noopener">PPTXjs v2</a> viewer option, e.g. <code>{ slideshow: { autoplay: 5, loop: true, transition: "slide" } }</code>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="opt-sheet">Spreadsheets – <code>sheet: { … }</code></h3>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>engine</code></td><td><code>"handsontable"</code></td><td>Excel-like grid, or <code>"table"</code> – a light read-only table that needs no Handsontable.</td></tr>
+          <tr><td><code>licenseKey</code></td><td><code>"non-commercial-and-evaluation"</code></td><td>Your <a href="https://handsontable.com/docs/javascript-data-grid/license-key/" rel="noopener">Handsontable license key</a>.</td></tr>
+          <tr><td><code>readOnly</code></td><td><code>true</code></td><td>Allow editing cells (changes are not saved to the file).</td></tr>
+          <tr><td><code>formulaBar</code></td><td><code>true</code></td><td>Cell address and value/formula of the selection.</td></tr>
+          <tr><td><code>rowHeaders</code>, <code>colHeaders</code></td><td><code>true</code></td><td>Row numbers and column letters.</td></tr>
+          <tr><td><code>columnSorting</code>, <code>contextMenu</code></td><td><code>false</code></td><td>Handsontable features.</td></tr>
+          <tr><td><code>fixedRowsTop</code>, <code>fixedColumnsStart</code></td><td><code>0</code></td><td>Frozen rows/columns.</td></tr>
+          <tr><td><code>activeSheet</code></td><td>workbook's</td><td>Index or name of the sheet to open.</td></tr>
+          <tr><td><code>skipHiddenSheets</code></td><td><code>true</code></td><td>Hide sheets that are hidden in the workbook.</td></tr>
+          <tr><td><code>maxRows</code></td><td><code>5000</code></td><td>Row limit of the <code>"table"</code> engine.</td></tr>
+          <tr><td><code>language</code></td><td>–</td><td>Handsontable language code (register the language first).</td></tr>
+          <tr><td><code>handsontableSettings</code>, <code>readOptions</code></td><td>–</td><td>Extra Handsontable settings / <code>XLSX.read</code> options.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note warn"><strong>Handsontable license:</strong> Handsontable is free for non-commercial use and evaluation only. For commercial products buy a license and pass <code>licenseKey</code>, or use <code>engine: "table"</code>.</div>
+
+      <h3 id="opt-image">Images – <code>image: { … }</code> and text – <code>text: { … }</code></h3>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>image.zoom</code></td><td><code>"auto"</code></td><td>Fit large images, <code>"page-actual"</code> (100%) or a factor.</td></tr>
+          <tr><td><code>image.maxZoom</code> / <code>zoomStep</code></td><td><code>20</code> / <code>1.25</code></td><td>Zoom limits.</td></tr>
+          <tr><td><code>image.wheelZoom</code></td><td><code>true</code></td><td>Mouse wheel zooms (otherwise Ctrl + wheel).</td></tr>
+          <tr><td><code>image.checkerboard</code>, <code>image.background</code></td><td><code>false</code></td><td>Transparency grid / stage colour.</td></tr>
+          <tr><td><code>text.wrap</code>, <code>text.lineNumbers</code></td><td><code>true</code></td><td>Line wrapping and numbers.</td></tr>
+          <tr><td><code>text.formatJson</code></td><td><code>true</code></td><td>Pretty-print JSON.</td></tr>
+          <tr><td><code>text.maxLength</code></td><td>5 000 000</td><td>Characters shown.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="api">API</h2>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Member</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>load(source, { fileName?, type?, signal? })</code></td><td>Loads a URL, File, Blob, ArrayBuffer or typed array. Resolves with <code>{ file, renderer }</code>; rejects with an <code>OfficeError</code>.</td></tr>
+          <tr><td><code>open()</code></td><td>Opens the file picker.</td></tr>
+          <tr><td><code>bindInput(input)</code></td><td>Loads files chosen in an <code>&lt;input type="file"&gt;</code> (element, id or selector). Returns an unsubscribe function.</td></tr>
+          <tr><td><code>close()</code></td><td>Closes the document.</td></tr>
+          <tr><td><code>zoomIn()</code>, <code>zoomOut()</code>, <code>setZoom(z)</code>, <code>zoom</code></td><td>Zoom (factor or preset).</td></tr>
+          <tr><td><code>goToPage(n)</code>, <code>nextPage()</code>, <code>previousPage()</code>, <code>page</code>, <code>pageCount</code></td><td>Pages, slides or sheets (1-based).</td></tr>
+          <tr><td><code>search(text, { matchCase? })</code></td><td>Finds and highlights text. Resolves with <code>{ total, current }</code>.</td></tr>
+          <tr><td><code>print()</code></td><td>Prints only the document.</td></tr>
+          <tr><td><code>download()</code></td><td>Saves the original file.</td></tr>
+          <tr><td><code>getText()</code></td><td>Plain text of the document.</td></tr>
+          <tr><td><code>toggleFullscreen(force?)</code>, <code>isFullscreen</code></td><td>Full screen (PDF and slides switch to presentation mode).</td></tr>
+          <tr><td><code>setTheme(theme)</code>, <code>theme</code>, <code>isDark</code></td><td>Theme.</td></tr>
+          <tr><td><code>resize()</code></td><td>Re-measures after the container was resized while hidden.</td></tr>
+          <tr><td><code>on(event, fn)</code>, <code>once</code>, <code>off</code></td><td>Events; <code>on</code> returns an unsubscribe function.</td></tr>
+          <tr><td><code>file</code>, <code>renderer</code>, <code>element</code></td><td>The open file (<code>bytes, name, kind, ext, size …</code>), the active renderer and the root element.</td></tr>
+          <tr><td><code>destroy()</code></td><td>Removes the viewer, listeners and object URLs.</td></tr>
+          <tr><td><code>OfficeViewer.registerRenderer(kind, factory)</code></td><td>Global renderer registration.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Other exports: <code>renderOffice()</code>, <code>detectFormat()</code>, <code>readSource()</code>, <code>registerLocale()</code>, <code>sanitizeHtml()</code>, <code>printDocument()</code>, <code>OfficeError</code>, <code>VERSION</code>, <code>LIB_VERSIONS</code>. Full TypeScript types are included.</p>
+      <h3>Errors</h3>
+      <p><code>OfficeError.code</code> is one of: <code>SOURCE_ERROR</code>, <code>INVALID_URL</code>, <code>FILE_TOO_LARGE</code>, <code>UNSUPPORTED_FORMAT</code>, <code>FORMAT_DISABLED</code>, <code>LIBRARY_LOAD_ERROR</code>, <code>PARSE_ERROR</code>, <code>PASSWORD_REQUIRED</code>, <code>ABORTED</code>, <code>DESTROYED</code>.</p>
+
+      <h2 id="events">Events</h2>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Event</th><th>Payload</th></tr></thead>
+        <tbody>
+          <tr><td><code>loadstart</code></td><td><code>{ source }</code></td></tr>
+          <tr><td><code>progress</code></td><td><code>{ phase: "download" | "render", loaded, total, ratio }</code></td></tr>
+          <tr><td><code>load</code></td><td><code>{ file, renderer }</code></td></tr>
+          <tr><td><code>error</code></td><td><code>{ error: OfficeError }</code></td></tr>
+          <tr><td><code>warning</code></td><td><code>{ message, detail }</code></td></tr>
+          <tr><td><code>pagechange</code></td><td><code>{ page, total }</code></td></tr>
+          <tr><td><code>zoomchange</code></td><td><code>{ zoom }</code></td></tr>
+          <tr><td><code>themechange</code></td><td><code>{ theme, dark }</code></td></tr>
+          <tr><td><code>fullscreenchange</code></td><td><code>{ fullscreen }</code></td></tr>
+          <tr><td><code>destroy</code></td><td><code>{}</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="libraries">Libraries &amp; self-hosting</h2>
+      <p>Each format library is resolved in this order: a module you pass in <code>libs.modules</code>, a global variable already on the page (<code>pdfjsLib</code>, <code>mammoth</code>, <code>XLSX</code>, <code>Handsontable</code>, <code>PPTXjs</code>), then the npm package (bundler builds) or <code>libs.urls</code> (script-tag build, defaulting to version-pinned CDN URLs).</p>
+      <div class="code"><pre><code>// Script-tag build, all files served from your own server:
+new OfficeToHtml.OfficeViewer("#viewer", {
+  libs: {
+    urls: {
+      pdfjs:        "/vendor/pdfjs/build/pdf.min.mjs",
+      pdfjsViewer:  "/vendor/pdfjs/web/pdf_viewer.mjs",
+      mammoth:      "/vendor/mammoth/mammoth.browser.min.js",
+      xlsx:         "/vendor/xlsx/xlsx.full.min.js",
+      handsontable: "/vendor/handsontable/handsontable.full.min.js",
+      pptxjs:       "/vendor/pptxjs/pptxjs.umd.js",
+    },
+  },
+  pdf: { assetsBase: "/vendor/pdfjs/" },  // worker, cmaps, fonts, css
+});
+
+// Bundler build, explicit modules (e.g. to share instances):
+import * as XLSX from "xlsx";
+new OfficeViewer("#viewer", { libs: { modules: { xlsx: XLSX } } });</code></pre></div>
+      <p>The files to copy are in <code>node_modules</code>: <code>pdfjs-dist/{build,web,cmaps,standard_fonts,wasm,iccs}</code>, <code>mammoth/mammoth.browser.min.js</code>, <code>xlsx/dist/xlsx.full.min.js</code>, <code>handsontable/dist/handsontable.full.min.js</code>, <code>@meshesha/pptxjs/dist/pptxjs.umd.js</code>. The repository's <code>scripts/build-site.mjs</code> does exactly that for this website.</p>
+      <p>With Vite you can point the PDF worker at the bundled file: <code>import workerSrc from "pdfjs-dist/build/pdf.worker.min.mjs?url"</code> → <code>pdf: { workerSrc }</code>.</p>
+
+      <h2 id="languages">Languages</h2>
+      <p>Built in: English, Hebrew, Arabic, Spanish, French, German, Russian and Chinese (<a href="lang.html">list</a>). Hebrew and Arabic switch the whole UI to right-to-left. Add a language or change any text:</p>
+      <div class="code"><pre><code>import { registerLocale } from "@meshesha/officetohtml";
+registerLocale("it", { open: "Apri file", download: "Scarica", print: "Stampa" /* … */ });
+
+new OfficeViewer("#viewer", { locale: "it", messages: { emptyHint: "Trascina qui un file" } });</code></pre></div>
+
+      <h2 id="theming">Theming</h2>
+      <p>The viewer uses CSS custom properties on <code>.oth</code> (and <code>.oth[data-theme="dark"]</code>):</p>
+      <div class="code" data-lang="css" data-plain><pre><code>.oth {
+  --oth-accent: #0f766e;     /* buttons, focus, active states */
+  --oth-bg: #f5f5f4;         /* page background */
+  --oth-surface: #ffffff;    /* toolbar, panels */
+  --oth-border: #e7e5e4;
+  --oth-text: #1c1917;
+  --oth-radius: 0;           /* square corners */
+  --oth-font: "Inter", sans-serif;
+}</code></pre></div>
+
+      <h2 id="keyboard">Keyboard shortcuts</h2>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>Keys</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>F</kbd></td><td>Search</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>Print the document</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>-</kbd> / <kbd>0</kbd>, Ctrl + wheel</td><td>Zoom in / out / fit</td></tr>
+          <tr><td><kbd>PageUp</kbd> / <kbd>PageDown</kbd>, <kbd>Home</kbd> / <kbd>End</kbd></td><td>Previous / next page or slide, first / last</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>PageUp</kbd> / <kbd>PageDown</kbd></td><td>Previous / next sheet</td></tr>
+          <tr><td>Arrows, <kbd>Space</kbd></td><td>Slides and PDF presentation mode: navigate; images: pan</td></tr>
+          <tr><td><kbd>R</kbd> / <kbd>Shift</kbd>+<kbd>R</kbd></td><td>Rotate (images, PDF)</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Close search / exit full screen</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="security">Security</h2>
+      <ul>
+        <li>HTML converted from Word files is sanitised with DOMPurify; <code>javascript:</code> and other unsafe links are removed and external links open with <code>rel="noopener noreferrer"</code>. Element ids are prefixed so a document cannot override globals of your page.</li>
+        <li>Sheet names, cells, file names and text files are always inserted as text.</li>
+        <li>PDF.js runs with <code>isEvalSupported: false</code> and without PDF scripting.</li>
+        <li>SVG images are displayed with <code>&lt;img&gt;</code>, so scripts inside them never run.</li>
+        <li>URLs are limited to <code>http(s)</code>, <code>blob</code> and <code>data</code> (<code>allowedProtocols</code>); files are limited to 200 MB (<code>maxFileSize</code>).</li>
+        <li>Printing uses a sandboxed iframe without script permission.</li>
+        <li>Strict Content Security Policy: set <code>injectStyles: false</code> and link <code>@meshesha/officetohtml/style.css</code>, pass a <code>nonce</code>, and self-host the libraries. PDF.js needs <code>worker-src blob:</code> or a same-origin worker.</li>
+      </ul>
+      <p>Report vulnerabilities privately – see <a href="https://github.com/meshesha/officetohtml/blob/master/SECURITY.md" rel="noopener">SECURITY.md</a>.</p>
+
+      <h2 id="custom-renderers">Custom renderers</h2>
+      <p>Renderers are small objects; optional methods enable the matching toolbar buttons automatically.</p>
+      <div class="code"><pre><code>import { OfficeViewer } from "@meshesha/officetohtml";
+
+OfficeViewer.registerRenderer("text", (ctx) =&gt; ({
+  async render() {
+    const html = myMarkdownToSafeHtml(new TextDecoder().decode(ctx.file.bytes));
+    ctx.container.append(html);                 // a DOM node you built safely
+    ctx.setStatus("Markdown");
+  },
+  destroy() {},
+  // optional capabilities: getZoom/setZoom, getPage/setPage/getPageCount,
+  // search/searchNext/searchPrevious/clearSearch, print, getText, onResize ...
+}));</code></pre></div>
+
+      <h2 id="migration">Migrating from v1</h2>
+      <ul>
+        <li>Remove all v1 includes (jQuery UI, pdf viewer files, jszip-utils, d3, nv.d3, reveal.js, verySimpleImageViewer, the v1 CSS) – one script replaces them.</li>
+        <li>jQuery is optional. <code>$(el).officeToHtml({ url, inputObjId, pdfSetting, docxSetting, pptxSetting, sheetSetting })</code> still works; settings are converted to v2 options.</li>
+        <li><code>pdfSetting.setLang</code> → <code>locale</code>; PDF toolbar flags → <code>toolbar</code>; <code>disableTextLayer</code> → <code>pdf.textLayer: false</code>.</li>
+        <li><code>docxSetting.isRtl</code> → <code>docx.rtl</code>; <code>pptxSetting.slideMode</code> → <code>pptx.mode: "slideshow"</code>; <code>sheetSetting.jqueryui</code> is gone (sheet tabs are built in).</li>
+        <li>The PDF viewer no longer needs a <code>locale</code> folder or a fixed folder structure.</li>
+      </ul>
+
+      <h2 id="faq">FAQ</h2>
+      <h3>Can it show .doc, .ppt or .odt files?</h3>
+      <p>No. These binary/legacy formats have no reliable browser-side reader. The viewer explains that and offers a download. Convert them to .docx/.pptx (Word, PowerPoint or LibreOffice: <code>soffice --headless --convert-to docx file.doc</code>). Old <strong>.xls</strong> files <em>are</em> supported.</p>
+      <h3>The Word document looks different from Word.</h3>
+      <p>mammoth.js converts the document's <em>structure</em> (headings, lists, tables, images, links) into clean HTML; it intentionally ignores most visual formatting such as exact fonts, colours, spacing and page layout. Image sizes are restored by OfficeToHtml. Use <code>docx.styleMap</code> to map Word styles to your own CSS classes.</p>
+      <h3>Files don't load from another domain.</h3>
+      <p>The server must allow cross-origin requests (CORS). Alternatively fetch the file yourself and pass the <code>Blob</code> / <code>ArrayBuffer</code> to <code>load()</code>.</p>
+      <h3>Does it work with Django, Magento, RequireJS …?</h3>
+      <p>Yes. v2 does not depend on a folder layout: the browser bundle is a single file, and library locations are configured with <code>libs.urls</code> and <code>pdf.assetsBase</code>. With RequireJS/AMD, load <code>officetohtml.umd.js</code> as an AMD module or before RequireJS.</p>
+      <h3>Is my file uploaded anywhere?</h3>
+      <p>No. Everything happens in the browser. Only the libraries themselves are downloaded (from your server or the CDN).</p>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© 2017–2026 <a href="https://github.com/meshesha" rel="noopener">Tady Meshesha</a> · MIT License</div>
+      <nav aria-label="Footer">
+        <a href="../">Home</a><a href="demos.html">Demos</a><a href="lang.html">Languages</a><a href="../#credits">Credits</a>
+        <a href="https://github.com/meshesha/officetohtml/issues" rel="noopener">Issues</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

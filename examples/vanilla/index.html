@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeToHtml – minimal example</title>
+  <style>
+    body { margin: 0; font: 15px system-ui, sans-serif; padding: 16px; background: #f3f4f6; }
+    #viewer { height: calc(100vh - 80px); }
+  </style>
+</head>
+<body>
+  <p>
+    <input type="file" id="file">
+    <button id="sample" type="button">Open a sample PDF</button>
+  </p>
+  <div id="viewer"></div>
+
+  <!-- From npm: node_modules/@meshesha/officetohtml/dist/officetohtml.umd.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@meshesha/officetohtml@2/dist/officetohtml.umd.js"></script>
+  <script>
+    const viewer = new OfficeToHtml.OfficeViewer("#viewer", { theme: "auto" });
+    viewer.bindInput("#file");
+    viewer.on("error", ({ error }) => console.warn(error.code, error.message));
+    document.getElementById("sample").onclick = () =>
+      viewer.load("https://raw.githubusercontent.com/mozilla/pdf.js/master/web/compressed.tracemonkey-pldi-09.pdf");
+  </script>
+</body>
+</html>
